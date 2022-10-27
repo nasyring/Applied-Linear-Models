@@ -21,7 +21,7 @@ median(Y)
 ```
 
 ```
-## [1] 1.026024
+## [1] 0.9683211
 ```
 
 ```r
@@ -29,7 +29,7 @@ median(log(Y))
 ```
 
 ```
-## [1] 0.02569102
+## [1] -0.03219152
 ```
 
 ```r
@@ -37,7 +37,7 @@ log(median(Y))
 ```
 
 ```
-## [1] 0.02569102
+## [1] -0.03219152
 ```
 
 Of course, the log-transform can only be applied to positive data values, and is meant specifically for use with positively skewed data.  Since the log transform is monotonic increasing it preserves medians.  That is, the median of the log-transformed values is equal to the log of the median of the original values.  This is helpful for interpreting the results of tests concerning the mean of the log-transformed values.  
