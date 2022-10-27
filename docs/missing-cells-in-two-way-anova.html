@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 11 Missing Cells in Two-Way ANOVA | Applied Linear Models</title>
+  <meta name="description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 11 Missing Cells in Two-Way ANOVA | Applied Linear Models" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 11 Missing Cells in Two-Way ANOVA | Applied Linear Models" />
+  
+  <meta name="twitter:description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  
+
+<meta name="author" content="Nick Syring" />
+
+
+<meta name="date" content="2022-10-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="unbalanced-data-in-two-way-anova.html"/>
+<link rel="next" href="strategy-for-analysis-in-two-factor-models.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied Linear Models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html"><i class="fa fa-check"></i><b>2</b> Data Analysis and Statistical Inference</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#data-experiments-and-studies"><i class="fa fa-check"></i><b>2.1</b> Data, Experiments, and Studies</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#james-linds-scurvy-trial"><i class="fa fa-check"></i><b>2.1.1</b> James Lind’s Scurvy Trial</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#framingham-heart-study"><i class="fa fa-check"></i><b>2.1.2</b> Framingham Heart Study</a></li>
+<li class="chapter" data-level="2.1.3" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#harris-bank-sex-pay-study"><i class="fa fa-check"></i><b>2.1.3</b> Harris Bank Sex Pay Study</a></li>
+<li class="chapter" data-level="2.1.4" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#large-aggregated-data-sets"><i class="fa fa-check"></i><b>2.1.4</b> Large, Aggregated Data Sets</a></li>
+<li class="chapter" data-level="2.1.5" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#study-concepts"><i class="fa fa-check"></i><b>2.1.5</b> Study Concepts</a></li>
+<li class="chapter" data-level="2.1.6" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#randomization-control-and-causation"><i class="fa fa-check"></i><b>2.1.6</b> Randomization, control, and causation</a></li>
+<li class="chapter" data-level="2.1.7" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#populations-and-scope-of-inference"><i class="fa fa-check"></i><b>2.1.7</b> Populations and scope of inference</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#data-summaries"><i class="fa fa-check"></i><b>2.2</b> Data Summaries</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#numerical-summaries"><i class="fa fa-check"></i><b>2.2.1</b> Numerical Summaries</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#visual-summaries"><i class="fa fa-check"></i><b>2.2.2</b> Visual Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#statistical-inference"><i class="fa fa-check"></i><b>2.3</b> Statistical Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html"><i class="fa fa-check"></i><b>3</b> Introduction to Linear Models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#defining-the-linear-model"><i class="fa fa-check"></i><b>3.1</b> Defining the linear model</a></li>
+<li class="chapter" data-level="3.2" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#gauss-markov-model-for-one-sample"><i class="fa fa-check"></i><b>3.2</b> Gauss-Markov model for one sample</a></li>
+<li class="chapter" data-level="3.3" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#gauss-markov-model-for-comparing-two-samples"><i class="fa fa-check"></i><b>3.3</b> Gauss-Markov model for comparing two samples</a></li>
+<li class="chapter" data-level="3.4" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#pairwise-testing-and-bonferroni-correction"><i class="fa fa-check"></i><b>3.4</b> Pairwise testing and Bonferroni correction</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#example-co2-uptake-in-echinochloa-crus-galli"><i class="fa fa-check"></i><b>3.4.1</b> Example: Co2 uptake in Echinochloa crus-galli</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#linear-models-for-more-than-two-treatments-populations"><i class="fa fa-check"></i><b>3.5</b> Linear Models for more than two treatments (populations)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html"><i class="fa fa-check"></i><b>4</b> Randomization and Permutation Testing</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#setup"><i class="fa fa-check"></i><b>4.1</b> Setup</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#example-1-the-harris-bank-sex-pay-study"><i class="fa fa-check"></i><b>4.1.1</b> Example 1: The Harris Bank Sex Pay Study</a></li>
+<li class="chapter" data-level="4.1.2" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#difference-in-mean-salaries-between-genders"><i class="fa fa-check"></i><b>4.1.2</b> Difference in mean salaries between genders</a></li>
+<li class="chapter" data-level="4.1.3" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#randomization-test-for-treatment-significance"><i class="fa fa-check"></i><b>4.1.3</b> Randomization test for treatment significance</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html"><i class="fa fa-check"></i><b>5</b> Alternatives for Non-Normal Responses</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#transformations"><i class="fa fa-check"></i><b>5.1</b> Transformations</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#example-cloud-seeding-for-rainfall"><i class="fa fa-check"></i><b>5.1.1</b> Example: Cloud Seeding for Rainfall</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#rank-sum-test"><i class="fa fa-check"></i><b>5.2</b> Rank-Sum Test</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#example-ratio-measurements"><i class="fa fa-check"></i><b>5.2.1</b> Example: ratio measurements</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#signed-rank-test"><i class="fa fa-check"></i><b>5.3</b> Signed-rank test</a></li>
+<li class="chapter" data-level="5.4" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrap"><i class="fa fa-check"></i><b>5.4</b> Bootstrap</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#intro-to-the-bootstrap"><i class="fa fa-check"></i><b>5.4.1</b> Intro to the bootstrap</a></li>
+<li class="chapter" data-level="5.4.2" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>5.4.2</b> Bootstrap Confidence Intervals</a></li>
+<li class="chapter" data-level="5.4.3" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrapping-linear-models"><i class="fa fa-check"></i><b>5.4.3</b> Bootstrapping linear models</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="one-way-anova.html"><a href="one-way-anova.html"><i class="fa fa-check"></i><b>6</b> One Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="one-way-anova.html"><a href="one-way-anova.html#the-gauss-markov-model-for-comparing-i-populations"><i class="fa fa-check"></i><b>6.1</b> The Gauss-Markov Model for comparing I populations</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="one-way-anova.html"><a href="one-way-anova.html#example-donuts-effects-model"><i class="fa fa-check"></i><b>6.1.1</b> Example: Donuts effects model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="one-way-anova.html"><a href="one-way-anova.html#testing-equality-of-means"><i class="fa fa-check"></i><b>6.2</b> Testing equality of means</a></li>
+<li class="chapter" data-level="6.3" data-path="one-way-anova.html"><a href="one-way-anova.html#follow-up-testing"><i class="fa fa-check"></i><b>6.3</b> Follow-up testing</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="one-way-anova.html"><a href="one-way-anova.html#donuts-example"><i class="fa fa-check"></i><b>6.3.1</b> Donuts example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="one-way-anova.html"><a href="one-way-anova.html#inference-for-particular-contrasts"><i class="fa fa-check"></i><b>6.4</b> Inference for particular contrasts</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="one-way-anova.html"><a href="one-way-anova.html#donuts-example-1"><i class="fa fa-check"></i><b>6.4.1</b> Donuts Example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="one-way-anova.html"><a href="one-way-anova.html#checking-assumptions-in-one-way-anova"><i class="fa fa-check"></i><b>6.5</b> Checking Assumptions in one-way ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="one-way-anova.html"><a href="one-way-anova.html#example-cehcking-assumptions-for-donuts-experiment"><i class="fa fa-check"></i><b>6.5.1</b> Example: Cehcking assumptions for donuts experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html"><i class="fa fa-check"></i><b>7</b> Randomized Complete Block Design</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#paired-experiments-as-blocking"><i class="fa fa-check"></i><b>7.1</b> Paired experiments as blocking</a></li>
+<li class="chapter" data-level="7.2" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#randomized-complete-block-designs"><i class="fa fa-check"></i><b>7.2</b> Randomized Complete Block Designs</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#notation"><i class="fa fa-check"></i><b>7.2.1</b> Notation</a></li>
+<li class="chapter" data-level="7.2.2" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-penicillin-manufacturing"><i class="fa fa-check"></i><b>7.2.2</b> Example: Penicillin Manufacturing</a></li>
+<li class="chapter" data-level="7.2.3" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#sums-of-squares-and-f-tests-in-rcbd"><i class="fa fa-check"></i><b>7.2.3</b> Sums of squares and F tests in RCBD</a></li>
+<li class="chapter" data-level="7.2.4" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-significance-of-process-in-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.4</b> Example: Significance of Process in Penicillin experiment</a></li>
+<li class="chapter" data-level="7.2.5" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#follow-up-comparisons-and-contrasts"><i class="fa fa-check"></i><b>7.2.5</b> Follow-up comparisons and contrasts</a></li>
+<li class="chapter" data-level="7.2.6" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-tukey-contrasts-and-scheffe-for-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.6</b> Example: Tukey, contrasts, and Scheffe for penicillin experiment</a></li>
+<li class="chapter" data-level="7.2.7" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#relative-efficiency-of-blocking-vs.-crd"><i class="fa fa-check"></i><b>7.2.7</b> Relative efficiency of Blocking (vs. CRD)</a></li>
+<li class="chapter" data-level="7.2.8" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-re-of-blocking-in-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.8</b> Example: RE of blocking in penicillin experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html"><i class="fa fa-check"></i><b>8</b> Latin Squares for two blocking variables</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#designs-for-multiple-blocks"><i class="fa fa-check"></i><b>8.1</b> Designs for multiple blocks</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-mpg-experiment"><i class="fa fa-check"></i><b>8.1.1</b> Example: MPG experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#model-notation"><i class="fa fa-check"></i><b>8.2</b> Model notation</a></li>
+<li class="chapter" data-level="8.3" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#sums-of-squares-and-test-for-treatment-effects"><i class="fa fa-check"></i><b>8.3</b> Sums of squares and test for treatment effects</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-mpg-experiment-1"><i class="fa fa-check"></i><b>8.3.1</b> Example: MPG experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#relative-efficiency-of-blocking"><i class="fa fa-check"></i><b>8.4</b> Relative efficiency of blocking</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-re-ignoring-driver-blocks"><i class="fa fa-check"></i><b>8.4.1</b> Example: RE ignoring driver blocks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="two-way-anova.html"><a href="two-way-anova.html"><i class="fa fa-check"></i><b>9</b> Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="two-way-anova.html"><a href="two-way-anova.html#the-model"><i class="fa fa-check"></i><b>9.1</b> The Model</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="two-way-anova.html"><a href="two-way-anova.html#example-protein-chemistry"><i class="fa fa-check"></i><b>9.1.1</b> Example: protein chemistry</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="two-way-anova.html"><a href="two-way-anova.html#tests-for-interaction-and-main-effects"><i class="fa fa-check"></i><b>9.2</b> Tests for interaction and main effects</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="two-way-anova.html"><a href="two-way-anova.html#example-protein-and-dietary-metals"><i class="fa fa-check"></i><b>9.2.1</b> Example: Protein and dietary metals</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html"><i class="fa fa-check"></i><b>10</b> Unbalanced data in Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#raw-and-least-squares-means"><i class="fa fa-check"></i><b>10.1</b> Raw and Least-Squares Means</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data"><i class="fa fa-check"></i><b>10.1.1</b> Example: Turbine data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#partial-f-tests-and-type-iii-ss"><i class="fa fa-check"></i><b>10.2</b> Partial F tests and Type III SS</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data-tests"><i class="fa fa-check"></i><b>10.2.1</b> Example: Turbine Data tests</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#follow-up-tests"><i class="fa fa-check"></i><b>10.3</b> Follow-up tests</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data-tukey-corrected-pairwise-comparisons"><i class="fa fa-check"></i><b>10.3.1</b> Example: Turbine data Tukey-corrected pairwise comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#unbalanced-data-and-simpsons-paradox"><i class="fa fa-check"></i><b>10.4</b> Unbalanced data and Simpson’s Paradox</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html"><i class="fa fa-check"></i><b>11</b> Missing Cells in Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#anova-with-missing-at-random-cell"><i class="fa fa-check"></i><b>11.1</b> ANOVA with missing “at random” cell</a></li>
+<li class="chapter" data-level="11.2" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#do-any-of-the-treatments-matter"><i class="fa fa-check"></i><b>11.2</b> Do any of the treatments matter?</a></li>
+<li class="chapter" data-level="11.3" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#fit-a-linear-model-with-additional-constraints"><i class="fa fa-check"></i><b>11.3</b> Fit a linear model with additional constraints</a></li>
+<li class="chapter" data-level="11.4" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#general-linear-test-for-interaction"><i class="fa fa-check"></i><b>11.4</b> General Linear Test for interaction</a></li>
+<li class="chapter" data-level="11.5" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#partial-analysis-for-interaction"><i class="fa fa-check"></i><b>11.5</b> Partial analysis for interaction</a></li>
+<li class="chapter" data-level="11.6" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#tests-for-main-effects-in-the-partial-table"><i class="fa fa-check"></i><b>11.6</b> Tests for main effects in the partial table</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html"><i class="fa fa-check"></i><b>12</b> Strategy for Analysis in Two-Factor models</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#unbalanced-two-factor-experiment-chick-weight"><i class="fa fa-check"></i><b>12.1</b> Unbalanced Two-Factor Experiment: Chick Weight</a></li>
+<li class="chapter" data-level="12.2" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#example-observational-study-on-growth-hormone-deficient-children-with-empty-cell"><i class="fa fa-check"></i><b>12.2</b> Example: observational study on growth-hormone deficient children with empty cell</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#linear-model-analysis-with-extra-constraint"><i class="fa fa-check"></i><b>12.2.1</b> Linear Model analysis with extra constraint</a></li>
+<li class="chapter" data-level="12.2.2" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#partial-table-analysis"><i class="fa fa-check"></i><b>12.2.2</b> Partial Table analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html"><i class="fa fa-check"></i><b>13</b> <span class="math inline">\(2^k\)</span> Factorial Experiments</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#the-model-1"><i class="fa fa-check"></i><b>13.1</b> The Model</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#example-stress-test-study"><i class="fa fa-check"></i><b>13.1.1</b> Example: Stress Test Study</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#unreplicated-factorial-experiments"><i class="fa fa-check"></i><b>13.2</b> Unreplicated Factorial Experiments</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#example-granola-bar-experiment"><i class="fa fa-check"></i><b>13.2.1</b> Example: Granola bar experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Linear Models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="missing-cells-in-two-way-anova" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">Chapter 11</span> Missing Cells in Two-Way ANOVA<a href="missing-cells-in-two-way-anova.html#missing-cells-in-two-way-anova" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this section we consider how to analyze a two-factor experiment when one crossed treatment is unobserved. If there is no interaction, then this is not problem. But, when interaction is present the lack of observations in a crossed treatment group makes it challenging to assess those interactions. There are, essentially, two ways to proceed: 1) use a one-way model, treating the observed crossed treatments as the levels; or, 2) do a partial two-way analysis. <br><br></p>
+<p>Below, we illustrate these two approaches in the context of a horticulture experiment about jalapenos.</p>
+<div id="anova-with-missing-at-random-cell" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> ANOVA with missing “at random” cell<a href="missing-cells-in-two-way-anova.html#anova-with-missing-at-random-cell" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Scoville (spiciness) measure of jalapeno peppers grown under 3 different watering regimens and 3 different levels of sun exposure.<br><br></p>
+<p>Unbalanced treatment groups with a missing crossed treatment, sun level 3 with water level 3.</p>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="missing-cells-in-two-way-anova.html#cb383-1" aria-hidden="true" tabindex="-1"></a>my.data</span></code></pre></div>
+<pre><code>##    scoville water.lvl sun.lvl
+## 1       259         1       1
+## 2       271         1       1
+## 3       289         2       1
+## 4       255         2       1
+## 5       361         2       1
+## 6       118         2       1
+## 7       463         3       1
+## 8       372         3       1
+## 9       372         3       1
+## 10      208         1       2
+## 11      288         1       2
+## 12      482         1       2
+## 13      337         1       2
+## 14      452         2       2
+## 15      325         2       2
+## 16      582         3       2
+## 17      411         3       2
+## 18      467         3       2
+## 19      512         1       3
+## 20      430         1       3
+## 21      478         1       3
+## 22      646         2       3
+## 23      436         2       3
+## 24      345         2       3</code></pre>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="missing-cells-in-two-way-anova.html#cb385-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">aggregate</span>(scoville<span class="sc">~</span>water.lvl<span class="sc">+</span>sun.lvl<span class="sc">+</span>water.lvl<span class="sc">*</span>sun.lvl, <span class="at">data =</span> my.data, <span class="at">FUN=</span>mean))</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">water.lvl</th>
+<th align="left">sun.lvl</th>
+<th align="right">scoville</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="right">265.0000</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="right">255.7500</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">1</td>
+<td align="right">402.3333</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">2</td>
+<td align="right">328.7500</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">2</td>
+<td align="right">388.5000</td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="left">2</td>
+<td align="right">486.6667</td>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">3</td>
+<td align="right">473.3333</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">3</td>
+<td align="right">475.6667</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="missing-cells-in-two-way-anova.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(water.lvl, sun.lvl,  scoville, <span class="at">data =</span> my.data)</span></code></pre></div>
+<p><img src="10-MissingCellsInTwoWay_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="missing-cells-in-two-way-anova.html#cb387-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(scoville<span class="sc">~</span>water.lvl<span class="sc">+</span> sun.lvl, <span class="at">data =</span> my.data)</span></code></pre></div>
+<p><img src="10-MissingCellsInTwoWay_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+</div>
+<div id="do-any-of-the-treatments-matter" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> Do any of the treatments matter?<a href="missing-cells-in-two-way-anova.html#do-any-of-the-treatments-matter" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Can test this two equivalent ways:<br>
+1. fit a one way anova (ignoring that there are two treatment variables) and test if the treatments are different.<br>
+2. fit a linear model and perform the model F test comparing the full model to the intercept only model.<br><br></p>
+<p>The linear model method is slightly more challenging to implement because of the additional constraint imposed by the missing cell. We have to modify the design matrix from the model.matrix function, or define it by hand.<br><br></p>
+<p>One way anova below. Notice it says the treatments are not all the same; their mean responses significantly differ for at least one treatment compared to the other 7. One approach would be to follow this test up with tests of contrasts or pairwise comparisons, corrected using Scheff'e or Tukey. Since the data is unbalanced, we should do these by hand.<br />
+<img src="10-MissingCellsInTwoWay_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="missing-cells-in-two-way-anova.html#cb388-1" aria-hidden="true" tabindex="-1"></a>my.data.oneway</span></code></pre></div>
+<pre><code>##    scoville trt
+## 1       259   1
+## 2       271   1
+## 3       289   2
+## 4       255   2
+## 5       361   2
+## 6       118   2
+## 7       463   3
+## 8       372   3
+## 9       372   3
+## 10      208   4
+## 11      288   4
+## 12      482   4
+## 13      337   4
+## 14      452   5
+## 15      325   5
+## 16      582   6
+## 17      411   6
+## 18      467   6
+## 19      512   7
+## 20      430   7
+## 21      478   7
+## 22      646   8
+## 23      436   8
+## 24      345   8</code></pre>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="missing-cells-in-two-way-anova.html#cb390-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb390-2"><a href="missing-cells-in-two-way-anova.html#cb390-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(<span class="fu">lm</span>(scoville<span class="sc">~</span>trt, <span class="at">data =</span> my.data.oneway), <span class="at">type =</span> <span class="st">&#39;III&#39;</span>)</span></code></pre></div>
+<pre><code>## Anova Table (Type III tests)
+## 
+## Response: scoville
+##              Sum Sq Df  F value   Pr(&gt;F)    
+## (Intercept) 3339450  1 354.1618 2.44e-12 ***
+## trt          188009  7   2.8484   0.0393 *  
+## Residuals    150867 16                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="fit-a-linear-model-with-additional-constraints" class="section level2 hasAnchor" number="11.3">
+<h2><span class="header-section-number">11.3</span> Fit a linear model with additional constraints<a href="missing-cells-in-two-way-anova.html#fit-a-linear-model-with-additional-constraints" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The other option for testing if any treatments matter is to fit a linear model. However, we cannot estimate all the parameters of the effects model due to missing the combination of sun level 3 and water level 3. We can only estimate 8 parameters: intercept, 2 for sun, 2 for water, and 3 (rather than 4) interactions. The way to deal with this is to find the full model matrix and then omit the last column corresponding to the interaction that is not estimable. IF we just use the lm() function, we’ll get an error, but it will still give us some useful output. Again, we end up having to do some things by hand.</p>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="missing-cells-in-two-way-anova.html#cb392-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&#39;contr.sum&#39;</span>, <span class="st">&#39;contr.sum&#39;</span>))</span>
+<span id="cb392-2"><a href="missing-cells-in-two-way-anova.html#cb392-2" aria-hidden="true" tabindex="-1"></a>my.lm<span class="ot">&lt;-</span><span class="fu">lm</span>(scoville<span class="sc">~</span>water.lvl<span class="sc">+</span>sun.lvl<span class="sc">+</span>water.lvl<span class="sc">*</span>sun.lvl, <span class="at">data =</span> my.data)</span>
+<span id="cb392-3"><a href="missing-cells-in-two-way-anova.html#cb392-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my.lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = scoville ~ water.lvl + sun.lvl + water.lvl * sun.lvl, 
+##     data = my.data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -137.750  -41.396   -3.375   44.167  170.333 
+## 
+## Coefficients: (1 not defined because of singularities)
+##                     Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)           386.11      41.79   9.240 8.15e-08 ***
+## water.lvl1            -30.42      48.55  -0.626    0.540    
+## water.lvl2            -12.81      52.02  -0.246    0.809    
+## sun.lvl1              -78.42      48.55  -1.615    0.126    
+## sun.lvl2               15.19      52.02   0.292    0.774    
+## water.lvl1:sun.lvl1   -12.28      49.44  -0.248    0.807    
+## water.lvl2:sun.lvl1   -39.14      68.02  -0.575    0.573    
+## water.lvl1:sun.lvl2   -42.14      68.02  -0.619    0.544    
+## water.lvl2:sun.lvl2       NA         NA      NA       NA    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 97.1 on 16 degrees of freedom
+## Multiple R-squared:  0.5548, Adjusted R-squared:   0.36 
+## F-statistic: 2.848 on 7 and 16 DF,  p-value: 0.0393</code></pre>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="missing-cells-in-two-way-anova.html#cb394-1" aria-hidden="true" tabindex="-1"></a>my.lm<span class="sc">$</span>coefficients</span></code></pre></div>
+<pre><code>##         (Intercept)          water.lvl1          water.lvl2            sun.lvl1 
+##           386.11111           -30.41667           -12.80556           -78.41667 
+##            sun.lvl2 water.lvl1:sun.lvl1 water.lvl2:sun.lvl1 water.lvl1:sun.lvl2 
+##            15.19444           -12.27778           -39.13889           -42.13889 
+## water.lvl2:sun.lvl2 
+##                  NA</code></pre>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="missing-cells-in-two-way-anova.html#cb396-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(scoville<span class="sc">~</span>water.lvl<span class="sc">+</span>sun.lvl<span class="sc">+</span>water.lvl<span class="sc">*</span>sun.lvl, <span class="at">data =</span> my.data)</span>
+<span id="cb396-2"><a href="missing-cells-in-two-way-anova.html#cb396-2" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div>
+<pre><code>##    (Intercept) water.lvl1 water.lvl2 sun.lvl1 sun.lvl2 water.lvl1:sun.lvl1
+## 1            1          1          0        1        0                   1
+## 2            1          1          0        1        0                   1
+## 3            1          0          1        1        0                   0
+## 4            1          0          1        1        0                   0
+## 5            1          0          1        1        0                   0
+## 6            1          0          1        1        0                   0
+## 7            1         -1         -1        1        0                  -1
+## 8            1         -1         -1        1        0                  -1
+## 9            1         -1         -1        1        0                  -1
+## 10           1          1          0        0        1                   0
+## 11           1          1          0        0        1                   0
+## 12           1          1          0        0        1                   0
+## 13           1          1          0        0        1                   0
+## 14           1          0          1        0        1                   0
+## 15           1          0          1        0        1                   0
+## 16           1         -1         -1        0        1                   0
+## 17           1         -1         -1        0        1                   0
+## 18           1         -1         -1        0        1                   0
+## 19           1          1          0       -1       -1                  -1
+## 20           1          1          0       -1       -1                  -1
+## 21           1          1          0       -1       -1                  -1
+## 22           1          0          1       -1       -1                   0
+## 23           1          0          1       -1       -1                   0
+## 24           1          0          1       -1       -1                   0
+##    water.lvl2:sun.lvl1 water.lvl1:sun.lvl2 water.lvl2:sun.lvl2
+## 1                    0                   0                   0
+## 2                    0                   0                   0
+## 3                    1                   0                   0
+## 4                    1                   0                   0
+## 5                    1                   0                   0
+## 6                    1                   0                   0
+## 7                   -1                   0                   0
+## 8                   -1                   0                   0
+## 9                   -1                   0                   0
+## 10                   0                   1                   0
+## 11                   0                   1                   0
+## 12                   0                   1                   0
+## 13                   0                   1                   0
+## 14                   0                   0                   1
+## 15                   0                   0                   1
+## 16                   0                  -1                  -1
+## 17                   0                  -1                  -1
+## 18                   0                  -1                  -1
+## 19                   0                  -1                   0
+## 20                   0                  -1                   0
+## 21                   0                  -1                   0
+## 22                  -1                   0                  -1
+## 23                  -1                   0                  -1
+## 24                  -1                   0                  -1
+## attr(,&quot;assign&quot;)
+## [1] 0 1 1 2 2 3 3 3 3
+## attr(,&quot;contrasts&quot;)
+## attr(,&quot;contrasts&quot;)$water.lvl
+## [1] &quot;contr.sum&quot;
+## 
+## attr(,&quot;contrasts&quot;)$sun.lvl
+## [1] &quot;contr.sum&quot;</code></pre>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="missing-cells-in-two-way-anova.html#cb398-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> X[,<span class="sc">-</span><span class="dv">9</span>]</span>
+<span id="cb398-2"><a href="missing-cells-in-two-way-anova.html#cb398-2" aria-hidden="true" tabindex="-1"></a>beta.hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X)<span class="sc">%*%</span><span class="fu">t</span>(X)<span class="sc">%*%</span>my.data<span class="sc">$</span>scoville</span>
+<span id="cb398-3"><a href="missing-cells-in-two-way-anova.html#cb398-3" aria-hidden="true" tabindex="-1"></a>beta.hat</span></code></pre></div>
+<pre><code>##                          [,1]
+## (Intercept)         386.11111
+## water.lvl1          -30.41667
+## water.lvl2          -12.80556
+## sun.lvl1            -78.41667
+## sun.lvl2             15.19444
+## water.lvl1:sun.lvl1 -12.27778
+## water.lvl2:sun.lvl1 -39.13889
+## water.lvl1:sun.lvl2 -42.13889</code></pre>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="missing-cells-in-two-way-anova.html#cb400-1" aria-hidden="true" tabindex="-1"></a>Y.pred <span class="ot">&lt;-</span>X<span class="sc">%*%</span>beta.hat</span>
+<span id="cb400-2"><a href="missing-cells-in-two-way-anova.html#cb400-2" aria-hidden="true" tabindex="-1"></a>SSE <span class="ot">&lt;-</span> <span class="fu">sum</span>((my.data<span class="sc">$</span>scoville<span class="sc">-</span>Y.pred)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb400-3"><a href="missing-cells-in-two-way-anova.html#cb400-3" aria-hidden="true" tabindex="-1"></a>MSE <span class="ot">&lt;-</span> SSE <span class="sc">/</span> (<span class="dv">24</span> <span class="sc">-</span> <span class="dv">8</span>)</span>
+<span id="cb400-4"><a href="missing-cells-in-two-way-anova.html#cb400-4" aria-hidden="true" tabindex="-1"></a>MSE</span></code></pre></div>
+<pre><code>## [1] 9429.167</code></pre>
+</div>
+<div id="general-linear-test-for-interaction" class="section level2 hasAnchor" number="11.4">
+<h2><span class="header-section-number">11.4</span> General Linear Test for interaction<a href="missing-cells-in-two-way-anova.html#general-linear-test-for-interaction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The linear model we just developed, with the additional constraint, allows us to perform more tests. We can use this model to perform General linear F tests for interaction and main effects.
+<br><br></p>
+<p>The first estimated interaction parameter
+<span class="math display">\[1/3 * [\mu_{11} - \mu_{13} - (\mu_{31}-\mu_{32}) - (\mu_{22} - \mu_{23})]\]</span>
+(265.0000 - 473.3333 - (402.3333 - 486.6667) - (388.5000 - 475.6667))/3
+= -12.27778</p>
+<p>The test for interaction does not reject the null hypothesis of no interaction.
+<br><br>
+Note, we cannot feed the Anova function the fitted linear model; it will produce an error because of the inability to fit all 9 parameters. So, we had to do this “by hand”.</p>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="missing-cells-in-two-way-anova.html#cb402-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&#39;contr.sum&#39;</span>, <span class="st">&#39;contr.sum&#39;</span>))</span>
+<span id="cb402-2"><a href="missing-cells-in-two-way-anova.html#cb402-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(scoville<span class="sc">~</span>water.lvl<span class="sc">+</span>sun.lvl<span class="sc">+</span>water.lvl<span class="sc">*</span>sun.lvl, <span class="at">data =</span> my.data, <span class="at">FUN=</span>mean)</span></code></pre></div>
+<pre><code>##   water.lvl sun.lvl scoville
+## 1         1       1 265.0000
+## 2         2       1 255.7500
+## 3         3       1 402.3333
+## 4         1       2 328.7500
+## 5         2       2 388.5000
+## 6         3       2 486.6667
+## 7         1       3 473.3333
+## 8         2       3 475.6667</code></pre>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="missing-cells-in-two-way-anova.html#cb404-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(scoville<span class="sc">~</span>water.lvl<span class="sc">+</span>sun.lvl<span class="sc">+</span>water.lvl<span class="sc">*</span>sun.lvl, <span class="at">data =</span> my.data)</span>
+<span id="cb404-2"><a href="missing-cells-in-two-way-anova.html#cb404-2" aria-hidden="true" tabindex="-1"></a>X.R <span class="ot">&lt;-</span> X[,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]  <span class="co"># no interaction parameters</span></span>
+<span id="cb404-3"><a href="missing-cells-in-two-way-anova.html#cb404-3" aria-hidden="true" tabindex="-1"></a>beta.hat.R <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X.R)<span class="sc">%*%</span>X.R)<span class="sc">%*%</span><span class="fu">t</span>(X.R)<span class="sc">%*%</span>my.data<span class="sc">$</span>scoville</span>
+<span id="cb404-4"><a href="missing-cells-in-two-way-anova.html#cb404-4" aria-hidden="true" tabindex="-1"></a>beta.hat.R</span></code></pre></div>
+<pre><code>##                   [,1]
+## (Intercept)  407.58333
+## water.lvl1   -54.98160
+## water.lvl2   -38.85173
+## sun.lvl1    -102.70887
+## sun.lvl2     -11.12446</code></pre>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="missing-cells-in-two-way-anova.html#cb406-1" aria-hidden="true" tabindex="-1"></a>Y.pred.R <span class="ot">&lt;-</span>X.R<span class="sc">%*%</span>beta.hat.R</span>
+<span id="cb406-2"><a href="missing-cells-in-two-way-anova.html#cb406-2" aria-hidden="true" tabindex="-1"></a>SSE.R <span class="ot">&lt;-</span> <span class="fu">sum</span>((my.data<span class="sc">$</span>scoville<span class="sc">-</span>Y.pred.R)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb406-3"><a href="missing-cells-in-two-way-anova.html#cb406-3" aria-hidden="true" tabindex="-1"></a>F <span class="ot">&lt;-</span> ((SSE.R <span class="sc">-</span> SSE)<span class="sc">/</span>(<span class="dv">3</span>)) <span class="sc">/</span> MSE</span>
+<span id="cb406-4"><a href="missing-cells-in-two-way-anova.html#cb406-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pf</span>(F,<span class="dv">3</span>,<span class="dv">16</span>)</span></code></pre></div>
+<pre><code>## [1] 0.9381543</code></pre>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="missing-cells-in-two-way-anova.html#cb408-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(car)</span></span>
+<span id="cb408-2"><a href="missing-cells-in-two-way-anova.html#cb408-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Anova(lm(scoville~water.lvl+sun.lvl+water.lvl*sun.lvl, data = my.data), type = &#39;III&#39;)</span></span></code></pre></div>
+</div>
+<div id="partial-analysis-for-interaction" class="section level2 hasAnchor" number="11.5">
+<h2><span class="header-section-number">11.5</span> Partial analysis for interaction<a href="missing-cells-in-two-way-anova.html#partial-analysis-for-interaction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>An alternative approach is to break the ANOVA into “overlapping” pieces that have no missing cells.<br />
+<br><br>
+Break down the table into two overlapping pieces, one with no sun level 3 and one with no water level 3. Let’s work with the no sun level 3 table. The idea is the same for the other table. We can test for interaction and main effects within this table. Now, there are 6 treatments, so we estimate an intercept, two water parameters, 1 sun parameter, and 2 interaction parameters.
+<br><br>
+The first interaction term (no sun level 3 table) is estimating
+<span class="math display">\[\frac{1}{3}(\mu_{11} -\mu_{12}) -  \frac{1}{6}(\mu_{21}- \mu_{22}) - \frac{1}{6}(\mu_{31} - \mu_{32})\]</span>
+<span class="math display">\[265/3 - 255.7500/6 - 402.3333/6-328.7500/3+388.500/6+486.6667/6=14.93057\]</span>
+<br><br>
+Compare this interaction term to the linear model with the additional constraint. I think it seems like a more interpretable interaction term, which I believe is why some people like the partial analysis.</p>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="missing-cells-in-two-way-anova.html#cb409-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&#39;contr.sum&#39;</span>, <span class="st">&#39;contr.sum&#39;</span>))</span>
+<span id="cb409-2"><a href="missing-cells-in-two-way-anova.html#cb409-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb409-3"><a href="missing-cells-in-two-way-anova.html#cb409-3" aria-hidden="true" tabindex="-1"></a>water.lvl <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb409-4"><a href="missing-cells-in-two-way-anova.html#cb409-4" aria-hidden="true" tabindex="-1"></a>sun.lvl <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(  <span class="dv">1</span><span class="sc">+</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb409-5"><a href="missing-cells-in-two-way-anova.html#cb409-5" aria-hidden="true" tabindex="-1"></a>scoville <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">18</span>, <span class="dv">100</span><span class="sc">*</span>(<span class="fu">as.numeric</span>(water.lvl)<span class="sc">+</span><span class="fu">as.numeric</span>(sun.lvl)),<span class="dv">100</span>),<span class="dv">0</span>)</span>
+<span id="cb409-6"><a href="missing-cells-in-two-way-anova.html#cb409-6" aria-hidden="true" tabindex="-1"></a>my.data1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(scoville, water.lvl, sun.lvl)</span>
+<span id="cb409-7"><a href="missing-cells-in-two-way-anova.html#cb409-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb409-8"><a href="missing-cells-in-two-way-anova.html#cb409-8" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(scoville<span class="sc">~</span>water.lvl<span class="sc">+</span>sun.lvl<span class="sc">+</span>water.lvl<span class="sc">*</span>sun.lvl, <span class="at">data =</span> my.data1, <span class="at">FUN=</span>mean)</span></code></pre></div>
+<pre><code>##   water.lvl sun.lvl scoville
+## 1         1       1 265.0000
+## 2         2       1 255.7500
+## 3         3       1 402.3333
+## 4         1       2 328.7500
+## 5         2       2 388.5000
+## 6         3       2 486.6667</code></pre>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="missing-cells-in-two-way-anova.html#cb411-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb411-2"><a href="missing-cells-in-two-way-anova.html#cb411-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(<span class="fu">lm</span>(scoville<span class="sc">~</span>water.lvl<span class="sc">+</span>sun.lvl<span class="sc">+</span>water.lvl<span class="sc">*</span>sun.lvl, <span class="at">data =</span> my.data1),<span class="at">type =</span> <span class="st">&#39;III&#39;</span>)</span></code></pre></div>
+<pre><code>## Anova Table (Type III tests)
+## 
+## Response: scoville
+##                    Sum Sq Df  F value    Pr(&gt;F)    
+## (Intercept)       2088060  1 251.0408 2.075e-09 ***
+## water.lvl           71684  2   4.3092   0.03887 *  
+## sun.lvl             36400  1   4.3763   0.05837 .  
+## water.lvl:sun.lvl    3360  2   0.2020   0.81984    
+## Residuals           99811 12                       
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="missing-cells-in-two-way-anova.html#cb413-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(scoville<span class="sc">~</span>water.lvl<span class="sc">+</span>sun.lvl<span class="sc">+</span>water.lvl<span class="sc">*</span>sun.lvl, <span class="at">data =</span> my.data1))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = scoville ~ water.lvl + sun.lvl + water.lvl * sun.lvl, 
+##     data = my.data1)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -137.750  -38.146   -3.375   53.812  153.250 
+## 
+## Coefficients:
+##                     Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)           354.50      22.37  15.844 2.07e-09 ***
+## water.lvl1            -57.62      31.94  -1.804   0.0964 .  
+## water.lvl2            -32.38      31.94  -1.013   0.3308    
+## sun.lvl1              -46.81      22.37  -2.092   0.0584 .  
+## water.lvl1:sun.lvl1    14.93      31.94   0.467   0.6486    
+## water.lvl2:sun.lvl1   -19.57      31.94  -0.613   0.5516    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 91.2 on 12 degrees of freedom
+## Multiple R-squared:  0.5438, Adjusted R-squared:  0.3538 
+## F-statistic: 2.861 on 5 and 12 DF,  p-value: 0.06299</code></pre>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="missing-cells-in-two-way-anova.html#cb415-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(scoville<span class="sc">~</span>water.lvl<span class="sc">+</span>sun.lvl<span class="sc">+</span>water.lvl<span class="sc">*</span>sun.lvl, <span class="at">data =</span> my.data1)</span>
+<span id="cb415-2"><a href="missing-cells-in-two-way-anova.html#cb415-2" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div>
+<pre><code>##    (Intercept) water.lvl1 water.lvl2 sun.lvl1 water.lvl1:sun.lvl1
+## 1            1          1          0        1                   1
+## 2            1          1          0        1                   1
+## 3            1          0          1        1                   0
+## 4            1          0          1        1                   0
+## 5            1          0          1        1                   0
+## 6            1          0          1        1                   0
+## 7            1         -1         -1        1                  -1
+## 8            1         -1         -1        1                  -1
+## 9            1         -1         -1        1                  -1
+## 10           1          1          0       -1                  -1
+## 11           1          1          0       -1                  -1
+## 12           1          1          0       -1                  -1
+## 13           1          1          0       -1                  -1
+## 14           1          0          1       -1                   0
+## 15           1          0          1       -1                   0
+## 16           1         -1         -1       -1                   1
+## 17           1         -1         -1       -1                   1
+## 18           1         -1         -1       -1                   1
+##    water.lvl2:sun.lvl1
+## 1                    0
+## 2                    0
+## 3                    1
+## 4                    1
+## 5                    1
+## 6                    1
+## 7                   -1
+## 8                   -1
+## 9                   -1
+## 10                   0
+## 11                   0
+## 12                   0
+## 13                   0
+## 14                  -1
+## 15                  -1
+## 16                   1
+## 17                   1
+## 18                   1
+## attr(,&quot;assign&quot;)
+## [1] 0 1 1 2 3 3
+## attr(,&quot;contrasts&quot;)
+## attr(,&quot;contrasts&quot;)$water.lvl
+## [1] &quot;contr.sum&quot;
+## 
+## attr(,&quot;contrasts&quot;)$sun.lvl
+## [1] &quot;contr.sum&quot;</code></pre>
+<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="missing-cells-in-two-way-anova.html#cb417-1" aria-hidden="true" tabindex="-1"></a><span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X)<span class="sc">%*%</span><span class="fu">t</span>(X)<span class="sc">%*%</span>my.data1<span class="sc">$</span>scoville</span></code></pre></div>
+<pre><code>##                          [,1]
+## (Intercept)         354.50000
+## water.lvl1          -57.62500
+## water.lvl2          -32.37500
+## sun.lvl1            -46.80556
+## water.lvl1:sun.lvl1  14.93056
+## water.lvl2:sun.lvl1 -19.56944</code></pre>
+</div>
+<div id="tests-for-main-effects-in-the-partial-table" class="section level2 hasAnchor" number="11.6">
+<h2><span class="header-section-number">11.6</span> Tests for main effects in the partial table<a href="missing-cells-in-two-way-anova.html#tests-for-main-effects-in-the-partial-table" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>(no sun level 3)
+<br><br>
+We can match the main effects tests in the ANOVA (type 3) table by comparing LS means.</p>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="missing-cells-in-two-way-anova.html#cb419-1" aria-hidden="true" tabindex="-1"></a><span class="co"># contrast test for sun</span></span>
+<span id="cb419-2"><a href="missing-cells-in-two-way-anova.html#cb419-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(scoville<span class="sc">~</span>water.lvl<span class="sc">+</span>sun.lvl<span class="sc">+</span>water.lvl<span class="sc">*</span>sun.lvl, <span class="at">data =</span> my.data1, <span class="at">FUN=</span>mean)</span></code></pre></div>
+<pre><code>##   water.lvl sun.lvl scoville
+## 1         1       1 265.0000
+## 2         2       1 255.7500
+## 3         3       1 402.3333
+## 4         1       2 328.7500
+## 5         2       2 388.5000
+## 6         3       2 486.6667</code></pre>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="missing-cells-in-two-way-anova.html#cb421-1" aria-hidden="true" tabindex="-1"></a>MSE <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">lm</span>(scoville<span class="sc">~</span>water.lvl<span class="sc">+</span>sun.lvl<span class="sc">+</span>water.lvl<span class="sc">*</span>sun.lvl, <span class="at">data =</span> my.data1)<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="dv">18-6</span>)</span>
+<span id="cb421-2"><a href="missing-cells-in-two-way-anova.html#cb421-2" aria-hidden="true" tabindex="-1"></a>MSE</span></code></pre></div>
+<pre><code>## [1] 8317.611</code></pre>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="missing-cells-in-two-way-anova.html#cb423-1" aria-hidden="true" tabindex="-1"></a>(((<span class="dv">265</span><span class="fl">+255.75+402.333</span>)<span class="sc">/</span><span class="dv">3</span>)<span class="sc">-</span>((<span class="fl">328.75+388.5+486.667</span>)<span class="sc">/</span><span class="dv">3</span>))<span class="sc">/</span><span class="fu">sqrt</span>(MSE <span class="sc">*</span> <span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">9</span> <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)))</span></code></pre></div>
+<pre><code>## [1] -2.091965</code></pre>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="missing-cells-in-two-way-anova.html#cb425-1" aria-hidden="true" tabindex="-1"></a>F<span class="ot">&lt;-</span>((((<span class="dv">265</span><span class="fl">+255.75+402.333</span>)<span class="sc">/</span><span class="dv">3</span>)<span class="sc">-</span>((<span class="fl">328.75+388.5+486.667</span>)<span class="sc">/</span><span class="dv">3</span>))<span class="sc">/</span><span class="fu">sqrt</span>(MSE <span class="sc">*</span> <span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">9</span> <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)))</span>
+<span id="cb425-2"><a href="missing-cells-in-two-way-anova.html#cb425-2" aria-hidden="true" tabindex="-1"></a>)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb425-3"><a href="missing-cells-in-two-way-anova.html#cb425-3" aria-hidden="true" tabindex="-1"></a>F</span></code></pre></div>
+<pre><code>## [1] 4.376316</code></pre>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="missing-cells-in-two-way-anova.html#cb427-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pf</span>(F,<span class="dv">1</span>,<span class="dv">12</span>)</span></code></pre></div>
+<pre><code>## [1] 0.05837152</code></pre>
+<p>These tests for main effects should be constructed using the MSE from the full linear model fitted above rather than the partial tables. There is not much of a difference in the conclusion, but the partial table seems to underestimate the variance because it excludes sun level 3 which has larger responses.</p>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="missing-cells-in-two-way-anova.html#cb429-1" aria-hidden="true" tabindex="-1"></a><span class="co"># contrast test for sun</span></span>
+<span id="cb429-2"><a href="missing-cells-in-two-way-anova.html#cb429-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(scoville<span class="sc">~</span>water.lvl<span class="sc">+</span>sun.lvl<span class="sc">+</span>water.lvl<span class="sc">*</span>sun.lvl, <span class="at">data =</span> my.data1, <span class="at">FUN=</span>mean)</span></code></pre></div>
+<pre><code>##   water.lvl sun.lvl scoville
+## 1         1       1 265.0000
+## 2         2       1 255.7500
+## 3         3       1 402.3333
+## 4         1       2 328.7500
+## 5         2       2 388.5000
+## 6         3       2 486.6667</code></pre>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="missing-cells-in-two-way-anova.html#cb431-1" aria-hidden="true" tabindex="-1"></a>MSE <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">lm</span>(scoville<span class="sc">~</span>water.lvl<span class="sc">+</span>sun.lvl<span class="sc">+</span>water.lvl<span class="sc">*</span>sun.lvl, <span class="at">data =</span> my.data)<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="dv">24-8</span>)</span>
+<span id="cb431-2"><a href="missing-cells-in-two-way-anova.html#cb431-2" aria-hidden="true" tabindex="-1"></a>MSE</span></code></pre></div>
+<pre><code>## [1] 9429.167</code></pre>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="missing-cells-in-two-way-anova.html#cb433-1" aria-hidden="true" tabindex="-1"></a>(((<span class="dv">265</span><span class="fl">+255.75+402.333</span>)<span class="sc">/</span><span class="dv">3</span>)<span class="sc">-</span>((<span class="fl">328.75+388.5+486.667</span>)<span class="sc">/</span><span class="dv">3</span>))<span class="sc">/</span><span class="fu">sqrt</span>(MSE <span class="sc">*</span> <span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">9</span> <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)))</span></code></pre></div>
+<pre><code>## [1] -1.964794</code></pre>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="missing-cells-in-two-way-anova.html#cb435-1" aria-hidden="true" tabindex="-1"></a>F <span class="ot">&lt;-</span> ((((<span class="dv">265</span><span class="fl">+255.75+402.333</span>)<span class="sc">/</span><span class="dv">3</span>)<span class="sc">-</span>((<span class="fl">328.75+388.5+486.667</span>)<span class="sc">/</span><span class="dv">3</span>))<span class="sc">/</span><span class="fu">sqrt</span>(MSE <span class="sc">*</span> <span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">9</span> <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)))</span>
+<span id="cb435-2"><a href="missing-cells-in-two-way-anova.html#cb435-2" aria-hidden="true" tabindex="-1"></a>)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb435-3"><a href="missing-cells-in-two-way-anova.html#cb435-3" aria-hidden="true" tabindex="-1"></a>F</span></code></pre></div>
+<pre><code>## [1] 3.860415</code></pre>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="missing-cells-in-two-way-anova.html#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pf</span>(F,<span class="dv">1</span>,<span class="dv">16</span>)</span></code></pre></div>
+<pre><code>## [1] 0.06704815</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="unbalanced-data-in-two-way-anova.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="strategy-for-analysis-in-two-factor-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/10-MissingCellsInTwoWay.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

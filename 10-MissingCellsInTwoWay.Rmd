@@ -1,0 +1,199 @@
+# Missing Cells in Two-Way ANOVA
+
+In this section we consider how to analyze a two-factor experiment when one crossed treatment is unobserved.  If there is no interaction, then this is not problem.  But, when interaction is present the lack of observations in a crossed treatment group makes it challenging to assess those interactions.  There are, essentially, two ways to proceed: 1) use a one-way model, treating the observed crossed treatments as the levels; or, 2) do a partial two-way analysis.  <br><br>
+
+Below, we illustrate these two approaches in the context of a horticulture experiment about jalapenos.
+
+## ANOVA with missing "at random" cell
+
+Scoville (spiciness) measure of jalapeno peppers grown under 3 different watering regimens and 3 different levels of sun exposure.<br><br>
+
+Unbalanced treatment groups with a missing crossed treatment, sun level 3 with water level 3.
+
+```{r, echo = F, eval = T}
+options(contrasts = c('contr.sum', 'contr.sum'))
+set.seed(12345)
+water.lvl <- as.factor(1+c(0,0,1,1,1,1,2,2,2,0,0,0,0,1,1,2,2,2,0,0,0,1,1,1))
+sun.lvl <- as.factor(  1+c(0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2))
+scoville <- round(rnorm(24, 100*(as.numeric(water.lvl)+as.numeric(sun.lvl)),100),0)
+my.data <- data.frame(scoville, water.lvl, sun.lvl)
+```
+
+
+```{r, echo = F, eval = T, message = F}
+options(warn = -1) 
+library(tidyverse)
+library(knitr)
+```
+
+```{r, echo = T, eval = T}
+my.data
+kable(aggregate(scoville~water.lvl+sun.lvl+water.lvl*sun.lvl, data = my.data, FUN=mean))
+
+interaction.plot(water.lvl, sun.lvl,  scoville, data = my.data)
+
+boxplot(scoville~water.lvl+ sun.lvl, data = my.data)
+
+```
+
+
+## Do any of the treatments matter?
+
+Can test this two equivalent ways:<br>
+  1. fit a one way anova (ignoring that there are two treatment variables) and test if the treatments are different.<br>
+  2. fit a linear model and perform the model F test comparing the full model to the intercept only model.<br><br>
+
+The linear model method is slightly more challenging to implement because of the additional constraint imposed by the missing cell.  We have to modify the design matrix from the model.matrix function, or define it by hand.<br><br>
+
+
+One way anova below.  Notice it says the treatments are not all the same; their mean responses significantly differ for at least one treatment compared to the other 7.  One approach would be to follow this test up with tests of contrasts or pairwise comparisons, corrected using Scheff\'e or Tukey.  Since the data is unbalanced, we should do these by hand.  
+```{r, echo = F, eval = T}
+set.seed(12345)
+water.lvl <- as.factor(1+c(0,0,1,1,1,1,2,2,2,0,0,0,0,1,1,2,2,2,0,0,0,1,1,1))
+sun.lvl <- as.factor(  1+c(0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2))
+trt <- as.factor(c(1,1,2,2,2,2,3,3,3,4,4,4,4,5,5,6,6,6,7,7,7,8,8,8))
+scoville <- round(rnorm(24, 100*(as.numeric(water.lvl)+as.numeric(sun.lvl)),100),0)
+my.data.oneway <- data.frame(scoville, trt)
+
+boxplot(scoville~trt, data = my.data.oneway)
+```
+
+```{r, echo = T, eval = T, message=F}
+my.data.oneway
+library(car)
+Anova(lm(scoville~trt, data = my.data.oneway), type = 'III')
+```
+
+
+## Fit a linear model with additional constraints
+
+The other option for testing if any treatments matter is to fit a linear model. However, we cannot estimate all the parameters of the effects model due to missing the combination of sun level 3 and water level 3. We can only estimate 8 parameters: intercept, 2 for sun, 2 for water, and 3 (rather than 4) interactions. The way to deal with this is to find the full model matrix and then omit the last column corresponding to the interaction that is not estimable. IF we just use the lm() function, we'll get an error, but it will still give us some useful output.  Again, we end up having to do some things by hand.
+
+
+
+
+```{r, echo = T, eval = T}
+options(contrasts = c('contr.sum', 'contr.sum'))
+my.lm<-lm(scoville~water.lvl+sun.lvl+water.lvl*sun.lvl, data = my.data)
+summary(my.lm)
+my.lm$coefficients
+X <- model.matrix(scoville~water.lvl+sun.lvl+water.lvl*sun.lvl, data = my.data)
+X
+X <- X[,-9]
+beta.hat <- solve(t(X)%*%X)%*%t(X)%*%my.data$scoville
+beta.hat
+Y.pred <-X%*%beta.hat
+SSE <- sum((my.data$scoville-Y.pred)^2)
+MSE <- SSE / (24 - 8)
+MSE
+
+
+
+```
+
+
+
+## General Linear Test for interaction
+
+The linear model we just developed, with the additional constraint, allows us to perform more tests.  We can use this model to perform General linear F tests for interaction and main effects.
+<br><br>
+
+The first estimated interaction parameter
+\[1/3 * [\mu_{11} - \mu_{13} - (\mu_{31}-\mu_{32}) - (\mu_{22} - \mu_{23})]\]
+(265.0000 - 473.3333 - (402.3333 - 486.6667) - (388.5000 - 475.6667))/3
+ = -12.27778
+ 
+The test for interaction does not reject the null hypothesis of no interaction.
+<br><br>
+Note, we cannot feed the Anova function the fitted linear model; it will produce an error because of the inability to fit all 9 parameters.  So, we had to do this "by hand".
+
+```{r, echo = T, eval = T}
+options(contrasts = c('contr.sum', 'contr.sum'))
+aggregate(scoville~water.lvl+sun.lvl+water.lvl*sun.lvl, data = my.data, FUN=mean)
+X <- model.matrix(scoville~water.lvl+sun.lvl+water.lvl*sun.lvl, data = my.data)
+X.R <- X[,1:5]  # no interaction parameters
+beta.hat.R <- solve(t(X.R)%*%X.R)%*%t(X.R)%*%my.data$scoville
+beta.hat.R
+Y.pred.R <-X.R%*%beta.hat.R
+SSE.R <- sum((my.data$scoville-Y.pred.R)^2)
+F <- ((SSE.R - SSE)/(3)) / MSE
+1-pf(F,3,16)
+#library(car)
+#Anova(lm(scoville~water.lvl+sun.lvl+water.lvl*sun.lvl, data = my.data), type = 'III')
+```
+
+
+
+## Partial analysis for interaction
+
+An alternative approach is to break the ANOVA into "overlapping" pieces that have no missing cells.  
+<br><br>
+Break down the table into two overlapping pieces, one with no sun level 3 and one with no water level 3.  Let's work with the no sun level 3 table.  The idea is the same for the other table.  We can test for interaction and main effects within this table.  Now, there are 6 treatments, so we estimate an intercept, two water parameters, 1 sun parameter, and 2 interaction parameters.
+<br><br>
+The first interaction term (no sun level 3 table) is estimating
+\[\frac{1}{3}(\mu_{11} -\mu_{12}) -  \frac{1}{6}(\mu_{21}- \mu_{22}) - \frac{1}{6}(\mu_{31} - \mu_{32})\]
+\[265/3 - 255.7500/6 - 402.3333/6-328.7500/3+388.500/6+486.6667/6=14.93057\]
+<br><br>
+Compare this interaction term to the linear model with the additional constraint. I think it seems like a more interpretable interaction term, which I believe is why some people like the partial analysis.
+
+
+```{r, echo = T, eval = T}
+options(contrasts = c('contr.sum', 'contr.sum'))
+set.seed(12345)
+water.lvl <- as.factor(1+c(0,0,1,1,1,1,2,2,2,0,0,0,0,1,1,2,2,2))
+sun.lvl <- as.factor(  1+c(0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1))
+scoville <- round(rnorm(18, 100*(as.numeric(water.lvl)+as.numeric(sun.lvl)),100),0)
+my.data1 <- data.frame(scoville, water.lvl, sun.lvl)
+
+aggregate(scoville~water.lvl+sun.lvl+water.lvl*sun.lvl, data = my.data1, FUN=mean)
+
+library(car)
+Anova(lm(scoville~water.lvl+sun.lvl+water.lvl*sun.lvl, data = my.data1),type = 'III')
+summary(lm(scoville~water.lvl+sun.lvl+water.lvl*sun.lvl, data = my.data1))
+
+
+X <- model.matrix(scoville~water.lvl+sun.lvl+water.lvl*sun.lvl, data = my.data1)
+X
+solve(t(X)%*%X)%*%t(X)%*%my.data1$scoville
+
+```
+
+
+## Tests for main effects in the partial table
+(no sun level 3)
+<br><br>
+We can match the main effects tests in the ANOVA (type 3) table by comparing LS means.
+
+
+```{r, echo = T, eval = T}
+# contrast test for sun
+aggregate(scoville~water.lvl+sun.lvl+water.lvl*sun.lvl, data = my.data1, FUN=mean)
+MSE <- sum(lm(scoville~water.lvl+sun.lvl+water.lvl*sun.lvl, data = my.data1)$residuals^2)/(18-6)
+MSE
+
+(((265+255.75+402.333)/3)-((328.75+388.5+486.667)/3))/sqrt(MSE * 2*(1/9 * (1/2+1/4+1/3)))
+
+F<-((((265+255.75+402.333)/3)-((328.75+388.5+486.667)/3))/sqrt(MSE * 2*(1/9 * (1/2+1/4+1/3)))
+)^2
+F
+1-pf(F,1,12)
+```
+
+These tests for main effects should be constructed using the MSE from the full linear model fitted above rather than the partial tables. There is not much of a difference in the conclusion, but the partial table seems to underestimate the variance because it excludes sun level 3 which has larger responses.   
+
+```{r, echo = T, eval = T}
+# contrast test for sun
+aggregate(scoville~water.lvl+sun.lvl+water.lvl*sun.lvl, data = my.data1, FUN=mean)
+MSE <- sum(lm(scoville~water.lvl+sun.lvl+water.lvl*sun.lvl, data = my.data)$residuals^2)/(24-8)
+MSE
+
+(((265+255.75+402.333)/3)-((328.75+388.5+486.667)/3))/sqrt(MSE * 2*(1/9 * (1/2+1/4+1/3)))
+
+F <- ((((265+255.75+402.333)/3)-((328.75+388.5+486.667)/3))/sqrt(MSE * 2*(1/9 * (1/2+1/4+1/3)))
+)^2
+F
+
+1-pf(F,1,16)
+
+```
+

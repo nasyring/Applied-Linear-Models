@@ -1,0 +1,159 @@
+# $2^k$ Factorial Experiments
+
+We will wrap up our discussion of ANOVA-type models with $2^k$ factorial experiments.  A study of $k$ binary factors and their effects on a response is a $2^k$ factorial experiment.  The two distinguishing features of these experiments is the fact all factors have only two levels, and the large number of crossed treatments.  These result in some unique challenges, but also some simplifications.  
+
+
+## The Model
+
+The ANOVa-type notation becomes cumbersome for  $2^k$ factorial experiments, so we favor the regression-type notation.  For example, suppose $k=3$ so that there are 8 crossed factors.  We have main effects, and interactions involving 2, 3, or all 4 factors.  To denote the corresponding parameters we use $\beta_j$ for $j=1, \ldots, 4$ for main effects, $\beta_{jk}$ for two-way interactions, and $\beta_{jk\ell}$ for three-way interactions.  Then, using the subscript $i$ for the observation $\i = 1, \ldots, n$, the model can be written
+\[Y_i = \beta_0 + \beta_1X_{1i}+\beta_2X_{2i}+\beta_3 X_{3i} + \beta_{12}X_{12i} + \beta_{13}X_{13i}+\beta_{23}X_{23i} + \beta_{123}X_{123i}+\epsilon_i.  \]
+Note we have 8 regression coefficients corresponding to the 8 crossed treatment means.<br><br>
+
+For balanced experiments some interesting simplifications emerge.  The design matrix may be easily coded using a sum-to-zero format as follows. Let response $i$ in main effects column $j$ be -1 if it has the first level of the factor and +1 if it has the second level.  Note that interaction columns of the design are determined by multiplication of the main effects columns.  Suppose for $k=3$ we have 16 responses (2 replicates for each combination of factor levels).  The first column of $X$ is all 1's.  The second, third, and fourth columns are for main effects, adn the last four are for interactions.  The design matrix is as follows:
+
+\[\begin{matrix}
+ 1 & -1 & -1 & -1 &  1& 1& 1& -1 \\
+ 1 & -1 & -1 & -1 &  1& 1& 1& -1 \\
+ 1 & 1 & -1 & -1 &  -1& -1& 1& -1 \\
+ 1 & 1 & -1 & -1 &  -1& -1& 1& -1 \\
+ 1 & 1 & 1 & -1 &  1& -1& -1& -1 \\
+ 1 & 1 & 1 & -1 &  1& -1& -1& -1 \\
+ 1 & 1 & 1 & 1 &  1& 1& 1& 1 \\
+ 1 & 1 & 1 & 1 &  1& 1& 1& 1 \\
+ 1 & -1 & 1 & -1 &  -1& 1& -1& 1 \\
+ 1 & -1 & 1 & -1 &  -1& 1& -1& 1 \\
+ 1 & -1 & -1 & 1 &  1& -1& -1& 1 \\
+ 1 & -1 & -1 & 1 &  1& -1& -1& 1 \\
+ 1 & -1 & 1 & 1 &  -1& -1& 1& -1 \\
+ 1 & -1 & 1 & 1 &  -1& -1& 1& -1 \\
+ 1 & 1 & -1 & 1 &  -1& 1& -1& 1 \\
+ 1 & 1 & -1 & 1 &  -1& 1& -1& 1 \\
+ \end{matrix}
+\]
+
+The design matrix $X$ has the interesting property that any two columns are orthogonal, i.e., their inner (dot) product is zero.  Therefore, $X^\top X = 16 I_{16}$ and $(X^\top X)^{-1} = \frac{1}{16}I_{16}$.  And, $\hat\beta = \frac{1}{16}X^\top Y$, making computation of the estimated regression coefficients very easy.  It also means that the estimated regression coefficients are uncorrelated (because $(X^\top X)^{-1}$ has all zeroes on the off-diagonals) with equal variance $\sigma^2 / 16$ (because the diagonal entries are equal).  
+
+### Example: Stress Test Study
+
+The following data records the results of a stress test measuring exercise tolerance on male and female adults who smoke (light or heavy) and who have high or low body fat:
+
+```{r}
+stress <- c(24.1,29.2,24.6,20.0,21.9,17.6,14.6,15.3,12.3,16.1,9.3,10.8,17.6,18.8,23.2,14.8,10.3,11.3,14.9,20.4,12.8,10.1,14.4,6.1)
+smoking <-c(rep(-1,12), rep(1,12))
+fat <- c(rep(-1,6), rep(1,6),rep(-1,6), rep(1,6))
+sex <- c(-1,-1,-1,1,1,1,-1,-1,-1,1,1,1,-1,-1,-1,1,1,1,-1,-1,-1,1,1,1)
+data.df <- data.frame(stress = stress, smoking = as.factor(smoking), fat=as.factor(fat), sex=as.factor(sex))
+
+X <- model.matrix(stress~smoking*fat*sex, data = data.df)
+
+t(X)%*%X
+
+solve(t(X)%*%X)%*%t(X)%*%matrix(stress,24,1)
+
+lm(stress~smoking*fat*sex, data = data.df)
+
+summary(lm(stress~smoking*fat*sex, data = data.df))
+```
+
+## Unreplicated Factorial Experiments
+
+Often, in practice, $k$ is very large, so that not enough sample size is available to run a replicated experiment.  When only 1 response is available for each crossed treatment (i.e. $n = 2^k$), the $2^k$ factorial experiment is called "unreplicated", and no degrees of freedom are available to estimate the variance $\sigma^2$.  <br><br>
+
+In unreplicated experiments, there are a few strategies available for recovering an estimate of $\sigma^2$.  <br>
+1. We can simply assume some interactions (usually higher-order first) are zero, and then the degrees of freedom associated with these may be put towards estimating $\sigma^2$.<br>
+2. Graphical methods (Pareto plots).<br>
+3. Center-point replication.<br><br>
+
+The Pareto plot is a graphical display showing the ratio of effect sum of squares to total sum of squares where effect sum of squares is $n\hat\beta_j^2$ for each of the $2^k$ coefficients.  A common technique is to use the effects with smallest sums of squares to pool to obtain a variance estimate.  The resulting variance estimate is likely to be an underestimate. <br><br>
+
+Center-point replication is sometimes implementable for factors based on underlying continuous variables.  For example, suppose a factor is "level of watering" of a plant with levels low and high corresponding to amount of 0.5 and 1 liters.  The center-point treatment is 0.75 liters.  For estimation of the variance, we have to include replicates with center-point factor levels.  The "pure-error" estimate $\hat\sigma^2$ is given by the sample variance of the responses at center-point treatment levels.  
+
+### Example: Granola bar experiment
+
+The following data is from Pecos Foods Company in a $2^4$ unreplicated factorial experiment to assess the effects of processing temperature, preservative, moisture, and acidity on microbial growth in granola bars they produce for human consumption.
+
+```{r}
+options(contrasts = c('contr.sum', 'contr.sum'))
+response <- c(5.55,4.47,5.19,4.32,10.54,11.56,5.08,5.45,5.12,5.63,6.18,5.24,10.73,10.33,6.53,4.93)
+temp <- c(1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1)
+preservative <- c(1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1,-1)
+moisture <- c(1,1,1,1,-1,-1,-1,-1,1,1,1,1,-1,-1,-1,-1)
+acidity <- c(1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1)
+granola <- data.frame(response=response, temp=as.factor(temp), preservative = as.factor(preservative), moisture = as.factor(moisture), acidity = as.factor(acidity))
+my.lm <- lm(response~preservative*moisture*acidity*temp, data = granola)
+summary(my.lm)
+
+```
+
+
+One way to estimate the variance is to assume higher-order interactions are zero.  Let's assume the three-way and four-way interactions are zero.  That gives us 5 df with which to estimate the variance.
+
+
+```{r}
+options(contrasts = c('contr.sum', 'contr.sum'))
+my.lm <- lm(response~preservative*moisture + preservative*acidity + preservative*temp + moisture * acidity + moisture * temp + acidity*temp, data = granola)
+summary(my.lm)
+
+```
+
+
+
+Let's construct a Pareto chart.  Based on the chart, we might only include preservative, preservative:moisture, and the intercept in the model, and use the remaining 13 df to estimate the variance.  But, be careful as this is a data-dependent decision.
+
+```{r}
+options(contrasts = c('contr.sum', 'contr.sum'))
+my.lm <- lm(response~preservative*moisture*acidity*temp, data = granola)
+SST <- sum((response - mean(response))^2)
+beta.ss.ratio <-(16*(my.lm$coefficients)^2)/SST
+terms <- c('intercept', attributes(my.lm$terms)$term.labels)
+results <- cbind(terms, as.numeric(beta.ss.ratio))
+results <- results[order(results[,2], decreasing = TRUE),]
+csum <- cumsum(results[,2])
+plot(1:16, csum/csum[16], type = 'o', xlab = 'Coefficients', ylab = 'ratio of SST', xaxt = 'n', ylim = c(0,1))
+axis(1, at = 1:16)
+results[,1]
+n <- length(granola$response)
+
+X <- model.matrix(response~moisture+preservative + preservative*moisture, data = granola)
+X.r <- X[,-2]
+hat.beta <- solve(t(X.r)%*%X.r)%*%t(X.r)%*%matrix(granola$response,n,1)
+
+hat.sigma2 <- sum((granola$response - X.r %*%hat.beta)^2)/(n-ncol(X.r))
+hat.sigma2
+
+```
+
+
+Suppose four center-point replicates are 7.23, 7.89, 7.801, 7.39.  Then, the variance estimate is the sample variance of these responses, or, $\hat\sigma^2 = 0.101$.  We may use $\hat\sigma^2$ in t-tests of significance of the fitted regression coefficients.
+
+
+
+
+
+
+
+```{r}
+options(contrasts = c('contr.sum', 'contr.sum'))
+response <- c(5.55,4.47,5.19,4.32,10.54,11.56,5.08,5.45,5.12,5.63,6.18,5.24,10.73,10.33,6.53,4.93)
+temp <- c(1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1)
+preservative <- c(1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1,-1)
+moisture <- c(1,1,1,1,-1,-1,-1,-1,1,1,1,1,-1,-1,-1,-1)
+acidity <- c(1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1)
+granola <- data.frame(response=response, temp=as.factor(temp), preservative = as.factor(preservative), moisture = as.factor(moisture), acidity = as.factor(acidity))
+my.lm <- lm(response~preservative*moisture*acidity*temp, data = granola)
+
+round(2*(1-pt(abs(my.lm$coefficients)/sqrt(0.101),3)),4)
+
+
+
+```
+
+
+
+
+
+
+
+
+
+

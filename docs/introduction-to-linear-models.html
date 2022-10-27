@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Introduction to Linear Models | Applied Linear Models</title>
+  <meta name="description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Introduction to Linear Models | Applied Linear Models" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Introduction to Linear Models | Applied Linear Models" />
+  
+  <meta name="twitter:description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  
+
+<meta name="author" content="Nick Syring" />
+
+
+<meta name="date" content="2022-10-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data-analysis-and-statistical-inference.html"/>
+<link rel="next" href="randomization-and-permutation-testing.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied Linear Models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html"><i class="fa fa-check"></i><b>2</b> Data Analysis and Statistical Inference</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#data-experiments-and-studies"><i class="fa fa-check"></i><b>2.1</b> Data, Experiments, and Studies</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#james-linds-scurvy-trial"><i class="fa fa-check"></i><b>2.1.1</b> James Lind’s Scurvy Trial</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#framingham-heart-study"><i class="fa fa-check"></i><b>2.1.2</b> Framingham Heart Study</a></li>
+<li class="chapter" data-level="2.1.3" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#harris-bank-sex-pay-study"><i class="fa fa-check"></i><b>2.1.3</b> Harris Bank Sex Pay Study</a></li>
+<li class="chapter" data-level="2.1.4" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#large-aggregated-data-sets"><i class="fa fa-check"></i><b>2.1.4</b> Large, Aggregated Data Sets</a></li>
+<li class="chapter" data-level="2.1.5" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#study-concepts"><i class="fa fa-check"></i><b>2.1.5</b> Study Concepts</a></li>
+<li class="chapter" data-level="2.1.6" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#randomization-control-and-causation"><i class="fa fa-check"></i><b>2.1.6</b> Randomization, control, and causation</a></li>
+<li class="chapter" data-level="2.1.7" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#populations-and-scope-of-inference"><i class="fa fa-check"></i><b>2.1.7</b> Populations and scope of inference</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#data-summaries"><i class="fa fa-check"></i><b>2.2</b> Data Summaries</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#numerical-summaries"><i class="fa fa-check"></i><b>2.2.1</b> Numerical Summaries</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#visual-summaries"><i class="fa fa-check"></i><b>2.2.2</b> Visual Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#statistical-inference"><i class="fa fa-check"></i><b>2.3</b> Statistical Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html"><i class="fa fa-check"></i><b>3</b> Introduction to Linear Models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#defining-the-linear-model"><i class="fa fa-check"></i><b>3.1</b> Defining the linear model</a></li>
+<li class="chapter" data-level="3.2" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#gauss-markov-model-for-one-sample"><i class="fa fa-check"></i><b>3.2</b> Gauss-Markov model for one sample</a></li>
+<li class="chapter" data-level="3.3" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#gauss-markov-model-for-comparing-two-samples"><i class="fa fa-check"></i><b>3.3</b> Gauss-Markov model for comparing two samples</a></li>
+<li class="chapter" data-level="3.4" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#pairwise-testing-and-bonferroni-correction"><i class="fa fa-check"></i><b>3.4</b> Pairwise testing and Bonferroni correction</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#example-co2-uptake-in-echinochloa-crus-galli"><i class="fa fa-check"></i><b>3.4.1</b> Example: Co2 uptake in Echinochloa crus-galli</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#linear-models-for-more-than-two-treatments-populations"><i class="fa fa-check"></i><b>3.5</b> Linear Models for more than two treatments (populations)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html"><i class="fa fa-check"></i><b>4</b> Randomization and Permutation Testing</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#setup"><i class="fa fa-check"></i><b>4.1</b> Setup</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#example-1-the-harris-bank-sex-pay-study"><i class="fa fa-check"></i><b>4.1.1</b> Example 1: The Harris Bank Sex Pay Study</a></li>
+<li class="chapter" data-level="4.1.2" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#difference-in-mean-salaries-between-genders"><i class="fa fa-check"></i><b>4.1.2</b> Difference in mean salaries between genders</a></li>
+<li class="chapter" data-level="4.1.3" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#randomization-test-for-treatment-significance"><i class="fa fa-check"></i><b>4.1.3</b> Randomization test for treatment significance</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html"><i class="fa fa-check"></i><b>5</b> Alternatives for Non-Normal Responses</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#transformations"><i class="fa fa-check"></i><b>5.1</b> Transformations</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#example-cloud-seeding-for-rainfall"><i class="fa fa-check"></i><b>5.1.1</b> Example: Cloud Seeding for Rainfall</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#rank-sum-test"><i class="fa fa-check"></i><b>5.2</b> Rank-Sum Test</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#example-ratio-measurements"><i class="fa fa-check"></i><b>5.2.1</b> Example: ratio measurements</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#signed-rank-test"><i class="fa fa-check"></i><b>5.3</b> Signed-rank test</a></li>
+<li class="chapter" data-level="5.4" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrap"><i class="fa fa-check"></i><b>5.4</b> Bootstrap</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#intro-to-the-bootstrap"><i class="fa fa-check"></i><b>5.4.1</b> Intro to the bootstrap</a></li>
+<li class="chapter" data-level="5.4.2" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>5.4.2</b> Bootstrap Confidence Intervals</a></li>
+<li class="chapter" data-level="5.4.3" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrapping-linear-models"><i class="fa fa-check"></i><b>5.4.3</b> Bootstrapping linear models</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="one-way-anova.html"><a href="one-way-anova.html"><i class="fa fa-check"></i><b>6</b> One Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="one-way-anova.html"><a href="one-way-anova.html#the-gauss-markov-model-for-comparing-i-populations"><i class="fa fa-check"></i><b>6.1</b> The Gauss-Markov Model for comparing I populations</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="one-way-anova.html"><a href="one-way-anova.html#example-donuts-effects-model"><i class="fa fa-check"></i><b>6.1.1</b> Example: Donuts effects model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="one-way-anova.html"><a href="one-way-anova.html#testing-equality-of-means"><i class="fa fa-check"></i><b>6.2</b> Testing equality of means</a></li>
+<li class="chapter" data-level="6.3" data-path="one-way-anova.html"><a href="one-way-anova.html#follow-up-testing"><i class="fa fa-check"></i><b>6.3</b> Follow-up testing</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="one-way-anova.html"><a href="one-way-anova.html#donuts-example"><i class="fa fa-check"></i><b>6.3.1</b> Donuts example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="one-way-anova.html"><a href="one-way-anova.html#inference-for-particular-contrasts"><i class="fa fa-check"></i><b>6.4</b> Inference for particular contrasts</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="one-way-anova.html"><a href="one-way-anova.html#donuts-example-1"><i class="fa fa-check"></i><b>6.4.1</b> Donuts Example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="one-way-anova.html"><a href="one-way-anova.html#checking-assumptions-in-one-way-anova"><i class="fa fa-check"></i><b>6.5</b> Checking Assumptions in one-way ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="one-way-anova.html"><a href="one-way-anova.html#example-cehcking-assumptions-for-donuts-experiment"><i class="fa fa-check"></i><b>6.5.1</b> Example: Cehcking assumptions for donuts experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html"><i class="fa fa-check"></i><b>7</b> Randomized Complete Block Design</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#paired-experiments-as-blocking"><i class="fa fa-check"></i><b>7.1</b> Paired experiments as blocking</a></li>
+<li class="chapter" data-level="7.2" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#randomized-complete-block-designs"><i class="fa fa-check"></i><b>7.2</b> Randomized Complete Block Designs</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#notation"><i class="fa fa-check"></i><b>7.2.1</b> Notation</a></li>
+<li class="chapter" data-level="7.2.2" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-penicillin-manufacturing"><i class="fa fa-check"></i><b>7.2.2</b> Example: Penicillin Manufacturing</a></li>
+<li class="chapter" data-level="7.2.3" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#sums-of-squares-and-f-tests-in-rcbd"><i class="fa fa-check"></i><b>7.2.3</b> Sums of squares and F tests in RCBD</a></li>
+<li class="chapter" data-level="7.2.4" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-significance-of-process-in-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.4</b> Example: Significance of Process in Penicillin experiment</a></li>
+<li class="chapter" data-level="7.2.5" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#follow-up-comparisons-and-contrasts"><i class="fa fa-check"></i><b>7.2.5</b> Follow-up comparisons and contrasts</a></li>
+<li class="chapter" data-level="7.2.6" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-tukey-contrasts-and-scheffe-for-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.6</b> Example: Tukey, contrasts, and Scheffe for penicillin experiment</a></li>
+<li class="chapter" data-level="7.2.7" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#relative-efficiency-of-blocking-vs.-crd"><i class="fa fa-check"></i><b>7.2.7</b> Relative efficiency of Blocking (vs. CRD)</a></li>
+<li class="chapter" data-level="7.2.8" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-re-of-blocking-in-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.8</b> Example: RE of blocking in penicillin experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html"><i class="fa fa-check"></i><b>8</b> Latin Squares for two blocking variables</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#designs-for-multiple-blocks"><i class="fa fa-check"></i><b>8.1</b> Designs for multiple blocks</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-mpg-experiment"><i class="fa fa-check"></i><b>8.1.1</b> Example: MPG experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#model-notation"><i class="fa fa-check"></i><b>8.2</b> Model notation</a></li>
+<li class="chapter" data-level="8.3" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#sums-of-squares-and-test-for-treatment-effects"><i class="fa fa-check"></i><b>8.3</b> Sums of squares and test for treatment effects</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-mpg-experiment-1"><i class="fa fa-check"></i><b>8.3.1</b> Example: MPG experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#relative-efficiency-of-blocking"><i class="fa fa-check"></i><b>8.4</b> Relative efficiency of blocking</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-re-ignoring-driver-blocks"><i class="fa fa-check"></i><b>8.4.1</b> Example: RE ignoring driver blocks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="two-way-anova.html"><a href="two-way-anova.html"><i class="fa fa-check"></i><b>9</b> Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="two-way-anova.html"><a href="two-way-anova.html#the-model"><i class="fa fa-check"></i><b>9.1</b> The Model</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="two-way-anova.html"><a href="two-way-anova.html#example-protein-chemistry"><i class="fa fa-check"></i><b>9.1.1</b> Example: protein chemistry</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="two-way-anova.html"><a href="two-way-anova.html#tests-for-interaction-and-main-effects"><i class="fa fa-check"></i><b>9.2</b> Tests for interaction and main effects</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="two-way-anova.html"><a href="two-way-anova.html#example-protein-and-dietary-metals"><i class="fa fa-check"></i><b>9.2.1</b> Example: Protein and dietary metals</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html"><i class="fa fa-check"></i><b>10</b> Unbalanced data in Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#raw-and-least-squares-means"><i class="fa fa-check"></i><b>10.1</b> Raw and Least-Squares Means</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data"><i class="fa fa-check"></i><b>10.1.1</b> Example: Turbine data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#partial-f-tests-and-type-iii-ss"><i class="fa fa-check"></i><b>10.2</b> Partial F tests and Type III SS</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data-tests"><i class="fa fa-check"></i><b>10.2.1</b> Example: Turbine Data tests</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#follow-up-tests"><i class="fa fa-check"></i><b>10.3</b> Follow-up tests</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data-tukey-corrected-pairwise-comparisons"><i class="fa fa-check"></i><b>10.3.1</b> Example: Turbine data Tukey-corrected pairwise comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#unbalanced-data-and-simpsons-paradox"><i class="fa fa-check"></i><b>10.4</b> Unbalanced data and Simpson’s Paradox</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html"><i class="fa fa-check"></i><b>11</b> Missing Cells in Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#anova-with-missing-at-random-cell"><i class="fa fa-check"></i><b>11.1</b> ANOVA with missing “at random” cell</a></li>
+<li class="chapter" data-level="11.2" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#do-any-of-the-treatments-matter"><i class="fa fa-check"></i><b>11.2</b> Do any of the treatments matter?</a></li>
+<li class="chapter" data-level="11.3" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#fit-a-linear-model-with-additional-constraints"><i class="fa fa-check"></i><b>11.3</b> Fit a linear model with additional constraints</a></li>
+<li class="chapter" data-level="11.4" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#general-linear-test-for-interaction"><i class="fa fa-check"></i><b>11.4</b> General Linear Test for interaction</a></li>
+<li class="chapter" data-level="11.5" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#partial-analysis-for-interaction"><i class="fa fa-check"></i><b>11.5</b> Partial analysis for interaction</a></li>
+<li class="chapter" data-level="11.6" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#tests-for-main-effects-in-the-partial-table"><i class="fa fa-check"></i><b>11.6</b> Tests for main effects in the partial table</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html"><i class="fa fa-check"></i><b>12</b> Strategy for Analysis in Two-Factor models</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#unbalanced-two-factor-experiment-chick-weight"><i class="fa fa-check"></i><b>12.1</b> Unbalanced Two-Factor Experiment: Chick Weight</a></li>
+<li class="chapter" data-level="12.2" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#example-observational-study-on-growth-hormone-deficient-children-with-empty-cell"><i class="fa fa-check"></i><b>12.2</b> Example: observational study on growth-hormone deficient children with empty cell</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#linear-model-analysis-with-extra-constraint"><i class="fa fa-check"></i><b>12.2.1</b> Linear Model analysis with extra constraint</a></li>
+<li class="chapter" data-level="12.2.2" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#partial-table-analysis"><i class="fa fa-check"></i><b>12.2.2</b> Partial Table analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html"><i class="fa fa-check"></i><b>13</b> <span class="math inline">\(2^k\)</span> Factorial Experiments</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#the-model-1"><i class="fa fa-check"></i><b>13.1</b> The Model</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#example-stress-test-study"><i class="fa fa-check"></i><b>13.1.1</b> Example: Stress Test Study</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#unreplicated-factorial-experiments"><i class="fa fa-check"></i><b>13.2</b> Unreplicated Factorial Experiments</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#example-granola-bar-experiment"><i class="fa fa-check"></i><b>13.2.1</b> Example: Granola bar experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Linear Models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction-to-linear-models" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Introduction to Linear Models<a href="introduction-to-linear-models.html#introduction-to-linear-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this section we define linear models, provide simple examples, and analyze linear models for one- and two-sample problems.</p>
+<div id="defining-the-linear-model" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Defining the linear model<a href="introduction-to-linear-models.html#defining-the-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Every linear model defines a linear relationship between an independent variable <span class="math inline">\(Y\)</span> and a dependent variable <span class="math inline">\(X\)</span>, including a random term <span class="math inline">\(\epsilon\)</span>:
+<span class="math display" id="eq:linmod">\[\begin{equation}
+Y = X\beta + \epsilon
+  \tag{3.1}
+\end{equation}\]</span>
+Usually, <span class="math inline">\(X\)</span> is a fixed or non-random variable, while <span class="math inline">\(\epsilon\)</span> is a random variable representing variation due to a random sampling mechanism, so that <span class="math inline">\(Y\)</span> is a random outcome. Further, in <a href="introduction-to-linear-models.html#eq:linmod">(3.1)</a> <span class="math inline">\(Y = (Y_1, \ldots, Y_n)^\top\)</span> is an <span class="math inline">\(n\times 1\)</span> vector of outcomes/responses, <span class="math inline">\(X\)</span> is an <span class="math inline">\(n\times p\)</span> matrix of fixed variables/covariates (<span class="math inline">\(p&lt;n\)</span>), <span class="math inline">\(\epsilon = (\epsilon_1, \ldots, \epsilon_n)^\top\)</span> is an <span class="math inline">\(n\times 1\)</span> vector of random variables, and <span class="math inline">\(\beta = (\beta_1, \ldots, \beta_p)^{\top}\)</span> is a <span class="math inline">\(p\times 1\)</span> coefficient vector of unknown parameters.</p>
+<p>The <em>least-squares model</em> or just called the <em>linear model</em> is the above model with few or no additional assumptions although, to estimate the unknown parameter <span class="math inline">\(\beta\)</span>, which characterizes the relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, assuming <span class="math inline">\(E(\epsilon_i) = 0\)</span> is very helpful and usually reasonable.</p>
+<p>The <em>Gauss-Markov model</em>—which we will tacitly use throughout the course and examine in detail at the end of the semester—makes the assumptions <span class="math inline">\(E(\epsilon_i) = 0\)</span>, <span class="math inline">\(E(\epsilon_i^2) = \sigma^2\)</span>, which means the ``error” term <span class="math inline">\(\epsilon\)</span> has the same variance for each random sample (homogeneous or constant variance), and <span class="math inline">\(E(\epsilon_i\epsilon_j)=0\)</span>. Or, in other words, the last two assumptions may be written <span class="math inline">\(Cov(\epsilon) = \sigma^2 I_{n}\)</span> where <span class="math inline">\(I_n\)</span> is the <span class="math inline">\(n\times n\)</span> identity matrix.</p>
+</div>
+<div id="gauss-markov-model-for-one-sample" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Gauss-Markov model for one sample<a href="introduction-to-linear-models.html#gauss-markov-model-for-one-sample" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let <span class="math inline">\(P\)</span> be a normal population with mean <span class="math inline">\(\beta\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. Let <span class="math inline">\(Y_i\stackrel{iid}{\sim}P\)</span>. Then, we may write
+<span class="math display">\[\begin{equation}
+\begin{aligned}
+Y_i &amp;= \beta x_i + \epsilon_i, \quad i = 1,\ldots, n, \,\,\text{or}\\
+Y &amp;= X\beta + \epsilon
+\end{aligned}
+\end{equation}\]</span>
+where <span class="math inline">\(x_i = 1\)</span>, so that <span class="math inline">\(X = (1, 1, ..., 1)^{\top}\)</span> is an <span class="math inline">\(n\times 1\)</span> vector of ones, and where <span class="math inline">\(\epsilon_i\stackrel{iid}{\sim}N(0,\sigma^2)\)</span>. This shows the Gauss-Markov model contains the one-sample normal population inference problem.</p>
+<p>For inference on the population mean <span class="math inline">\(\beta\)</span> we typically consider the point estimator <span class="math inline">\(\hat\beta = \overline Y\)</span>, the sample mean. And, we evaluate the usual one-sample Student’s <span class="math inline">\(t\)</span> test of <span class="math inline">\(H_0:\beta = \beta_0\)</span> vs. <span class="math inline">\(H_a:\beta\ne\beta_0\)</span> by comparing the test statistic
+<span class="math display">\[T = \frac{\overline Y - \beta_0}{\sqrt{S^2/n}}\]</span>
+to quantiles of a Student’s <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n-1\)</span> df, where <span class="math inline">\(S^2 = (n-1)^{-1}\sum_{i=1}^n(Y_i - \overline Y)^2\)</span>.</p>
+<p>A common theme in the study and use of linear models is ``model-checking”. The idea is to us the data to interrogate the Gauss-Markov assumptions: linearity, normality, and constant variance (and sometimes independence). In the one-sample problem linearity is of no concern because <span class="math inline">\(x\)</span> is constant, so there’s no relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> to check for linearity. Normality may be checked by constructing a qq-plot of the residuals <span class="math inline">\(\hat\epsilon_i = Y_i - \hat Y_i\)</span> where <span class="math inline">\(\hat Y_i = \hat\beta x_i\)</span>; in this case, <span class="math inline">\(\hat\epsilon_i = Y_i - \overline Y\)</span>. Often times data exhibit non-homogeneous variance in the sense that the variance increases or decreases in <span class="math inline">\(X\)</span>. Again, this kind of non-homogeneity is not relevant in the one-sample problem. Finally, in data sets with time or space variation (like gasoline prices in Ames from 2021-2022), we may suspect non-independence of <span class="math inline">\(\epsilon_i\)</span>’s. This kind of time-series dependence may be checked using a serial correlation plot; see below.</p>
+<p>Example: A horticulturist plants 500 seeds of <em>centaurea cyanus</em> in a 10 foot by 1 foot plot of clay-type soil in 1 foot by one foot squares. After 6 weeks she records the number of sprouted plants in each square, finding
+<span class="math display">\[37\,\,\, 24\,\,\, 31\,\,\, 21\,\,\,  9\,\,\, 21\,\,\, 15\,\,\, 37\,\,\, 31\,\,\, 26.\]</span>
+Assuming a normal population, she wants to infer the true average number of sprouted (germinated) seeds per one-foot by one-foot plot of fifty in clay-type soil.</p>
+<p>In particular, she’d like to know if the true mean is at least 25. She will not make a wholesale purchase of this particular seed unless she is convinced the true mean is at least 25.</p>
+<p>The horticulturist’s Gauss-Markov model has <span class="math inline">\(Y_i\)</span> equal to the recorded number of sprouts for sub-plots <span class="math inline">\(i=1, \ldots, 10\)</span>, and where <span class="math inline">\(x_i = 1\)</span> for each. The following t-test concludes (at level 0.05) that the true mean is quite plausibly less than 25.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="introduction-to-linear-models.html#cb2-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">37</span>, <span class="dv">24</span>, <span class="dv">31</span>, <span class="dv">21</span>,  <span class="dv">9</span>, <span class="dv">21</span>, <span class="dv">15</span>, <span class="dv">37</span>, <span class="dv">31</span>, <span class="dv">26</span>)</span>
+<span id="cb2-2"><a href="introduction-to-linear-models.html#cb2-2" aria-hidden="true" tabindex="-1"></a>ybar <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
+<span id="cb2-3"><a href="introduction-to-linear-models.html#cb2-3" aria-hidden="true" tabindex="-1"></a>ybar</span></code></pre></div>
+<pre><code>## [1] 25.2</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="introduction-to-linear-models.html#cb4-1" aria-hidden="true" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> <span class="fu">var</span>(y)</span>
+<span id="cb4-2"><a href="introduction-to-linear-models.html#cb4-2" aria-hidden="true" tabindex="-1"></a>s2</span></code></pre></div>
+<pre><code>## [1] 83.28889</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="introduction-to-linear-models.html#cb6-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(y)</span>
+<span id="cb6-2"><a href="introduction-to-linear-models.html#cb6-2" aria-hidden="true" tabindex="-1"></a>T <span class="ot">&lt;-</span> (ybar <span class="sc">-</span> <span class="dv">25</span>)<span class="sc">/</span><span class="fu">sqrt</span>(s2<span class="sc">/</span>n)</span>
+<span id="cb6-3"><a href="introduction-to-linear-models.html#cb6-3" aria-hidden="true" tabindex="-1"></a>T</span></code></pre></div>
+<pre><code>## [1] 0.06930051</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="introduction-to-linear-models.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.95</span>,n<span class="dv">-1</span>)</span></code></pre></div>
+<pre><code>## [1] 1.833113</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="introduction-to-linear-models.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pt</span>(T,n<span class="dv">-1</span>)</span></code></pre></div>
+<pre><code>## [1] 0.4731329</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="introduction-to-linear-models.html#cb12-1" aria-hidden="true" tabindex="-1"></a>ybar<span class="sc">+</span><span class="fu">qt</span>(<span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>),n<span class="dv">-1</span>)<span class="sc">*</span><span class="fu">sqrt</span>(s2<span class="sc">/</span>n)</span></code></pre></div>
+<pre><code>## [1] 18.67146 31.72854</code></pre>
+<p>Further, we can interrogate the normality (Gaussianity) assumption using a qq-plot. The plot reveals no concerns about the normality assumption.</p>
+<p><img src="02-Intro-to-Linear-Models_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>In this particular example, we may be concerned that sub-plots next to each other may have (spatially) correlated responses. One way to evaluate this is to compute the correlation between adjacent pairs. The observed (sample) correlation is only about <span class="math inline">\(12\%\)</span>, not high enough to suspect spatial non-independence.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="introduction-to-linear-models.html#cb14-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">37</span>, <span class="dv">24</span>, <span class="dv">31</span>, <span class="dv">21</span>,  <span class="dv">9</span>, <span class="dv">21</span>, <span class="dv">15</span>, <span class="dv">37</span>, <span class="dv">31</span>, <span class="dv">26</span>)</span>
+<span id="cb14-2"><a href="introduction-to-linear-models.html#cb14-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(y)</span>
+<span id="cb14-3"><a href="introduction-to-linear-models.html#cb14-3" aria-hidden="true" tabindex="-1"></a>y_adj <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">31</span>, <span class="dv">21</span>,  <span class="dv">9</span>, <span class="dv">21</span>, <span class="dv">15</span>, <span class="dv">37</span>, <span class="dv">31</span>, <span class="dv">26</span>)</span>
+<span id="cb14-4"><a href="introduction-to-linear-models.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(y[<span class="dv">1</span><span class="sc">:</span>(n<span class="dv">-1</span>)], y_adj)</span></code></pre></div>
+<pre><code>## [1] 0.1275145</code></pre>
+</div>
+<div id="gauss-markov-model-for-comparing-two-samples" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Gauss-Markov model for comparing two samples<a href="introduction-to-linear-models.html#gauss-markov-model-for-comparing-two-samples" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now suppose we have two normal populations, with the same variances, and we want to compare possibly different means. For some usual notation we might say <span class="math inline">\(X_{1,i}\stackrel{iid}{\sim}N(\mu_1, \sigma^2)\)</span> for <span class="math inline">\(i=1, \ldots, n_1\)</span> and <span class="math inline">\(X_{2,j}\stackrel{iid}{\sim}N(\mu_2, \sigma^2)\)</span> for <span class="math inline">\(j=1, \ldots, n_2\)</span>. There are (at least) two ways to represent this data in linear model format. Either way, we let <span class="math inline">\(Y = (X_{1,1}, \ldots, X_{1,n_1}, X_{2,1}, \ldots, X_{2,n_2})^\top\)</span> be the vector of <span class="math inline">\(n = n_1+n_2\)</span> responses. The <em>means model</em> uses design matrix <span class="math inline">\(X = (X_1, X_2)\)</span> where <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are <span class="math inline">\(n\times 1\)</span> column vectors with <span class="math inline">\(X_1 = (1_{n_1}^\top, 0_{n_2}^\top)^{\top}\)</span> and <span class="math inline">\(X_2 = (0_{n_1}^\top, 1_{n_2}^\top)^{\top}\)</span>. Suppose <span class="math inline">\(n_1 = n_2 = 10\)</span>; then, <span class="math inline">\(X\)</span> looks like the following:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="introduction-to-linear-models.html#cb16-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">cbind</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">10</span>),<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">10</span>)), <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">10</span>),<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">10</span>)))</span>
+<span id="cb16-2"><a href="introduction-to-linear-models.html#cb16-2" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div>
+<pre><code>##       [,1] [,2]
+##  [1,]    1    0
+##  [2,]    1    0
+##  [3,]    1    0
+##  [4,]    1    0
+##  [5,]    1    0
+##  [6,]    1    0
+##  [7,]    1    0
+##  [8,]    1    0
+##  [9,]    1    0
+## [10,]    1    0
+## [11,]    0    1
+## [12,]    0    1
+## [13,]    0    1
+## [14,]    0    1
+## [15,]    0    1
+## [16,]    0    1
+## [17,]    0    1
+## [18,]    0    1
+## [19,]    0    1
+## [20,]    0    1</code></pre>
+<p>The product <span class="math inline">\(X\beta\)</span> is the vector <span class="math inline">\((\beta_1 1_{n_1}^\top, \beta_2 1_{n_2}^\top)^\top\)</span>. Taking the expectation of <span class="math inline">\(X\beta + \epsilon\)</span> we get <span class="math inline">\(E(Y) = (\beta_1 1_{n_1}^\top, \beta_2 1_{n_2}^\top)^\top\)</span>. Therefore, <span class="math inline">\((\beta_1, \beta_2) = (\mu_1, \mu_2)\)</span>. In other words, the linear model coefficient vector is identical to the group means.</p>
+<p>The second way to formulate the linear model is to encode the design matrix using the <em>effects model</em>. Let <span class="math inline">\(X = (1_n^\top, (1_{n_1}^\top, 0_{n_2}^\top))^\top\)</span>, or, in other words:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="introduction-to-linear-models.html#cb18-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">cbind</span>(<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">20</span>), <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">10</span>),<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">10</span>)))</span>
+<span id="cb18-2"><a href="introduction-to-linear-models.html#cb18-2" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div>
+<pre><code>##       [,1] [,2]
+##  [1,]    1    1
+##  [2,]    1    1
+##  [3,]    1    1
+##  [4,]    1    1
+##  [5,]    1    1
+##  [6,]    1    1
+##  [7,]    1    1
+##  [8,]    1    1
+##  [9,]    1    1
+## [10,]    1    1
+## [11,]    1    0
+## [12,]    1    0
+## [13,]    1    0
+## [14,]    1    0
+## [15,]    1    0
+## [16,]    1    0
+## [17,]    1    0
+## [18,]    1    0
+## [19,]    1    0
+## [20,]    1    0</code></pre>
+<p>In that case, <span class="math inline">\(E(Y) = E(X\beta+\epsilon) = ((\beta_1 + \beta_2)1_{n_1}^\top, \beta_1 1_{n_2}^\top)^\top\)</span>. That means <span class="math inline">\(\beta_1 + \beta_2 = \mu_1\)</span> and <span class="math inline">\(\beta_1 = \mu_2\)</span>. Or, equivalently, <span class="math inline">\(\beta_1 = \mu_2\)</span> and <span class="math inline">\(\beta_2 = \mu_1 - \mu_2\)</span>. For this design, testing <span class="math inline">\(\beta_2=0\)</span> is equivalent to testing for no difference in population means.</p>
+<p>Example: The following is an analysis of carbon dioxide uptake rates of Echinochloa crus-galli grown in Quebec and Mississippi.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="introduction-to-linear-models.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(uptake<span class="sc">~</span>Type, <span class="at">data =</span> CO2)</span></code></pre></div>
+<p><img src="02-Intro-to-Linear-Models_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="introduction-to-linear-models.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># means model</span></span>
+<span id="cb21-2"><a href="introduction-to-linear-models.html#cb21-2" aria-hidden="true" tabindex="-1"></a>hat.beta1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type <span class="sc">==</span> <span class="st">&#39;Quebec&#39;</span>])</span>
+<span id="cb21-3"><a href="introduction-to-linear-models.html#cb21-3" aria-hidden="true" tabindex="-1"></a>hat.beta1</span></code></pre></div>
+<pre><code>## [1] 33.54286</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="introduction-to-linear-models.html#cb23-1" aria-hidden="true" tabindex="-1"></a>hat.beta2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type <span class="sc">==</span> <span class="st">&#39;Mississippi&#39;</span>])</span>
+<span id="cb23-2"><a href="introduction-to-linear-models.html#cb23-2" aria-hidden="true" tabindex="-1"></a>hat.beta2</span></code></pre></div>
+<pre><code>## [1] 20.88333</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="introduction-to-linear-models.html#cb25-1" aria-hidden="true" tabindex="-1"></a>S2 <span class="ot">&lt;-</span> (<span class="fu">var</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type <span class="sc">==</span> <span class="st">&#39;Quebec&#39;</span>]) <span class="sc">+</span> <span class="fu">var</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type <span class="sc">==</span> <span class="st">&#39;Mississippi&#39;</span>])) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb25-2"><a href="introduction-to-linear-models.html#cb25-2" aria-hidden="true" tabindex="-1"></a>S2</span></code></pre></div>
+<pre><code>## [1] 77.33465</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="introduction-to-linear-models.html#cb27-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(CO2<span class="sc">$</span>uptake)</span>
+<span id="cb27-2"><a href="introduction-to-linear-models.html#cb27-2" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> (hat.beta1 <span class="sc">-</span> hat.beta2)<span class="sc">/</span><span class="fu">sqrt</span>(S2<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span>(n<span class="sc">/</span><span class="dv">2</span>) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>(n<span class="sc">/</span><span class="dv">2</span>)))</span>
+<span id="cb27-3"><a href="introduction-to-linear-models.html#cb27-3" aria-hidden="true" tabindex="-1"></a>t</span></code></pre></div>
+<pre><code>## [1] 6.596901</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="introduction-to-linear-models.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pt</span>(t, n<span class="dv">-2</span>)</span></code></pre></div>
+<pre><code>## [1] 1.917343e-09</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="introduction-to-linear-models.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>),n<span class="dv">-2</span>)</span></code></pre></div>
+<pre><code>## [1] -1.989319  1.989319</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="introduction-to-linear-models.html#cb33-1" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> <span class="fu">c</span>((CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type <span class="sc">==</span> <span class="st">&#39;Quebec&#39;</span>] <span class="sc">-</span> hat.beta1), CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type <span class="sc">==</span> <span class="st">&#39;Mississippi&#39;</span>] <span class="sc">-</span> hat.beta2)</span>
+<span id="cb33-2"><a href="introduction-to-linear-models.html#cb33-2" aria-hidden="true" tabindex="-1"></a>studentized.residuals <span class="ot">&lt;-</span> residuals <span class="sc">/</span> <span class="fu">sqrt</span>(S2)</span>
+<span id="cb33-3"><a href="introduction-to-linear-models.html#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqplot</span>(<span class="at">x =</span> <span class="fu">qt</span>(<span class="fu">ppoints</span>(<span class="dv">500</span>), <span class="at">df =</span> n<span class="dv">-2</span>), studentized.residuals)</span>
+<span id="cb33-4"><a href="introduction-to-linear-models.html#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(studentized.residuals, <span class="at">distribution =</span> <span class="cf">function</span>(p) <span class="fu">qt</span>(p, <span class="at">df =</span> n<span class="dv">-2</span>), <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.8</span>), <span class="at">col =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="02-Intro-to-Linear-Models_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<p>We conduct a two-sample t-test (assuming equal variances) and conclude there is a substantial difference in CO2 uptake of this grass species between the two locations. Inspection of the qq-plot reveals no concerns about normality.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="introduction-to-linear-models.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Effects Model</span></span>
+<span id="cb34-2"><a href="introduction-to-linear-models.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(uptake<span class="sc">~</span>Type, <span class="at">data =</span> CO2))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = uptake ~ Type, data = CO2)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -24.243  -6.243   1.187   7.027  14.617 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       33.543      1.357  24.719  &lt; 2e-16 ***
+## TypeMississippi  -12.660      1.919  -6.597 3.83e-09 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 8.794 on 82 degrees of freedom
+## Multiple R-squared:  0.3467, Adjusted R-squared:  0.3387 
+## F-statistic: 43.52 on 1 and 82 DF,  p-value: 3.835e-09</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="introduction-to-linear-models.html#cb36-1" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">lm</span>(uptake<span class="sc">~</span>Type, <span class="at">data =</span> CO2)</span>
+<span id="cb36-2"><a href="introduction-to-linear-models.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(M)</span></code></pre></div>
+<pre><code>##    (Intercept) TypeMississippi
+## 1            1               0
+## 2            1               0
+## 3            1               0
+## 4            1               0
+## 5            1               0
+## 6            1               0
+## 7            1               0
+## 8            1               0
+## 9            1               0
+## 10           1               0
+## 11           1               0
+## 12           1               0
+## 13           1               0
+## 14           1               0
+## 15           1               0
+## 16           1               0
+## 17           1               0
+## 18           1               0
+## 19           1               0
+## 20           1               0
+## 21           1               0
+## 22           1               0
+## 23           1               0
+## 24           1               0
+## 25           1               0
+## 26           1               0
+## 27           1               0
+## 28           1               0
+## 29           1               0
+## 30           1               0
+## 31           1               0
+## 32           1               0
+## 33           1               0
+## 34           1               0
+## 35           1               0
+## 36           1               0
+## 37           1               0
+## 38           1               0
+## 39           1               0
+## 40           1               0
+## 41           1               0
+## 42           1               0
+## 43           1               1
+## 44           1               1
+## 45           1               1
+## 46           1               1
+## 47           1               1
+## 48           1               1
+## 49           1               1
+## 50           1               1
+## 51           1               1
+## 52           1               1
+## 53           1               1
+## 54           1               1
+## 55           1               1
+## 56           1               1
+## 57           1               1
+## 58           1               1
+## 59           1               1
+## 60           1               1
+## 61           1               1
+## 62           1               1
+## 63           1               1
+## 64           1               1
+## 65           1               1
+## 66           1               1
+## 67           1               1
+## 68           1               1
+## 69           1               1
+## 70           1               1
+## 71           1               1
+## 72           1               1
+## 73           1               1
+## 74           1               1
+## 75           1               1
+## 76           1               1
+## 77           1               1
+## 78           1               1
+## 79           1               1
+## 80           1               1
+## 81           1               1
+## 82           1               1
+## 83           1               1
+## 84           1               1
+## attr(,&quot;assign&quot;)
+## [1] 0 1
+## attr(,&quot;contrasts&quot;)
+## attr(,&quot;contrasts&quot;)$Type
+## [1] &quot;contr.treatment&quot;</code></pre>
+<p>The <strong>lm</strong> function in R fits linear models and tests <span class="math inline">\(\beta_j = 0\)</span> for each <span class="math inline">\(j=1, \ldots, p\)</span>. Note that the default design is a form of effects model, where the first level of the categorical variable is the baseline or reference level, so that the intercept term <span class="math inline">\(\beta_1\)</span> is identified with its mean, while the other <span class="math inline">\(\beta\)</span>’s become <em>effects</em>, the differences <span class="math inline">\(\mu_2 - \mu_1\)</span> and so on…</p>
+</div>
+<div id="pairwise-testing-and-bonferroni-correction" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Pairwise testing and Bonferroni correction<a href="introduction-to-linear-models.html#pairwise-testing-and-bonferroni-correction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The two-sample t-test is appropriate for comparing two populations; for example, when experimenters compare two interventions/treatments in terms of mean effects. But, the two-sample t-test procedure does not generalize well to comparing 3 or more populations, i.e., more interventions. Let’s see why not, and then consider what we could do instead.</p>
+<p>Consider <span class="math inline">\(k\)</span> treatments corresponding to <span class="math inline">\(k\)</span> populations. Two sample t-tests may be used with the null hypothesis <span class="math inline">\(H_0:\mu_i = \mu_j\)</span>, <span class="math inline">\(i,j = 1, \ldots, k\)</span>, <span class="math inline">\(i\ne j\)</span>. There are <span class="math inline">\({k \choose 2}\)</span> pairs of treatments, so there are the same number of tests to conduct. Now, suppose all the means are equal, i.e. the treatments are indistinguishiable on the basis of mean. If each test is conducted at level <span class="math inline">\(\alpha\)</span> then the chance of at least 1 type 1 error occurring is approximately <span class="math inline">\(1-(1-\alpha)^{{k \choose 2}}\)</span>, that is, if all tests are independent. For large <span class="math inline">\(k\)</span>, this <em>familywise</em> type 1 error (type 1 error for all the tests) gets close to 1! In other words, the strategy of evaluating the hypothesis <span class="math inline">\(H_0:\text{all }\mu_i\text{&#39;s are equal}\)</span> by pairwise testing is not effective.</p>
+<p>Several modifications are available to deal with this <em>multiple testing problem</em>. We’ll discuss two: Bonferroni and Benjamini-Hochberg adjustments. The Bonferroni adjustment requires the Type-1 error level <span class="math inline">\(\alpha\)</span> of each test be changed to <span class="math inline">\(\alpha^\star = \alpha/k\)</span> where <span class="math inline">\(k\)</span> is the total number of tests. By the same probability calculation (assuming independence of tests) it follows that the family-wise type 1 error probability using the Bonferroni procedure is about <span class="math inline">\(\alpha\)</span>:
+<span class="math display">\[\begin{align*}
+P(\text{at least one rejection given }H_0\text{ true}) &amp;= 1-P(\text{no rejections given }H_0\text{ true})\\
+&amp; \stackrel{ind.}{=} 1-(1-\frac{\alpha}{k})^k\\
+&amp; \approx 1 - e^{-\alpha}\quad \text{for large k}\\
+&amp; \approx 1 - (1-\alpha) = \alpha \quad \text{for small }\alpha.
+\end{align*}\]</span></p>
+<p>The downside to Bonferroni is that when <span class="math inline">\(k\)</span> is large each test has a very, very small chance of rejecting the null. In other words, each test has very low power. This inspired other procedures, like Benjamini-Hochberg (BH). Rather than controlling the family-wise type 1 error rate the BH procedure makes a compromise, and seeks to limit something called the false-discovery rate (FDR). Let <span class="math inline">\(V\)</span> be the number of tests out of <span class="math inline">\(k\)</span> that reject the null incorrectly, and let <span class="math inline">\(R\)</span> be the number of tests out of <span class="math inline">\(k\)</span> that reject the null. Then, FDR is defined as <span class="math inline">\(E(\frac{V}{R}|R&gt;0)P(R&gt;0)\)</span>. In words, the FDR is controlling the proportion of rejections that are incorrect out of all rejections, rather than out of all tests (like FWER does). If we did 1000 tests and rejected 40 nulls and controlled FDR at <span class="math inline">\(5\%\)</span> we would expect 2 of the 40 rejections to be false rejections. To control FDR, the BH procedure instructs us to:<br>
+1. Sort the realized p-values from least to greatest <span class="math inline">\(p_{(1)}, p_{(2)}, ..., p_{(k)}\)</span><br>
+2. Find the largest <span class="math inline">\(\ell\)</span> such that <span class="math inline">\(p_{(\ell)}\leq \frac{\ell}{k}\alpha\)</span>.<br>
+3. Reject all nulls corresponding to p-values <span class="math inline">\(p_{(1)}\)</span> to <span class="math inline">\(p_{(\ell)}\)</span>.</p>
+<div id="example-co2-uptake-in-echinochloa-crus-galli" class="section level3 hasAnchor" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Example: Co2 uptake in Echinochloa crus-galli<a href="introduction-to-linear-models.html#example-co2-uptake-in-echinochloa-crus-galli" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider the four interventions on the echinochloa grass formed by crossing the factors location and chilling with levels Mississippi/Quebec and chilled/non-chilled. We must make 6 pairwise comparisons, which we do below, using uncorrected, Bonferroni-corrected, and BH-corrected two-sample t-tests (assuming equal variances), and based on <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="introduction-to-linear-models.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datasets)</span>
+<span id="cb38-2"><a href="introduction-to-linear-models.html#cb38-2" aria-hidden="true" tabindex="-1"></a>xbar1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type<span class="sc">==</span><span class="st">&#39;Quebec&#39;</span> <span class="sc">&amp;</span> CO2<span class="sc">$</span>Treatment <span class="sc">==</span> <span class="st">&quot;chilled&quot;</span>])</span>
+<span id="cb38-3"><a href="introduction-to-linear-models.html#cb38-3" aria-hidden="true" tabindex="-1"></a>xbar2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type<span class="sc">==</span><span class="st">&#39;Quebec&#39;</span> <span class="sc">&amp;</span> CO2<span class="sc">$</span>Treatment <span class="sc">==</span> <span class="st">&quot;nonchilled&quot;</span>])</span>
+<span id="cb38-4"><a href="introduction-to-linear-models.html#cb38-4" aria-hidden="true" tabindex="-1"></a>xbar3 <span class="ot">&lt;-</span> <span class="fu">mean</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type<span class="sc">==</span><span class="st">&#39;Mississippi&#39;</span> <span class="sc">&amp;</span> CO2<span class="sc">$</span>Treatment <span class="sc">==</span> <span class="st">&quot;chilled&quot;</span>])</span>
+<span id="cb38-5"><a href="introduction-to-linear-models.html#cb38-5" aria-hidden="true" tabindex="-1"></a>xbar4 <span class="ot">&lt;-</span> <span class="fu">mean</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type<span class="sc">==</span><span class="st">&#39;Mississippi&#39;</span> <span class="sc">&amp;</span> CO2<span class="sc">$</span>Treatment <span class="sc">==</span> <span class="st">&quot;nonchilled&quot;</span>])</span>
+<span id="cb38-6"><a href="introduction-to-linear-models.html#cb38-6" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> (xbar1 <span class="sc">-</span> xbar2)<span class="sc">/</span><span class="fu">sqrt</span>((<span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">var</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type<span class="sc">==</span><span class="st">&#39;Quebec&#39;</span> <span class="sc">&amp;</span> CO2<span class="sc">$</span>Treatment <span class="sc">==</span> <span class="st">&quot;chilled&quot;</span>]) <span class="sc">+</span> <span class="fu">var</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type<span class="sc">==</span><span class="st">&#39;Quebec&#39;</span> <span class="sc">&amp;</span> CO2<span class="sc">$</span>Treatment <span class="sc">==</span> <span class="st">&quot;nonchilled&quot;</span>])))<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">21</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">21</span>))</span>
+<span id="cb38-7"><a href="introduction-to-linear-models.html#cb38-7" aria-hidden="true" tabindex="-1"></a>t2 <span class="ot">&lt;-</span> (xbar1 <span class="sc">-</span> xbar3)<span class="sc">/</span><span class="fu">sqrt</span>((<span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">var</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type<span class="sc">==</span><span class="st">&#39;Quebec&#39;</span> <span class="sc">&amp;</span> CO2<span class="sc">$</span>Treatment <span class="sc">==</span> <span class="st">&quot;chilled&quot;</span>]) <span class="sc">+</span> <span class="fu">var</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type<span class="sc">==</span><span class="st">&#39;Mississippi&#39;</span> <span class="sc">&amp;</span> CO2<span class="sc">$</span>Treatment <span class="sc">==</span> <span class="st">&quot;chilled&quot;</span>])))<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">21</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">21</span>))</span>
+<span id="cb38-8"><a href="introduction-to-linear-models.html#cb38-8" aria-hidden="true" tabindex="-1"></a>t3 <span class="ot">&lt;-</span> (xbar1 <span class="sc">-</span> xbar4)<span class="sc">/</span><span class="fu">sqrt</span>((<span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">var</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type<span class="sc">==</span><span class="st">&#39;Quebec&#39;</span> <span class="sc">&amp;</span> CO2<span class="sc">$</span>Treatment <span class="sc">==</span> <span class="st">&quot;chilled&quot;</span>]) <span class="sc">+</span> <span class="fu">var</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type<span class="sc">==</span><span class="st">&#39;Mississippi&#39;</span> <span class="sc">&amp;</span> CO2<span class="sc">$</span>Treatment <span class="sc">==</span> <span class="st">&quot;nonchilled&quot;</span>])))<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">21</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">21</span>))</span>
+<span id="cb38-9"><a href="introduction-to-linear-models.html#cb38-9" aria-hidden="true" tabindex="-1"></a>t4 <span class="ot">&lt;-</span> (xbar2 <span class="sc">-</span> xbar3)<span class="sc">/</span><span class="fu">sqrt</span>((<span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">var</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type<span class="sc">==</span><span class="st">&#39;Quebec&#39;</span> <span class="sc">&amp;</span> CO2<span class="sc">$</span>Treatment <span class="sc">==</span> <span class="st">&quot;nonchilled&quot;</span>]) <span class="sc">+</span> <span class="fu">var</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type<span class="sc">==</span><span class="st">&#39;Mississippi&#39;</span> <span class="sc">&amp;</span> CO2<span class="sc">$</span>Treatment <span class="sc">==</span> <span class="st">&quot;chilled&quot;</span>])))<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">21</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">21</span>))</span>
+<span id="cb38-10"><a href="introduction-to-linear-models.html#cb38-10" aria-hidden="true" tabindex="-1"></a>t5 <span class="ot">&lt;-</span> (xbar2 <span class="sc">-</span> xbar4)<span class="sc">/</span><span class="fu">sqrt</span>((<span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">var</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type<span class="sc">==</span><span class="st">&#39;Quebec&#39;</span> <span class="sc">&amp;</span> CO2<span class="sc">$</span>Treatment <span class="sc">==</span> <span class="st">&quot;nonchilled&quot;</span>]) <span class="sc">+</span> <span class="fu">var</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type<span class="sc">==</span><span class="st">&#39;Mississippi&#39;</span> <span class="sc">&amp;</span> CO2<span class="sc">$</span>Treatment <span class="sc">==</span> <span class="st">&quot;nonchilled&quot;</span>])))<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">21</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">21</span>))</span>
+<span id="cb38-11"><a href="introduction-to-linear-models.html#cb38-11" aria-hidden="true" tabindex="-1"></a>t6 <span class="ot">&lt;-</span> (xbar3 <span class="sc">-</span> xbar4)<span class="sc">/</span><span class="fu">sqrt</span>((<span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">var</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type<span class="sc">==</span><span class="st">&#39;Mississippi&#39;</span> <span class="sc">&amp;</span> CO2<span class="sc">$</span>Treatment <span class="sc">==</span> <span class="st">&quot;chilled&quot;</span>]) <span class="sc">+</span> <span class="fu">var</span>(CO2<span class="sc">$</span>uptake[CO2<span class="sc">$</span>Type<span class="sc">==</span><span class="st">&#39;Mississippi&#39;</span> <span class="sc">&amp;</span> CO2<span class="sc">$</span>Treatment <span class="sc">==</span> <span class="st">&quot;nonchilled&quot;</span>])))<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">21</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">21</span>))</span>
+<span id="cb38-12"><a href="introduction-to-linear-models.html#cb38-12" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pt</span>(<span class="fu">abs</span>(t1),<span class="dv">40</span>))</span>
+<span id="cb38-13"><a href="introduction-to-linear-models.html#cb38-13" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pt</span>(<span class="fu">abs</span>(t2),<span class="dv">40</span>))</span>
+<span id="cb38-14"><a href="introduction-to-linear-models.html#cb38-14" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pt</span>(<span class="fu">abs</span>(t3),<span class="dv">40</span>))</span>
+<span id="cb38-15"><a href="introduction-to-linear-models.html#cb38-15" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pt</span>(<span class="fu">abs</span>(t4),<span class="dv">40</span>))</span>
+<span id="cb38-16"><a href="introduction-to-linear-models.html#cb38-16" aria-hidden="true" tabindex="-1"></a>p5 <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pt</span>(<span class="fu">abs</span>(t5),<span class="dv">40</span>))</span>
+<span id="cb38-17"><a href="introduction-to-linear-models.html#cb38-17" aria-hidden="true" tabindex="-1"></a>p6 <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pt</span>(<span class="fu">abs</span>(t6),<span class="dv">40</span>))</span>
+<span id="cb38-18"><a href="introduction-to-linear-models.html#cb38-18" aria-hidden="true" tabindex="-1"></a>p1</span></code></pre></div>
+<pre><code>## [1] 0.2348577</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="introduction-to-linear-models.html#cb40-1" aria-hidden="true" tabindex="-1"></a>p2</span></code></pre></div>
+<pre><code>## [1] 2.000916e-08</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="introduction-to-linear-models.html#cb42-1" aria-hidden="true" tabindex="-1"></a>p3</span></code></pre></div>
+<pre><code>## [1] 0.03471652</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="introduction-to-linear-models.html#cb44-1" aria-hidden="true" tabindex="-1"></a>p4</span></code></pre></div>
+<pre><code>## [1] 1.297742e-10</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="introduction-to-linear-models.html#cb46-1" aria-hidden="true" tabindex="-1"></a>p5</span></code></pre></div>
+<pre><code>## [1] 0.001011226</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="introduction-to-linear-models.html#cb48-1" aria-hidden="true" tabindex="-1"></a>p6</span></code></pre></div>
+<pre><code>## [1] 2.355328e-06</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="introduction-to-linear-models.html#cb50-1" aria-hidden="true" tabindex="-1"></a>sorted <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="fu">round</span>(<span class="fu">c</span>(p1,p2,p3,p4,p5,p6), <span class="dv">4</span>))</span>
+<span id="cb50-2"><a href="introduction-to-linear-models.html#cb50-2" aria-hidden="true" tabindex="-1"></a>sorted <span class="ot">&lt;-</span> sorted[<span class="fu">order</span>(sorted[,<span class="dv">2</span>]),]</span>
+<span id="cb50-3"><a href="introduction-to-linear-models.html#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(sorted,<span class="fu">c</span>(<span class="fl">0.05</span><span class="sc">/</span><span class="dv">6</span>,<span class="fl">0.05</span><span class="sc">*</span><span class="dv">2</span><span class="sc">/</span><span class="dv">6</span>,<span class="fl">0.05</span><span class="sc">*</span><span class="dv">3</span><span class="sc">/</span><span class="dv">6</span>,<span class="fl">0.05</span><span class="sc">*</span><span class="dv">4</span><span class="sc">/</span><span class="dv">6</span>,<span class="fl">0.05</span><span class="sc">*</span><span class="dv">5</span><span class="sc">/</span><span class="dv">6</span>,<span class="fl">0.05</span><span class="sc">*</span><span class="dv">6</span><span class="sc">/</span><span class="dv">6</span>), <span class="fu">c</span>(sorted[<span class="dv">1</span>,<span class="dv">2</span>] <span class="sc">&lt;=</span> <span class="fl">0.05</span><span class="sc">*</span><span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>, sorted[<span class="dv">2</span>,<span class="dv">2</span>] <span class="sc">&lt;=</span> <span class="fl">0.05</span><span class="sc">*</span><span class="dv">2</span><span class="sc">/</span><span class="dv">6</span>, sorted[<span class="dv">3</span>,<span class="dv">2</span>] <span class="sc">&lt;=</span> <span class="fl">0.05</span><span class="sc">*</span><span class="dv">3</span><span class="sc">/</span><span class="dv">6</span>, sorted[<span class="dv">4</span>,<span class="dv">2</span>] <span class="sc">&lt;=</span> <span class="fl">0.05</span><span class="sc">*</span><span class="dv">4</span><span class="sc">/</span><span class="dv">6</span>, sorted[<span class="dv">5</span>,<span class="dv">2</span>] <span class="sc">&lt;=</span> <span class="fl">0.05</span><span class="sc">*</span><span class="dv">5</span><span class="sc">/</span><span class="dv">6</span>, sorted[<span class="dv">6</span>,<span class="dv">2</span>] <span class="sc">&lt;=</span> <span class="fl">0.05</span><span class="sc">*</span><span class="dv">6</span><span class="sc">/</span><span class="dv">6</span>), <span class="fu">rep</span>(<span class="fl">0.05</span><span class="sc">/</span><span class="dv">6</span>,<span class="dv">6</span>),</span>
+<span id="cb50-4"><a href="introduction-to-linear-models.html#cb50-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(sorted[<span class="dv">1</span>,<span class="dv">2</span>] <span class="sc">&lt;=</span> <span class="fl">0.05</span><span class="sc">/</span><span class="dv">6</span>, sorted[<span class="dv">2</span>,<span class="dv">2</span>] <span class="sc">&lt;=</span> <span class="fl">0.05</span><span class="sc">/</span><span class="dv">6</span>, sorted[<span class="dv">3</span>,<span class="dv">2</span>] <span class="sc">&lt;=</span> <span class="fl">0.05</span><span class="sc">/</span><span class="dv">6</span>, sorted[<span class="dv">4</span>,<span class="dv">2</span>] <span class="sc">&lt;=</span> <span class="fl">0.05</span><span class="sc">/</span><span class="dv">6</span>, sorted[<span class="dv">5</span>,<span class="dv">2</span>] <span class="sc">&lt;=</span> <span class="fl">0.05</span><span class="sc">/</span><span class="dv">6</span>, sorted[<span class="dv">6</span>,<span class="dv">2</span>] <span class="sc">&lt;=</span> <span class="fl">0.05</span><span class="sc">/</span><span class="dv">6</span>))</span></code></pre></div>
+<pre><code>##      [,1]   [,2]        [,3] [,4]        [,5] [,6]
+## [1,]    2 0.0000 0.008333333    1 0.008333333    1
+## [2,]    4 0.0000 0.016666667    1 0.008333333    1
+## [3,]    6 0.0000 0.025000000    1 0.008333333    1
+## [4,]    5 0.0010 0.033333333    1 0.008333333    1
+## [5,]    3 0.0347 0.041666667    1 0.008333333    0
+## [6,]    1 0.2349 0.050000000    0 0.008333333    0</code></pre>
+<p>Using uncorrected tests we would reject the null hypothesis in all but the first test. We actually get the same result using the BH procedure. but, the Bonferroni procedure is more conservative and does not allow us to reject the null in the 1st or 3rd tests.</p>
+</div>
+</div>
+<div id="linear-models-for-more-than-two-treatments-populations" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Linear Models for more than two treatments (populations)<a href="introduction-to-linear-models.html#linear-models-for-more-than-two-treatments-populations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We may generalize the “means model” and “effects model” constructions to apply the Gauss-Markov model to data sets with several treatments, as in the CO2 data set considered above. Recall that the CO2 data set has 84 observations, 21 in each of four groups: Quebec-chilled, Quebec-nonchilled, Mississippi-chilled, and Mississippi-nonchilled. If we sort the response vector to correspond to these categories, we can construct the design matrix as follows: <span class="math inline">\(X = (X_1, X_2, X_3, X_4)\)</span> where <span class="math inline">\(X_1\)</span> is the <span class="math inline">\(84\times 1\)</span> column vector combined by stacking a <span class="math inline">\(21\times 1\)</span> vector of 1’s atop a <span class="math inline">\(63\times 1\)</span> vector of 0’s. The remaining columns of <span class="math inline">\(X\)</span> are formed analogously, with the 21 1 values occupying the 22nd through 42nd spots, the 43rd through 63rd, and the 64th through 84th, respectively.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="introduction-to-linear-models.html#cb52-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(  <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">21</span>),<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">21</span>),<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">21</span>),<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">21</span>)),</span>
+<span id="cb52-2"><a href="introduction-to-linear-models.html#cb52-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">21</span>),<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">21</span>),<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">21</span>),<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">21</span>)),</span>
+<span id="cb52-3"><a href="introduction-to-linear-models.html#cb52-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">21</span>),<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">21</span>),<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">21</span>),<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">21</span>)),</span>
+<span id="cb52-4"><a href="introduction-to-linear-models.html#cb52-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">21</span>),<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">21</span>),<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">21</span>),<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">21</span>)))</span></code></pre></div>
+<p>This construction is a “means model” matrix because the coefficient vector <span class="math inline">\(\beta\)</span> is identified with the four group means. That is, <span class="math inline">\(X\beta = (\beta_1 1_{21\times1}^\top, \beta_2 1_{21\times1}^\top, \beta_3 1_{21\times1}^\top, \beta_4 1_{21\times1}^\top)^\top\)</span>. So, <span class="math inline">\(\beta_j = \mu_j\)</span> for <span class="math inline">\(j=1,...,4\)</span>.<br><br></p>
+<p>There are many ways to define an “effects model” for the CO2 dataset. Recall that R uses an effects model parametrization by default. Let’s fit a linear model in R and see what model matrix R constructs.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="introduction-to-linear-models.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datasets)</span>
+<span id="cb53-2"><a href="introduction-to-linear-models.html#cb53-2" aria-hidden="true" tabindex="-1"></a>CO2subset <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(CO2<span class="sc">$</span>Type, CO2<span class="sc">$</span>Treatment,  CO2<span class="sc">$</span>uptake)</span>
+<span id="cb53-3"><a href="introduction-to-linear-models.html#cb53-3" aria-hidden="true" tabindex="-1"></a>my.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(CO2.uptake<span class="sc">~</span>CO2.Type<span class="sc">+</span>CO2.Treatment, <span class="at">data =</span> CO2subset)</span>
+<span id="cb53-4"><a href="introduction-to-linear-models.html#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(my.lm)</span></code></pre></div>
+<pre><code>##    (Intercept) CO2.TypeMississippi CO2.Treatmentchilled
+## 1            1                   0                    0
+## 2            1                   0                    0
+## 3            1                   0                    0
+## 4            1                   0                    0
+## 5            1                   0                    0
+## 6            1                   0                    0
+## 7            1                   0                    0
+## 8            1                   0                    0
+## 9            1                   0                    0
+## 10           1                   0                    0
+## 11           1                   0                    0
+## 12           1                   0                    0
+## 13           1                   0                    0
+## 14           1                   0                    0
+## 15           1                   0                    0
+## 16           1                   0                    0
+## 17           1                   0                    0
+## 18           1                   0                    0
+## 19           1                   0                    0
+## 20           1                   0                    0
+## 21           1                   0                    0
+## 22           1                   0                    1
+## 23           1                   0                    1
+## 24           1                   0                    1
+## 25           1                   0                    1
+## 26           1                   0                    1
+## 27           1                   0                    1
+## 28           1                   0                    1
+## 29           1                   0                    1
+## 30           1                   0                    1
+## 31           1                   0                    1
+## 32           1                   0                    1
+## 33           1                   0                    1
+## 34           1                   0                    1
+## 35           1                   0                    1
+## 36           1                   0                    1
+## 37           1                   0                    1
+## 38           1                   0                    1
+## 39           1                   0                    1
+## 40           1                   0                    1
+## 41           1                   0                    1
+## 42           1                   0                    1
+## 43           1                   1                    0
+## 44           1                   1                    0
+## 45           1                   1                    0
+## 46           1                   1                    0
+## 47           1                   1                    0
+## 48           1                   1                    0
+## 49           1                   1                    0
+## 50           1                   1                    0
+## 51           1                   1                    0
+## 52           1                   1                    0
+## 53           1                   1                    0
+## 54           1                   1                    0
+## 55           1                   1                    0
+## 56           1                   1                    0
+## 57           1                   1                    0
+## 58           1                   1                    0
+## 59           1                   1                    0
+## 60           1                   1                    0
+## 61           1                   1                    0
+## 62           1                   1                    0
+## 63           1                   1                    0
+## 64           1                   1                    1
+## 65           1                   1                    1
+## 66           1                   1                    1
+## 67           1                   1                    1
+## 68           1                   1                    1
+## 69           1                   1                    1
+## 70           1                   1                    1
+## 71           1                   1                    1
+## 72           1                   1                    1
+## 73           1                   1                    1
+## 74           1                   1                    1
+## 75           1                   1                    1
+## 76           1                   1                    1
+## 77           1                   1                    1
+## 78           1                   1                    1
+## 79           1                   1                    1
+## 80           1                   1                    1
+## 81           1                   1                    1
+## 82           1                   1                    1
+## 83           1                   1                    1
+## 84           1                   1                    1
+## attr(,&quot;assign&quot;)
+## [1] 0 1 2
+## attr(,&quot;contrasts&quot;)
+## attr(,&quot;contrasts&quot;)$CO2.Type
+## [1] &quot;contr.treatment&quot;
+## 
+## attr(,&quot;contrasts&quot;)$CO2.Treatment
+## [1] &quot;contr.treatment&quot;</code></pre>
+<p>Based on the model matrix, we see that R defines three coefficients, <span class="math inline">\(\beta_1, \beta_2, \beta_3\)</span>.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-analysis-and-statistical-inference.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="randomization-and-permutation-testing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/02-Intro-to-Linear-Models.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Alternatives for Non-Normal Responses | Applied Linear Models</title>
+  <meta name="description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Alternatives for Non-Normal Responses | Applied Linear Models" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Alternatives for Non-Normal Responses | Applied Linear Models" />
+  
+  <meta name="twitter:description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  
+
+<meta name="author" content="Nick Syring" />
+
+
+<meta name="date" content="2022-10-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="randomization-and-permutation-testing.html"/>
+<link rel="next" href="one-way-anova.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied Linear Models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html"><i class="fa fa-check"></i><b>2</b> Data Analysis and Statistical Inference</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#data-experiments-and-studies"><i class="fa fa-check"></i><b>2.1</b> Data, Experiments, and Studies</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#james-linds-scurvy-trial"><i class="fa fa-check"></i><b>2.1.1</b> James Lind’s Scurvy Trial</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#framingham-heart-study"><i class="fa fa-check"></i><b>2.1.2</b> Framingham Heart Study</a></li>
+<li class="chapter" data-level="2.1.3" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#harris-bank-sex-pay-study"><i class="fa fa-check"></i><b>2.1.3</b> Harris Bank Sex Pay Study</a></li>
+<li class="chapter" data-level="2.1.4" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#large-aggregated-data-sets"><i class="fa fa-check"></i><b>2.1.4</b> Large, Aggregated Data Sets</a></li>
+<li class="chapter" data-level="2.1.5" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#study-concepts"><i class="fa fa-check"></i><b>2.1.5</b> Study Concepts</a></li>
+<li class="chapter" data-level="2.1.6" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#randomization-control-and-causation"><i class="fa fa-check"></i><b>2.1.6</b> Randomization, control, and causation</a></li>
+<li class="chapter" data-level="2.1.7" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#populations-and-scope-of-inference"><i class="fa fa-check"></i><b>2.1.7</b> Populations and scope of inference</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#data-summaries"><i class="fa fa-check"></i><b>2.2</b> Data Summaries</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#numerical-summaries"><i class="fa fa-check"></i><b>2.2.1</b> Numerical Summaries</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#visual-summaries"><i class="fa fa-check"></i><b>2.2.2</b> Visual Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#statistical-inference"><i class="fa fa-check"></i><b>2.3</b> Statistical Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html"><i class="fa fa-check"></i><b>3</b> Introduction to Linear Models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#defining-the-linear-model"><i class="fa fa-check"></i><b>3.1</b> Defining the linear model</a></li>
+<li class="chapter" data-level="3.2" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#gauss-markov-model-for-one-sample"><i class="fa fa-check"></i><b>3.2</b> Gauss-Markov model for one sample</a></li>
+<li class="chapter" data-level="3.3" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#gauss-markov-model-for-comparing-two-samples"><i class="fa fa-check"></i><b>3.3</b> Gauss-Markov model for comparing two samples</a></li>
+<li class="chapter" data-level="3.4" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#pairwise-testing-and-bonferroni-correction"><i class="fa fa-check"></i><b>3.4</b> Pairwise testing and Bonferroni correction</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#example-co2-uptake-in-echinochloa-crus-galli"><i class="fa fa-check"></i><b>3.4.1</b> Example: Co2 uptake in Echinochloa crus-galli</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#linear-models-for-more-than-two-treatments-populations"><i class="fa fa-check"></i><b>3.5</b> Linear Models for more than two treatments (populations)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html"><i class="fa fa-check"></i><b>4</b> Randomization and Permutation Testing</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#setup"><i class="fa fa-check"></i><b>4.1</b> Setup</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#example-1-the-harris-bank-sex-pay-study"><i class="fa fa-check"></i><b>4.1.1</b> Example 1: The Harris Bank Sex Pay Study</a></li>
+<li class="chapter" data-level="4.1.2" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#difference-in-mean-salaries-between-genders"><i class="fa fa-check"></i><b>4.1.2</b> Difference in mean salaries between genders</a></li>
+<li class="chapter" data-level="4.1.3" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#randomization-test-for-treatment-significance"><i class="fa fa-check"></i><b>4.1.3</b> Randomization test for treatment significance</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html"><i class="fa fa-check"></i><b>5</b> Alternatives for Non-Normal Responses</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#transformations"><i class="fa fa-check"></i><b>5.1</b> Transformations</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#example-cloud-seeding-for-rainfall"><i class="fa fa-check"></i><b>5.1.1</b> Example: Cloud Seeding for Rainfall</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#rank-sum-test"><i class="fa fa-check"></i><b>5.2</b> Rank-Sum Test</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#example-ratio-measurements"><i class="fa fa-check"></i><b>5.2.1</b> Example: ratio measurements</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#signed-rank-test"><i class="fa fa-check"></i><b>5.3</b> Signed-rank test</a></li>
+<li class="chapter" data-level="5.4" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrap"><i class="fa fa-check"></i><b>5.4</b> Bootstrap</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#intro-to-the-bootstrap"><i class="fa fa-check"></i><b>5.4.1</b> Intro to the bootstrap</a></li>
+<li class="chapter" data-level="5.4.2" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>5.4.2</b> Bootstrap Confidence Intervals</a></li>
+<li class="chapter" data-level="5.4.3" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrapping-linear-models"><i class="fa fa-check"></i><b>5.4.3</b> Bootstrapping linear models</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="one-way-anova.html"><a href="one-way-anova.html"><i class="fa fa-check"></i><b>6</b> One Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="one-way-anova.html"><a href="one-way-anova.html#the-gauss-markov-model-for-comparing-i-populations"><i class="fa fa-check"></i><b>6.1</b> The Gauss-Markov Model for comparing I populations</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="one-way-anova.html"><a href="one-way-anova.html#example-donuts-effects-model"><i class="fa fa-check"></i><b>6.1.1</b> Example: Donuts effects model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="one-way-anova.html"><a href="one-way-anova.html#testing-equality-of-means"><i class="fa fa-check"></i><b>6.2</b> Testing equality of means</a></li>
+<li class="chapter" data-level="6.3" data-path="one-way-anova.html"><a href="one-way-anova.html#follow-up-testing"><i class="fa fa-check"></i><b>6.3</b> Follow-up testing</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="one-way-anova.html"><a href="one-way-anova.html#donuts-example"><i class="fa fa-check"></i><b>6.3.1</b> Donuts example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="one-way-anova.html"><a href="one-way-anova.html#inference-for-particular-contrasts"><i class="fa fa-check"></i><b>6.4</b> Inference for particular contrasts</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="one-way-anova.html"><a href="one-way-anova.html#donuts-example-1"><i class="fa fa-check"></i><b>6.4.1</b> Donuts Example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="one-way-anova.html"><a href="one-way-anova.html#checking-assumptions-in-one-way-anova"><i class="fa fa-check"></i><b>6.5</b> Checking Assumptions in one-way ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="one-way-anova.html"><a href="one-way-anova.html#example-cehcking-assumptions-for-donuts-experiment"><i class="fa fa-check"></i><b>6.5.1</b> Example: Cehcking assumptions for donuts experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html"><i class="fa fa-check"></i><b>7</b> Randomized Complete Block Design</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#paired-experiments-as-blocking"><i class="fa fa-check"></i><b>7.1</b> Paired experiments as blocking</a></li>
+<li class="chapter" data-level="7.2" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#randomized-complete-block-designs"><i class="fa fa-check"></i><b>7.2</b> Randomized Complete Block Designs</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#notation"><i class="fa fa-check"></i><b>7.2.1</b> Notation</a></li>
+<li class="chapter" data-level="7.2.2" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-penicillin-manufacturing"><i class="fa fa-check"></i><b>7.2.2</b> Example: Penicillin Manufacturing</a></li>
+<li class="chapter" data-level="7.2.3" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#sums-of-squares-and-f-tests-in-rcbd"><i class="fa fa-check"></i><b>7.2.3</b> Sums of squares and F tests in RCBD</a></li>
+<li class="chapter" data-level="7.2.4" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-significance-of-process-in-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.4</b> Example: Significance of Process in Penicillin experiment</a></li>
+<li class="chapter" data-level="7.2.5" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#follow-up-comparisons-and-contrasts"><i class="fa fa-check"></i><b>7.2.5</b> Follow-up comparisons and contrasts</a></li>
+<li class="chapter" data-level="7.2.6" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-tukey-contrasts-and-scheffe-for-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.6</b> Example: Tukey, contrasts, and Scheffe for penicillin experiment</a></li>
+<li class="chapter" data-level="7.2.7" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#relative-efficiency-of-blocking-vs.-crd"><i class="fa fa-check"></i><b>7.2.7</b> Relative efficiency of Blocking (vs. CRD)</a></li>
+<li class="chapter" data-level="7.2.8" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-re-of-blocking-in-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.8</b> Example: RE of blocking in penicillin experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html"><i class="fa fa-check"></i><b>8</b> Latin Squares for two blocking variables</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#designs-for-multiple-blocks"><i class="fa fa-check"></i><b>8.1</b> Designs for multiple blocks</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-mpg-experiment"><i class="fa fa-check"></i><b>8.1.1</b> Example: MPG experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#model-notation"><i class="fa fa-check"></i><b>8.2</b> Model notation</a></li>
+<li class="chapter" data-level="8.3" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#sums-of-squares-and-test-for-treatment-effects"><i class="fa fa-check"></i><b>8.3</b> Sums of squares and test for treatment effects</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-mpg-experiment-1"><i class="fa fa-check"></i><b>8.3.1</b> Example: MPG experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#relative-efficiency-of-blocking"><i class="fa fa-check"></i><b>8.4</b> Relative efficiency of blocking</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-re-ignoring-driver-blocks"><i class="fa fa-check"></i><b>8.4.1</b> Example: RE ignoring driver blocks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="two-way-anova.html"><a href="two-way-anova.html"><i class="fa fa-check"></i><b>9</b> Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="two-way-anova.html"><a href="two-way-anova.html#the-model"><i class="fa fa-check"></i><b>9.1</b> The Model</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="two-way-anova.html"><a href="two-way-anova.html#example-protein-chemistry"><i class="fa fa-check"></i><b>9.1.1</b> Example: protein chemistry</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="two-way-anova.html"><a href="two-way-anova.html#tests-for-interaction-and-main-effects"><i class="fa fa-check"></i><b>9.2</b> Tests for interaction and main effects</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="two-way-anova.html"><a href="two-way-anova.html#example-protein-and-dietary-metals"><i class="fa fa-check"></i><b>9.2.1</b> Example: Protein and dietary metals</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html"><i class="fa fa-check"></i><b>10</b> Unbalanced data in Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#raw-and-least-squares-means"><i class="fa fa-check"></i><b>10.1</b> Raw and Least-Squares Means</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data"><i class="fa fa-check"></i><b>10.1.1</b> Example: Turbine data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#partial-f-tests-and-type-iii-ss"><i class="fa fa-check"></i><b>10.2</b> Partial F tests and Type III SS</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data-tests"><i class="fa fa-check"></i><b>10.2.1</b> Example: Turbine Data tests</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#follow-up-tests"><i class="fa fa-check"></i><b>10.3</b> Follow-up tests</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data-tukey-corrected-pairwise-comparisons"><i class="fa fa-check"></i><b>10.3.1</b> Example: Turbine data Tukey-corrected pairwise comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#unbalanced-data-and-simpsons-paradox"><i class="fa fa-check"></i><b>10.4</b> Unbalanced data and Simpson’s Paradox</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html"><i class="fa fa-check"></i><b>11</b> Missing Cells in Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#anova-with-missing-at-random-cell"><i class="fa fa-check"></i><b>11.1</b> ANOVA with missing “at random” cell</a></li>
+<li class="chapter" data-level="11.2" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#do-any-of-the-treatments-matter"><i class="fa fa-check"></i><b>11.2</b> Do any of the treatments matter?</a></li>
+<li class="chapter" data-level="11.3" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#fit-a-linear-model-with-additional-constraints"><i class="fa fa-check"></i><b>11.3</b> Fit a linear model with additional constraints</a></li>
+<li class="chapter" data-level="11.4" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#general-linear-test-for-interaction"><i class="fa fa-check"></i><b>11.4</b> General Linear Test for interaction</a></li>
+<li class="chapter" data-level="11.5" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#partial-analysis-for-interaction"><i class="fa fa-check"></i><b>11.5</b> Partial analysis for interaction</a></li>
+<li class="chapter" data-level="11.6" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#tests-for-main-effects-in-the-partial-table"><i class="fa fa-check"></i><b>11.6</b> Tests for main effects in the partial table</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html"><i class="fa fa-check"></i><b>12</b> Strategy for Analysis in Two-Factor models</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#unbalanced-two-factor-experiment-chick-weight"><i class="fa fa-check"></i><b>12.1</b> Unbalanced Two-Factor Experiment: Chick Weight</a></li>
+<li class="chapter" data-level="12.2" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#example-observational-study-on-growth-hormone-deficient-children-with-empty-cell"><i class="fa fa-check"></i><b>12.2</b> Example: observational study on growth-hormone deficient children with empty cell</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#linear-model-analysis-with-extra-constraint"><i class="fa fa-check"></i><b>12.2.1</b> Linear Model analysis with extra constraint</a></li>
+<li class="chapter" data-level="12.2.2" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#partial-table-analysis"><i class="fa fa-check"></i><b>12.2.2</b> Partial Table analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html"><i class="fa fa-check"></i><b>13</b> <span class="math inline">\(2^k\)</span> Factorial Experiments</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#the-model-1"><i class="fa fa-check"></i><b>13.1</b> The Model</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#example-stress-test-study"><i class="fa fa-check"></i><b>13.1.1</b> Example: Stress Test Study</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#unreplicated-factorial-experiments"><i class="fa fa-check"></i><b>13.2</b> Unreplicated Factorial Experiments</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#example-granola-bar-experiment"><i class="fa fa-check"></i><b>13.2.1</b> Example: Granola bar experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Linear Models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="alternatives-for-non-normal-responses" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Alternatives for Non-Normal Responses<a href="alternatives-for-non-normal-responses.html#alternatives-for-non-normal-responses" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>When responses (or residuals) appear non-normal we may doubt the validity of z-, t-, and F- tests, especially for small sample sizes. We’ll discuss two strategies for dealing with non-normality: transformations and robust tests.</p>
+<div id="transformations" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Transformations<a href="alternatives-for-non-normal-responses.html#transformations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Sometimes, when residuals/responses appear non-normal, a particular transformation/function of the values will produce residuals/responses that do appear normal. The case-in-point is the Lognormal distribution. It is, essentially, defined by the following relationship: If <span class="math inline">\(X\sim\)</span>Lognormal, then <span class="math inline">\(\log(X)\sim\)</span>Normal. And, vice-versa, if <span class="math inline">\(Y\sim\)</span>Normal, then <span class="math inline">\(\exp(Y)\sim\)</span>Lognormal. A random sample from a lognormal distribution will appear skewed to the right, or positively skewed. The log transformation dampens large (absolute) values more than small ones, reducing or removing the skew.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="alternatives-for-non-normal-responses.html#cb64-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">rnorm</span>(<span class="dv">101</span>))</span>
+<span id="cb64-2"><a href="alternatives-for-non-normal-responses.html#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb64-3"><a href="alternatives-for-non-normal-responses.html#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(Y, <span class="at">main =</span> <span class="st">&#39;A random sample of 101 Lognormal r.v. s&#39;</span>)</span>
+<span id="cb64-4"><a href="alternatives-for-non-normal-responses.html#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(Y), <span class="at">main =</span> <span class="st">&#39;Same data after log-transform&#39;</span>)</span></code></pre></div>
+<p><img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="alternatives-for-non-normal-responses.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(Y)</span></code></pre></div>
+<pre><code>## [1] 1.085543</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="alternatives-for-non-normal-responses.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(<span class="fu">log</span>(Y))</span></code></pre></div>
+<pre><code>## [1] 0.08207994</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="alternatives-for-non-normal-responses.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="fu">median</span>(Y))</span></code></pre></div>
+<pre><code>## [1] 0.08207994</code></pre>
+<p>Of course, the log-transform can only be applied to positive data values, and is meant specifically for use with positively skewed data. Since the log transform is monotonic increasing it preserves medians. That is, the median of the log-transformed values is equal to the log of the median of the original values. This is helpful for interpreting the results of tests concerning the mean of the log-transformed values.</p>
+<p>Allow me to elaborate. Consider a one-sample test of <span class="math inline">\(H_0:\mu = \mu_0\)</span> where <span class="math inline">\(\mu\)</span> denotes the population mean of the log-transformed random variable <span class="math inline">\(X = \log(Y)\)</span>. Assuming <span class="math inline">\(X\)</span> follows a normal distribution, its mean and median are the same. So, if we reject the hypothesis and say <span class="math inline">\(\mu \ne \mu_0\)</span> this is equivalent to saying the <strong>median</strong> of the <span class="math inline">\(Y\)</span> population is not <span class="math inline">\(\log(\mu_0)\)</span>.</p>
+<p>For a two sample test of <span class="math inline">\(H_0:\mu_1 = \mu_2\)</span> the point estimate <span class="math inline">\(\overline X_1 - \overline X_2\)</span> measures the difference in population means for the log-transformed random variables, and <span class="math inline">\(\exp(\overline X_1 - \overline X_2)\)</span> estimates the <strong>ratio of medians</strong> for the populations on the original scale.</p>
+<p>The log transform is not the only transformation that may aid in “normalizing” right-skewed responses. Sometimes a square root transformation is appropriate. A general method is available to select the “best” normalizing transformation for right-skewed data. I won’t elaborate on this method here, but simply note that in R the function “boxcox” will determine a good transformation to use to normalize right-skewed responses. These transformations are the Box-Cox family of functions
+<span class="math display">\[\frac{y^\gamma - 1}{\gamma}\quad \gamma \ne 0, \]</span>
+and where the transformation is defined to be the log-transform when <span class="math inline">\(\gamma = 0\)</span>.</p>
+<div id="example-cloud-seeding-for-rainfall" class="section level3 hasAnchor" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Example: Cloud Seeding for Rainfall<a href="alternatives-for-non-normal-responses.html#example-cloud-seeding-for-rainfall" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The data frame “clouds” in the HSAUR2 package contains rainfall measurements (among other things) when researchers have “seeded” clouds in the atmosphere compared to when they have not done so. The data is noticeably right-skewed, and, of course positive because we’re talking about rainfall measurments.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="alternatives-for-non-normal-responses.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(HSAUR2)</span></code></pre></div>
+<pre><code>## Loading required package: tools</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="alternatives-for-non-normal-responses.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(rainfall <span class="sc">~</span> seeding, <span class="at">data =</span> clouds, <span class="at">ylab =</span> <span class="st">&quot;Rainfall&quot;</span>)</span></code></pre></div>
+<p><img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Using the boxcox function we see that the “best” normalizing transformation has <span class="math inline">\(\gamma \approx 0.42\)</span>. Briefly, the “best” transformation is the one maximizing a normal likelihood. And, indeed boxplots of rainfall measurements under this transformation appear closer to normal.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="alternatives-for-non-normal-responses.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb74-2"><a href="alternatives-for-non-normal-responses.html#cb74-2" aria-hidden="true" tabindex="-1"></a>bc <span class="ot">&lt;-</span> <span class="fu">boxcox</span>(rainfall<span class="sc">~</span>seeding, <span class="at">data =</span> clouds)</span></code></pre></div>
+<p><img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="alternatives-for-non-normal-responses.html#cb75-1" aria-hidden="true" tabindex="-1"></a>bc<span class="sc">$</span>x[<span class="fu">which.max</span>(bc<span class="sc">$</span>y)]</span></code></pre></div>
+<pre><code>## [1] 0.4242424</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="alternatives-for-non-normal-responses.html#cb77-1" aria-hidden="true" tabindex="-1"></a>my.clouds <span class="ot">&lt;-</span> clouds</span>
+<span id="cb77-2"><a href="alternatives-for-non-normal-responses.html#cb77-2" aria-hidden="true" tabindex="-1"></a>my.clouds<span class="sc">$</span>bc <span class="ot">&lt;-</span> (my.clouds<span class="sc">$</span>rainfall<span class="sc">^</span><span class="fl">0.42</span> <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span> <span class="fl">0.42</span></span>
+<span id="cb77-3"><a href="alternatives-for-non-normal-responses.html#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(bc<span class="sc">~</span>seeding, <span class="at">data =</span> my.clouds)</span></code></pre></div>
+<p><img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<p>Let’s do a two-sample t-test for difference in mean rainfall under seeding/non-seeding conditions. Remember to interpret the results carefully due to our transformation.</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="alternatives-for-non-normal-responses.html#cb78-1" aria-hidden="true" tabindex="-1"></a>bc.t.test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(my.clouds<span class="sc">$</span>bc[my.clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;no&#39;</span>], my.clouds<span class="sc">$</span>bc[my.clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;yes&#39;</span>], <span class="at">alternative =</span> <span class="st">&#39;two.sided&#39;</span>)</span>
+<span id="cb78-2"><a href="alternatives-for-non-normal-responses.html#cb78-2" aria-hidden="true" tabindex="-1"></a>bc.t.test</span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  my.clouds$bc[my.clouds$seeding == &quot;no&quot;] and my.clouds$bc[my.clouds$seeding == &quot;yes&quot;]
+## t = -0.7541, df = 19.094, p-value = 0.46
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -1.6280579  0.7654181
+## sample estimates:
+## mean of x mean of y 
+##  1.551329  1.982649</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="alternatives-for-non-normal-responses.html#cb80-1" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(my.clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;no&#39;</span>)</span>
+<span id="cb80-2"><a href="alternatives-for-non-normal-responses.html#cb80-2" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(my.clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;yes&#39;</span>)</span>
+<span id="cb80-3"><a href="alternatives-for-non-normal-responses.html#cb80-3" aria-hidden="true" tabindex="-1"></a>sp2 <span class="ot">&lt;-</span> (n1<span class="sc">*</span><span class="fu">var</span>(my.clouds<span class="sc">$</span>bc[my.clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;no&#39;</span>]) <span class="sc">+</span> n2<span class="sc">*</span><span class="fu">var</span>(my.clouds<span class="sc">$</span>bc[my.clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;yes&#39;</span>]))<span class="sc">/</span>(n1<span class="sc">+</span>n2<span class="dv">-2</span>)</span>
+<span id="cb80-4"><a href="alternatives-for-non-normal-responses.html#cb80-4" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> <span class="fu">c</span>( my.clouds<span class="sc">$</span>bc[my.clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;no&#39;</span>] <span class="sc">-</span> <span class="fu">mean</span>(my.clouds<span class="sc">$</span>bc[my.clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;no&#39;</span>]), my.clouds<span class="sc">$</span>bc[my.clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;yes&#39;</span>] <span class="sc">-</span> <span class="fu">mean</span>(my.clouds<span class="sc">$</span>bc[my.clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;yes&#39;</span>])  )<span class="sc">/</span><span class="fu">sqrt</span>(sp2)</span>
+<span id="cb80-5"><a href="alternatives-for-non-normal-responses.html#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(residuals)</span>
+<span id="cb80-6"><a href="alternatives-for-non-normal-responses.html#cb80-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(residuals)</span></code></pre></div>
+<p><img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>We do not reject the hypothesis of equal mean (transformed) rainfall. On the original data scale, we say the ratio of population median rainfall amounts is not significantly different than 1.</p>
+<p>We can look also at the t-test on the original data scale and see to what extent the residuals may suggest the normality assumption is suspect.</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="alternatives-for-non-normal-responses.html#cb81-1" aria-hidden="true" tabindex="-1"></a>orig.t.test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(clouds<span class="sc">$</span>rainfall[my.clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;no&#39;</span>], clouds<span class="sc">$</span>rainfall[clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;yes&#39;</span>], <span class="at">alternative =</span> <span class="st">&#39;two.sided&#39;</span>)</span>
+<span id="cb81-2"><a href="alternatives-for-non-normal-responses.html#cb81-2" aria-hidden="true" tabindex="-1"></a>orig.t.test</span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  clouds$rainfall[my.clouds$seeding == &quot;no&quot;] and clouds$rainfall[clouds$seeding == &quot;yes&quot;]
+## t = -0.3574, df = 20.871, p-value = 0.7244
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -3.154691  2.229691
+## sample estimates:
+## mean of x mean of y 
+##  4.171667  4.634167</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="alternatives-for-non-normal-responses.html#cb83-1" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;no&#39;</span>)</span>
+<span id="cb83-2"><a href="alternatives-for-non-normal-responses.html#cb83-2" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;yes&#39;</span>)</span>
+<span id="cb83-3"><a href="alternatives-for-non-normal-responses.html#cb83-3" aria-hidden="true" tabindex="-1"></a>sp2 <span class="ot">&lt;-</span> (n1<span class="sc">*</span><span class="fu">var</span>(clouds<span class="sc">$</span>rainfall[clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;no&#39;</span>]) <span class="sc">+</span> n2<span class="sc">*</span><span class="fu">var</span>(clouds<span class="sc">$</span>rainfall[clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;yes&#39;</span>]))<span class="sc">/</span>(n1<span class="sc">+</span>n2<span class="dv">-2</span>)</span>
+<span id="cb83-4"><a href="alternatives-for-non-normal-responses.html#cb83-4" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> <span class="fu">c</span>( clouds<span class="sc">$</span>rainfall[clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;no&#39;</span>] <span class="sc">-</span> <span class="fu">mean</span>(clouds<span class="sc">$</span>rainfall[clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;no&#39;</span>]), clouds<span class="sc">$</span>rainfall[clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;yes&#39;</span>] <span class="sc">-</span> <span class="fu">mean</span>(clouds<span class="sc">$</span>rainfall[clouds<span class="sc">$</span>seeding <span class="sc">==</span> <span class="st">&#39;yes&#39;</span>])  )<span class="sc">/</span><span class="fu">sqrt</span>(sp2)</span>
+<span id="cb83-5"><a href="alternatives-for-non-normal-responses.html#cb83-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(residuals)</span>
+<span id="cb83-6"><a href="alternatives-for-non-normal-responses.html#cb83-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(residuals)</span></code></pre></div>
+<p><img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>At least the tails of the residuals certainly look like less of a match than the Box-Cox transformed responses. This is consistent with the strong right skew we see in the original rainfall data.</p>
+</div>
+</div>
+<div id="rank-sum-test" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Rank-Sum Test<a href="alternatives-for-non-normal-responses.html#rank-sum-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We have seen that certain one-to-one transformations can be helpful when dealing with positively-skewed responses. But, what about other types of non-normal data? One general-purpose approach to comparing two populations of non-normal responses is to apply a rank transformation and use the Mann-Whitney (Rank-Sum) test.</p>
+<p>Unlike the previous Box-Cox transformations, the rank transformation is not one-to-one, so some information is lost moving from the original to the transformed data (the ranks). But, in exchange for this price we pay we obtain a data set that is easier to analyze, especially in certain special cases.</p>
+<p>To perform the rank-sum test we first sort all the responses, with the two groups pooled together. If some responses have the same value, we assign to them the average of the corresponding ranks. For example, the sorted responses 1,2,2,3,4,6 would get the ranks 1,2.5,2.5,4,5,6. Let <span class="math inline">\(T = \max\{T_1, T_2\}\)</span> where <span class="math inline">\(T_1\)</span> and <span class="math inline">\(T_2\)</span> are the sums of the ranks for responses in groups 1 and 2, respectively. Let <span class="math inline">\(n_T\)</span> be the sample size of the group corresponding to <span class="math inline">\(T\)</span>. Let <span class="math inline">\(\overline r\)</span> and <span class="math inline">\(s_r\)</span> be the sample mean and sample standard deviation of all of the ranks. Then, the rank-sum test statistic is defined as
+<span class="math display">\[z = \frac{T - n_T\overline r}{s_r\sqrt{\frac{n_1n_2}{n_1+n_2}}}.\]</span>
+For large <span class="math inline">\(n_1\)</span> and <span class="math inline">\(n_2\)</span>, <span class="math inline">\(z \stackrel{\cdot}{\sim}N(0,1)\)</span>, so the test conclusion follows from comparing <span class="math inline">\(z\)</span> to standard normal quantiles. For example, the p-value is <span class="math inline">\(2(1-\Phi(z))\)</span>.</p>
+<p>Just what does the rank-sum test test? In the most general form, under no further assumptions, the rank-sum tests equality of distributions of the response in the two groups. However, the test will only detect differences in those distributions if <span class="math inline">\(P(X_1 &gt; X_2) \ne P(X_2 &gt; X_1)\)</span> where <span class="math inline">\(X_1\)</span> and <span class="math inline">\(x_2\)</span> denote the response random variable from each population. For example, if the populations are both normal with the same mean but different variances, then the rank-sum test will not generally be able to distinguish between the populations. In the special case that the populations are different by a location shift, i.e., <span class="math inline">\(F_1(x) = F_1(x+c)\)</span> for a constant <span class="math inline">\(c\)</span>, the null hypothesis is equivalent to testing equality of population medians.</p>
+<div id="example-ratio-measurements" class="section level3 hasAnchor" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Example: ratio measurements<a href="alternatives-for-non-normal-responses.html#example-ratio-measurements" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The following data represent the ratios of lengths of canine and molar teeth in two populations of animals: wild and captive. Ratios are tricky, and may behave badly when the denominator can be close to zero. These ratio measurements exhibit non-normality, but not positive skew like we have seen before.</p>
+<a href="data:text/csv;base64,LHJhdGlvLnRlZXRoLGdyb3VwDQoxLDQuMiwwDQoyLDExLjUsMA0KMyw3LjMsMA0KNCw1LjgsMA0KNSw2LjQsMA0KNiwxMCwwDQo3LDExLjIsMA0KOCwxMS4yLDANCjksNS4yLDANCjEwLDcsMA0KMTEsMTUuMiwxDQoxMiwyMS41LDENCjEzLDE3LjYsMQ0KMTQsOS43LDENCjE1LDE0LjUsMQ0KMTYsMTAsMQ0KMTcsOC4yLDENCjE4LDkuNCwxDQoxOSwxNi41LDENCjIwLDkuNywxDQo=" download="teeth.csv">Download teeth.csv</a>
+<p><img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Next, we’ll implement the rank-sum test.</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="alternatives-for-non-normal-responses.html#cb84-1" aria-hidden="true" tabindex="-1"></a>teeth <span class="ot">&lt;-</span> teeth[<span class="fu">order</span>(teeth<span class="sc">$</span>ratio.teeth),]</span>
+<span id="cb84-2"><a href="alternatives-for-non-normal-responses.html#cb84-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-3"><a href="alternatives-for-non-normal-responses.html#cb84-3" aria-hidden="true" tabindex="-1"></a>ranks <span class="ot">&lt;-</span> <span class="fu">rank</span>(teeth<span class="sc">$</span>ratio.teeth, <span class="at">ties =</span> <span class="st">&#39;average&#39;</span>)</span>
+<span id="cb84-4"><a href="alternatives-for-non-normal-responses.html#cb84-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-5"><a href="alternatives-for-non-normal-responses.html#cb84-5" aria-hidden="true" tabindex="-1"></a>teeth<span class="sc">$</span>ranks <span class="ot">&lt;-</span> ranks</span>
+<span id="cb84-6"><a href="alternatives-for-non-normal-responses.html#cb84-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-7"><a href="alternatives-for-non-normal-responses.html#cb84-7" aria-hidden="true" tabindex="-1"></a>T1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(teeth<span class="sc">$</span>ranks[teeth<span class="sc">$</span>group <span class="sc">==</span> <span class="dv">1</span>])</span>
+<span id="cb84-8"><a href="alternatives-for-non-normal-responses.html#cb84-8" aria-hidden="true" tabindex="-1"></a>T0 <span class="ot">&lt;-</span> <span class="fu">sum</span>(teeth<span class="sc">$</span>ranks[teeth<span class="sc">$</span>group <span class="sc">==</span> <span class="dv">0</span>])</span>
+<span id="cb84-9"><a href="alternatives-for-non-normal-responses.html#cb84-9" aria-hidden="true" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="fu">max</span>(T1, T0)</span>
+<span id="cb84-10"><a href="alternatives-for-non-normal-responses.html#cb84-10" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(teeth<span class="sc">$</span>group <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb84-11"><a href="alternatives-for-non-normal-responses.html#cb84-11" aria-hidden="true" tabindex="-1"></a>n0 <span class="ot">&lt;-</span> <span class="fu">sum</span>(teeth<span class="sc">$</span>group <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb84-12"><a href="alternatives-for-non-normal-responses.html#cb84-12" aria-hidden="true" tabindex="-1"></a>nt <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(T<span class="sc">==</span>T1, n1, n0)</span>
+<span id="cb84-13"><a href="alternatives-for-non-normal-responses.html#cb84-13" aria-hidden="true" tabindex="-1"></a>rbar <span class="ot">&lt;-</span> <span class="fu">mean</span>(teeth<span class="sc">$</span>ranks)</span>
+<span id="cb84-14"><a href="alternatives-for-non-normal-responses.html#cb84-14" aria-hidden="true" tabindex="-1"></a>sr <span class="ot">&lt;-</span> <span class="fu">sd</span>(teeth<span class="sc">$</span>ranks)</span>
+<span id="cb84-15"><a href="alternatives-for-non-normal-responses.html#cb84-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-16"><a href="alternatives-for-non-normal-responses.html#cb84-16" aria-hidden="true" tabindex="-1"></a>test.stat <span class="ot">&lt;-</span> (T <span class="sc">-</span> nt<span class="sc">*</span>rbar)<span class="sc">/</span>(sr <span class="sc">*</span> <span class="fu">sqrt</span>(n1<span class="sc">*</span>n0<span class="sc">/</span>(n1<span class="sc">+</span>n0)))</span>
+<span id="cb84-17"><a href="alternatives-for-non-normal-responses.html#cb84-17" aria-hidden="true" tabindex="-1"></a>test.stat</span></code></pre></div>
+<pre><code>## [1] 2.308188</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="alternatives-for-non-normal-responses.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(test.stat))</span></code></pre></div>
+<pre><code>## [1] 0.02098868</code></pre>
+<p>The p-value is less than 0.05 so we would reject the null hypothesis of equal distributions. The teeth measurements have different distributions in the captive and wild populations. Digging in a bit further, we plot the empirical distribution functions of the measurements in each group. This shows the CDFs are approximately equivalent up to a location shift. So, it is reasonable to interpret the rank-sum test and rejecting the hypothesis of equal medians: the wild and captive populations have different median tooth ratios.</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="alternatives-for-non-normal-responses.html#cb88-1" aria-hidden="true" tabindex="-1"></a>F0 <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(teeth<span class="sc">$</span>ratio.teeth[teeth<span class="sc">$</span>group<span class="sc">==</span><span class="dv">0</span>])</span>
+<span id="cb88-2"><a href="alternatives-for-non-normal-responses.html#cb88-2" aria-hidden="true" tabindex="-1"></a>F1 <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(teeth<span class="sc">$</span>ratio.teeth[teeth<span class="sc">$</span>group<span class="sc">==</span><span class="dv">1</span>])</span>
+<span id="cb88-3"><a href="alternatives-for-non-normal-responses.html#cb88-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(F0, <span class="at">main =</span> <span class="st">&#39;&#39;</span>)</span>
+<span id="cb88-4"><a href="alternatives-for-non-normal-responses.html#cb88-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(F1, <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>)</span></code></pre></div>
+<p><img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Finally, compare the the rank-sum test to Student’s t-test. The t-test shows an even smaller p-value, but note that the qq-plot shows strong non-normality, which calls into question the appropriateness of the t-test.</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="alternatives-for-non-normal-responses.html#cb89-1" aria-hidden="true" tabindex="-1"></a>my.t.test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(ratio.teeth<span class="sc">~</span>group, <span class="at">data =</span> teeth)</span>
+<span id="cb89-2"><a href="alternatives-for-non-normal-responses.html#cb89-2" aria-hidden="true" tabindex="-1"></a>my.t.test</span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  ratio.teeth by group
+## t = -3.1697, df = 14.969, p-value = 0.006359
+## alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+## 95 percent confidence interval:
+##  -8.780943 -1.719057
+## sample estimates:
+## mean in group 0 mean in group 1 
+##            7.98           13.23</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="alternatives-for-non-normal-responses.html#cb91-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">c</span>((teeth<span class="sc">$</span>ratio.teeth[teeth<span class="sc">$</span>group<span class="sc">==</span><span class="dv">0</span>] <span class="sc">-</span> my.t.test<span class="sc">$</span>estimate[<span class="dv">1</span>]) <span class="sc">/</span> my.t.test<span class="sc">$</span>stderr, (teeth<span class="sc">$</span>ratio.teeth[teeth<span class="sc">$</span>group<span class="sc">==</span><span class="dv">1</span>] <span class="sc">-</span> my.t.test<span class="sc">$</span>estimate[<span class="dv">2</span>]) <span class="sc">/</span> my.t.test<span class="sc">$</span>stderr)</span>
+<span id="cb91-2"><a href="alternatives-for-non-normal-responses.html#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(z)</span>
+<span id="cb91-3"><a href="alternatives-for-non-normal-responses.html#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(z)</span></code></pre></div>
+<p><img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+</div>
+<div id="signed-rank-test" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Signed-rank test<a href="alternatives-for-non-normal-responses.html#signed-rank-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The signed-rank test or Wilcoxon signed-rank test is the paired analog of the Mann-Whitney test. As an illustrative example we consider a real twins study (not simulated this time) comparing BMIs in pairs of twins.</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="alternatives-for-non-normal-responses.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mets)</span></code></pre></div>
+<pre><code>## Loading required package: timereg</code></pre>
+<pre><code>## Loading required package: survival</code></pre>
+<pre><code>## Loading required package: lava</code></pre>
+<pre><code>## mets version 1.3.0</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="alternatives-for-non-normal-responses.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;twinbmi&quot;</span>)</span>
+<span id="cb97-2"><a href="alternatives-for-non-normal-responses.html#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(twinbmi)</span></code></pre></div>
+<pre><code>##   tvparnr      bmi      age gender zyg id num
+## 1       1 26.33289 57.51212   male  DZ  1   1
+## 2       1 25.46939 57.51212   male  DZ  1   2
+## 3       2 28.65014 56.62696   male  MZ  2   1
+## 5       3 28.40909 57.73097   male  DZ  3   1
+## 7       4 27.25089 53.68683   male  DZ  4   1
+## 8       4 28.07504 53.68683   male  DZ  4   2</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="alternatives-for-non-normal-responses.html#cb99-1" aria-hidden="true" tabindex="-1"></a>twinwide <span class="ot">&lt;-</span> <span class="fu">fast.reshape</span>(twinbmi, <span class="at">id=</span><span class="st">&quot;tvparnr&quot;</span>,<span class="at">varying=</span><span class="fu">c</span>(<span class="st">&quot;bmi&quot;</span>))</span>
+<span id="cb99-2"><a href="alternatives-for-non-normal-responses.html#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(twinwide)</span></code></pre></div>
+<pre><code>##    tvparnr     bmi1      age gender zyg id num     bmi2
+## 1        1 26.33289 57.51212   male  DZ  1   1 25.46939
+## 3        2 28.65014 56.62696   male  MZ  2   1       NA
+## 5        3 28.40909 57.73097   male  DZ  3   1       NA
+## 7        4 27.25089 53.68683   male  DZ  4   1 28.07504
+## 9        5 27.77778 52.55838   male  DZ  5   1       NA
+## 11       6 28.04282 52.52231   male  DZ  6   1 22.30936</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="alternatives-for-non-normal-responses.html#cb101-1" aria-hidden="true" tabindex="-1"></a>twinwide<span class="sc">$</span>bmidiff <span class="ot">&lt;-</span> (twinwide<span class="sc">$</span>bmi1 <span class="sc">-</span> twinwide<span class="sc">$</span>bmi2)</span>
+<span id="cb101-2"><a href="alternatives-for-non-normal-responses.html#cb101-2" aria-hidden="true" tabindex="-1"></a>twinwide.cc <span class="ot">&lt;-</span> <span class="fu">complete.cases</span>(twinwide)</span>
+<span id="cb101-3"><a href="alternatives-for-non-normal-responses.html#cb101-3" aria-hidden="true" tabindex="-1"></a>twinwide <span class="ot">&lt;-</span> twinwide[twinwide.cc,]</span>
+<span id="cb101-4"><a href="alternatives-for-non-normal-responses.html#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(twinwide)</span></code></pre></div>
+<pre><code>##    tvparnr     bmi1      age gender zyg id num     bmi2  bmidiff
+## 1        1 26.33289 57.51212   male  DZ  1   1 25.46939  0.86350
+## 7        4 27.25089 53.68683   male  DZ  4   1 28.07504 -0.82415
+## 11       6 28.04282 52.52231   male  DZ  6   1 22.30936  5.73346
+## 13       7 28.06642 52.62944   male  DZ  7   1 26.51180  1.55462
+## 19      10 30.47797 51.24806   male  DZ 10   1 27.66010  2.81787
+## 23      12 27.39818 50.02067   male  DZ 12   1 25.97012  1.42806</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="alternatives-for-non-normal-responses.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(twinwide)</span></code></pre></div>
+<pre><code>## [1] 4271    9</code></pre>
+<p>The BMI differences may appear normal but actually exhibit <em>kurtosis</em>. Since this is an unusual non-normality we will apply a rank transformation.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="alternatives-for-non-normal-responses.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(twinwide<span class="sc">$</span>bmidiff, <span class="at">freq =</span> F)</span>
+<span id="cb105-2"><a href="alternatives-for-non-normal-responses.html#cb105-2" aria-hidden="true" tabindex="-1"></a>dnorm.tw <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">dnorm</span>(x,<span class="fu">mean</span>(twinwide<span class="sc">$</span>bmidiff), <span class="fu">sd</span>(twinwide<span class="sc">$</span>bmidiff))</span>
+<span id="cb105-3"><a href="alternatives-for-non-normal-responses.html#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(dnorm.tw, <span class="sc">-</span><span class="dv">20</span>,<span class="dv">20</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>We can compute the test statistic and p-value by hand as follows: let <span class="math inline">\(T\)</span> be the sum of the ranks of the absolute BMI differences in the group of positive differences. Then, <span class="math inline">\(z = (T - \tfrac14n(n+1)) / \sqrt{n(n+1)(2n+1)/24}\)</span> is approximately standard normal.</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="alternatives-for-non-normal-responses.html#cb106-1" aria-hidden="true" tabindex="-1"></a>absdiff <span class="ot">&lt;-</span> <span class="fu">abs</span>(twinwide<span class="sc">$</span>bmidiff)</span>
+<span id="cb106-2"><a href="alternatives-for-non-normal-responses.html#cb106-2" aria-hidden="true" tabindex="-1"></a>signs <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(twinwide<span class="sc">$</span>bmidiff<span class="sc">&lt;</span><span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb106-3"><a href="alternatives-for-non-normal-responses.html#cb106-3" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="fu">length</span>(signs)</span>
+<span id="cb106-4"><a href="alternatives-for-non-normal-responses.html#cb106-4" aria-hidden="true" tabindex="-1"></a>sr.nums <span class="ot">&lt;-</span> <span class="fu">cbind</span>(absdiff, signs, <span class="fu">rank</span>(absdiff))</span>
+<span id="cb106-5"><a href="alternatives-for-non-normal-responses.html#cb106-5" aria-hidden="true" tabindex="-1"></a>sr.nums <span class="ot">&lt;-</span> sr.nums[<span class="fu">order</span>(sr.nums[,<span class="dv">1</span>]),]</span>
+<span id="cb106-6"><a href="alternatives-for-non-normal-responses.html#cb106-6" aria-hidden="true" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="fu">sum</span>(sr.nums[sr.nums[,<span class="dv">2</span>]<span class="sc">==</span><span class="dv">1</span>,<span class="dv">3</span>])</span>
+<span id="cb106-7"><a href="alternatives-for-non-normal-responses.html#cb106-7" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> (T <span class="sc">-</span> n<span class="sc">*</span>(n<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span><span class="dv">4</span>)<span class="sc">/</span><span class="fu">sqrt</span>(n<span class="sc">*</span>(n<span class="sc">+</span><span class="dv">1</span>)<span class="sc">*</span>(<span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span><span class="dv">1</span>)<span class="sc">/</span><span class="dv">24</span>)</span>
+<span id="cb106-8"><a href="alternatives-for-non-normal-responses.html#cb106-8" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(<span class="fu">abs</span>(z)))</span></code></pre></div>
+<pre><code>## [1] 0.1904966</code></pre>
+<p>R has built in functions for the rank-sum and signed-rank tests.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="alternatives-for-non-normal-responses.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(twinwide<span class="sc">$</span>bmi1, twinwide<span class="sc">$</span>bmi2, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## 
+##  Wilcoxon signed rank test with continuity correction
+## 
+## data:  twinwide$bmi1 and twinwide$bmi2
+## V = 4551983, p-value = 0.2021
+## alternative hypothesis: true location shift is not equal to 0</code></pre>
+<p>In this case we likely will not come to a different conclusion if we apply Student’s t-test.</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="alternatives-for-non-normal-responses.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(twinwide<span class="sc">$</span>bmi1, twinwide<span class="sc">$</span>bmi2, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  twinwide$bmi1 and twinwide$bmi2
+## t = 1.1008, df = 4270, p-value = 0.2711
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  -0.04832046  0.17204938
+## sample estimates:
+## mean difference 
+##      0.06186446</code></pre>
+</div>
+<div id="bootstrap" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Bootstrap<a href="alternatives-for-non-normal-responses.html#bootstrap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="intro-to-the-bootstrap" class="section level3 hasAnchor" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> Intro to the bootstrap<a href="alternatives-for-non-normal-responses.html#intro-to-the-bootstrap" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For hypothesis testing and confidence intervals, there is a “statistic” whose sampling distribution is required<br><br></p>
+<p>For example, to test <span class="math inline">\(H_0:\mu = \mu_0\)</span> using a normal random sample <span class="math inline">\(X_1, ..., X_n\)</span> with <span class="math inline">\(X_i \stackrel{iid}{\sim}N(\mu, \sigma^2)\)</span> the test statistic
+<span class="math display">\[T = \frac{\bar X - \mu_0}{S/\sqrt{n}}\]</span>
+has a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n-1\)</span> degrees of freedom given the null hypothesis is true.<br><br></p>
+<p>Only in very simple problems can we determine an “exact” test statistic. For example, in the two-sample t-test with unknown, unequal population variances, the T statistic is only approximate.<br><br></p>
+<p>We often rely on assumptions (like normality) or large sample sizes (CLT) in order to derive approximate (or asymptotic) distributions of statistics.<br><br></p>
+<p>The bootstrap (in a manner similar to Monte Carlo) tries to approximate the distribution of a test statistic using simulations.</p>
+<p>For a distribution with cdf <span class="math inline">\(F\)</span>, we are interested in a parameter <span class="math inline">\(\theta = \phi(F)\)</span>, and functional of <span class="math inline">\(F\)</span>.<br><br></p>
+<p>Examples:<br>
+1. Mean - <span class="math inline">\(\phi(F) = \int xdF(x)\)</span><br>
+2. Anything else that is a function of moments, like variance<br>
+3. Median - <span class="math inline">\(\phi(F) = \inf\{x: F(x)\geq 0.5\}\)</span>…<br><br></p>
+<p>Given data <span class="math inline">\(X_1, ..., X_n\)</span> the empirical CDF (think of this as an estimate of <span class="math inline">\(F\)</span>) is
+<span class="math display">\[\hat F(x) = \frac{1}{n}\sum_{i=1}^n 1\{X_i \leq x\}.\]</span></p>
+<p><br>
+A natural estimate of <span class="math inline">\(\theta\)</span> is the “plug-in” estimator <span class="math inline">\(\hat\theta = \phi(\hat F)\)</span>.</p>
+<p>Given the previous setup of CDF and empirical CDF, suppose we want to estimate <span class="math inline">\(\theta\)</span>. If we could somehow simulate from <span class="math inline">\(F\)</span>, then our knowledge of Monte Carlo suggests the following:<br>
+1. Simulate many data sets, say <span class="math inline">\(M\)</span>, of size <span class="math inline">\(n\)</span>: <span class="math inline">\(X_{1,1}, ..., X_{n,1}\)</span>, …, <span class="math inline">\(X_{1,M}, ..., X_{n,M}\)</span>. <br>
+2. From the <span class="math inline">\(M\)</span> data sets, compute <span class="math inline">\(\hat{\theta}_i\)</span> for <span class="math inline">\(i=1, ..., M\)</span>. <br>
+3. Then, our many estimates should given us an idea of the mean and the variance of <span class="math inline">\(\hat{\theta}\)</span>.<br><br></p>
+<p>This actually works when we know the distribution of the test statistic. In the one-sample t-test for a normal mean, the test statistic has a <span class="math inline">\(t(n-1)\)</span> distribution. So, if we sample from this distribution many times, we will be able to find the rejection region for the hypothesis test by computing Monte Carlo estimates of the <span class="math inline">\(t(n-1)\)</span> quantiles, but this is rather trivial…</p>
+<p>Of course, we (usually) cannot simulate from <span class="math inline">\(F\)</span> because it is unknown (depends on unknown parameters). <br><br></p>
+<p>Bootstrap idea: Replace simulation from <span class="math inline">\(F\)</span> with simulation from <span class="math inline">\(\hat F\)</span>! <br><br></p>
+<p>Note: it is easy to simulate from <span class="math inline">\(\hat F\)</span>, it’s just simulation from a discrete uniform distribution with probabilities <span class="math inline">\(1/n\)</span> on each data point.<br></p>
+<p>Suppose we are given the following two samples:</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="alternatives-for-non-normal-responses.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3214354</span>)</span>
+<span id="cb112-2"><a href="alternatives-for-non-normal-responses.html#cb112-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">10</span>,<span class="dv">1</span>)</span>
+<span id="cb112-3"><a href="alternatives-for-non-normal-responses.html#cb112-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">9</span>,<span class="fl">0.8</span>)</span>
+<span id="cb112-4"><a href="alternatives-for-non-normal-responses.html#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(x,<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##  [1] 0.18 1.30 0.09 1.30 1.73 0.86 1.59 0.60 0.58 0.68</code></pre>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="alternatives-for-non-normal-responses.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(y,<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [1] 0.02 0.50 0.41 0.19 0.19 0.69 2.40 1.11 0.11</code></pre>
+<p>We could use the t-test, but wait…</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="alternatives-for-non-normal-responses.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb116-2"><a href="alternatives-for-non-normal-responses.html#cb116-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(x)</span>
+<span id="cb116-3"><a href="alternatives-for-non-normal-responses.html#cb116-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(x)</span>
+<span id="cb116-4"><a href="alternatives-for-non-normal-responses.html#cb116-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(y)</span>
+<span id="cb116-5"><a href="alternatives-for-non-normal-responses.html#cb116-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(y)</span></code></pre></div>
+<p><img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="alternatives-for-non-normal-responses.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(x)</span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  x
+## W = 0.94146, p-value = 0.5694</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="alternatives-for-non-normal-responses.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(y)</span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  y
+## W = 0.77085, p-value = 0.009449</code></pre>
+<p>What “test statistic” should I use to test <span class="math inline">\(H_0:\mu_X = \mu_Y\)</span>? Why not <span class="math inline">\(\bar X - \bar Y\)</span>?</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="alternatives-for-non-normal-responses.html#cb121-1" aria-hidden="true" tabindex="-1"></a>test.statistic <span class="ot">&lt;-</span> <span class="fu">mean</span>(x) <span class="sc">-</span> <span class="fu">mean</span>(y)</span>
+<span id="cb121-2"><a href="alternatives-for-non-normal-responses.html#cb121-2" aria-hidden="true" tabindex="-1"></a>boot.test.statistic <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">10000</span>)</span>
+<span id="cb121-3"><a href="alternatives-for-non-normal-responses.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10000</span>){</span>
+<span id="cb121-4"><a href="alternatives-for-non-normal-responses.html#cb121-4" aria-hidden="true" tabindex="-1"></a>  boot.x <span class="ot">&lt;-</span> <span class="fu">sample</span>(x,<span class="at">replace =</span> T)</span>
+<span id="cb121-5"><a href="alternatives-for-non-normal-responses.html#cb121-5" aria-hidden="true" tabindex="-1"></a>  boot.y <span class="ot">&lt;-</span> <span class="fu">sample</span>(y, <span class="at">replace =</span> T)</span>
+<span id="cb121-6"><a href="alternatives-for-non-normal-responses.html#cb121-6" aria-hidden="true" tabindex="-1"></a>  boot.test.statistic[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(boot.x)<span class="sc">-</span><span class="fu">mean</span>(boot.y)</span>
+<span id="cb121-7"><a href="alternatives-for-non-normal-responses.html#cb121-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb121-8"><a href="alternatives-for-non-normal-responses.html#cb121-8" aria-hidden="true" tabindex="-1"></a>test.statistic</span></code></pre></div>
+<pre><code>## [1] 0.2657391</code></pre>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="alternatives-for-non-normal-responses.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(boot.test.statistic,<span class="fl">0.025</span>)</span></code></pre></div>
+<pre><code>##      2.5% 
+## -0.345881</code></pre>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="alternatives-for-non-normal-responses.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(boot.test.statistic,<span class="fl">0.975</span>)</span></code></pre></div>
+<pre><code>##    97.5% 
+## 0.792484</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="alternatives-for-non-normal-responses.html#cb127-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">median</span>(boot.test.statistic)</span>
+<span id="cb127-2"><a href="alternatives-for-non-normal-responses.html#cb127-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb127-3"><a href="alternatives-for-non-normal-responses.html#cb127-3" aria-hidden="true" tabindex="-1"></a>approx.p.value <span class="ot">=</span> <span class="fu">ifelse</span>(test.statistic <span class="sc">&gt;</span> m, <span class="fu">sum</span>((boot.test.statistic<span class="sc">-</span>m) <span class="sc">&gt;</span> (test.statistic <span class="sc">-</span> m))<span class="sc">/</span><span class="dv">10000</span> <span class="sc">+</span> <span class="fu">sum</span>((boot.test.statistic<span class="sc">-</span>m) <span class="sc">&lt;</span> (m<span class="sc">-</span>test.statistic))<span class="sc">/</span><span class="dv">10000</span>, <span class="fu">sum</span>((boot.test.statistic<span class="sc">-</span>m) <span class="sc">&gt;</span> (m<span class="sc">-</span>test.statistic))<span class="sc">/</span><span class="dv">10000</span> <span class="sc">+</span> <span class="fu">sum</span>((boot.test.statistic<span class="sc">-</span>m) <span class="sc">&lt;</span> (test.statistic<span class="sc">-</span>m))<span class="sc">/</span><span class="dv">10000</span> )</span>
+<span id="cb127-4"><a href="alternatives-for-non-normal-responses.html#cb127-4" aria-hidden="true" tabindex="-1"></a>approx.p.value </span></code></pre></div>
+<pre><code>## [1] 0.9726</code></pre>
+</div>
+<div id="bootstrap-confidence-intervals" class="section level3 hasAnchor" number="5.4.2">
+<h3><span class="header-section-number">5.4.2</span> Bootstrap Confidence Intervals<a href="alternatives-for-non-normal-responses.html#bootstrap-confidence-intervals" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A variety of methods are used to construct confidence intervals using the bootstrap distribution of an estimator. We’ll discuss the percentile, basic, and Studentized methods, although several others are available, including the bias-corrected and accelerated (BCa) intervals computed by default in R’s boot package.</p>
+<p><br><br></p>
+<p>Suppose the bootstrap samples <span class="math inline">\(\hat\theta_1, \ldots, \hat\theta_B\)</span> are available. The simplest bootstrap interval estimate is given by the percentile method, which defines the <span class="math inline">\(100(1-\alpha)\%\)</span> CI to be the <span class="math inline">\(\alpha/2\)</span> to <span class="math inline">\((1-\alpha/2)\)</span> sample quantiles of <span class="math inline">\(\hat\theta_1, \ldots, \hat\theta_B\)</span>. There are good arguments against the percentile method, but we won’t wade into the details presently. Those arguments tend to favor the basic bootstrap method, which defines the <span class="math inline">\(100(1-\alpha)\%\)</span> CI to be the interval <span class="math inline">\((2\overline \theta - \hat\theta_{1-\alpha/2}, \, 2\overline \theta - \hat\theta_{\alpha/2})\)</span>, which is twise the sample mean of the bootstrapped estimates minus the <span class="math inline">\((1-\alpha/2)\)</span> and <span class="math inline">\(\alpha/2\)</span> sample quantiles of those bootstrapped estimates <span class="math inline">\(\hat\theta_1, \ldots, \hat\theta_B\)</span>.</p>
+<p><br><br></p>
+<p>The last method we’ll discuss is the Studentized bootstrap. The idea of the method is to mimic the usual z- or t-test pivotal quantity <span class="math inline">\(\frac{\hat\theta - \theta}{se(\hat\theta)}\)</span>. First, compute <span class="math inline">\(\hat\theta\)</span> for teh original data. Then, perform the following nested bootstrap, for <span class="math inline">\(b\)</span> in 1 to <span class="math inline">\(B\)</span> do:<br>
+1.Resample the data with replacement to generate the <span class="math inline">\(b^{th}\)</span> bootstrap data set<br>
+a. for this <span class="math inline">\(b^{th}\)</span> data set compute the point estimate <span class="math inline">\(\tilde \theta_b\)</span><br>
+b. Resample the resamples! Generate <span class="math inline">\(K\)</span> nested bootstrap resamples sample of data. For each of them compute <span class="math inline">\(\tilde\theta_{b,k}\)</span> for <span class="math inline">\(k=1, \ldots, K\)</span>.<br>
+c. Estimate <span class="math inline">\(se(\tilde \theta)\)</span> as the standard deviation of <span class="math inline">\(\tilde\theta_{b,k}\)</span> for <span class="math inline">\(k=1, \ldots, K\)</span>.<br>
+d. Keep the studentized value <span class="math inline">\(q_b = \frac{\tilde\theta_b - \hat\theta}{se(\tilde\theta_b)}\)</span><br>
+2. Let <span class="math inline">\(se(\hat\theta)\)</span> be estimated by the sample standard deviation of <span class="math inline">\(\tilde\theta_1, \ldots, \tilde\theta_B\)</span>.<br>
+3. Define the Studentized interval as
+<span class="math display">\[(\hat\theta - q_{1-\alpha/2}se(\hat\theta), \, \hat\theta - q_{\alpha/2}se(\hat\theta))\]</span>
+where <span class="math inline">\(q_\alpha\)</span> is the <span class="math inline">\(\alpha\)</span> sample quantile of the Studentized <span class="math inline">\(q\)</span> values.</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="alternatives-for-non-normal-responses.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3214354</span>)</span>
+<span id="cb129-2"><a href="alternatives-for-non-normal-responses.html#cb129-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">10</span>,<span class="dv">1</span>)</span>
+<span id="cb129-3"><a href="alternatives-for-non-normal-responses.html#cb129-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">9</span>,<span class="fl">0.8</span>)</span>
+<span id="cb129-4"><a href="alternatives-for-non-normal-responses.html#cb129-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(x,<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##  [1] 0.18 1.30 0.09 1.30 1.73 0.86 1.59 0.60 0.58 0.68</code></pre>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="alternatives-for-non-normal-responses.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(y,<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [1] 0.02 0.50 0.41 0.19 0.19 0.69 2.40 1.11 0.11</code></pre>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="alternatives-for-non-normal-responses.html#cb133-1" aria-hidden="true" tabindex="-1"></a>my.boot <span class="ot">&lt;-</span> <span class="cf">function</span>(x,y, B, K, alpha){</span>
+<span id="cb133-2"><a href="alternatives-for-non-normal-responses.html#cb133-2" aria-hidden="true" tabindex="-1"></a>  hattheta <span class="ot">&lt;-</span> <span class="fu">mean</span>(x) <span class="sc">-</span> <span class="fu">mean</span>(y)</span>
+<span id="cb133-3"><a href="alternatives-for-non-normal-responses.html#cb133-3" aria-hidden="true" tabindex="-1"></a>  tildetheta <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>,B)</span>
+<span id="cb133-4"><a href="alternatives-for-non-normal-responses.html#cb133-4" aria-hidden="true" tabindex="-1"></a>  q <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>,B)</span>
+<span id="cb133-5"><a href="alternatives-for-non-normal-responses.html#cb133-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(b <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B){</span>
+<span id="cb133-6"><a href="alternatives-for-non-normal-responses.html#cb133-6" aria-hidden="true" tabindex="-1"></a>  indices1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">10</span>,<span class="dv">10</span>,<span class="at">replace =</span> <span class="cn">TRUE</span>)  </span>
+<span id="cb133-7"><a href="alternatives-for-non-normal-responses.html#cb133-7" aria-hidden="true" tabindex="-1"></a>  indices2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">9</span>,<span class="dv">9</span>,<span class="at">replace =</span> <span class="cn">TRUE</span>)  </span>
+<span id="cb133-8"><a href="alternatives-for-non-normal-responses.html#cb133-8" aria-hidden="true" tabindex="-1"></a>  xstar <span class="ot">&lt;-</span> x[indices1]</span>
+<span id="cb133-9"><a href="alternatives-for-non-normal-responses.html#cb133-9" aria-hidden="true" tabindex="-1"></a>  ystar <span class="ot">&lt;-</span> y[indices2]</span>
+<span id="cb133-10"><a href="alternatives-for-non-normal-responses.html#cb133-10" aria-hidden="true" tabindex="-1"></a>  tildetheta[b] <span class="ot">&lt;-</span> <span class="fu">mean</span>(xstar) <span class="sc">-</span> <span class="fu">mean</span>(ystar)</span>
+<span id="cb133-11"><a href="alternatives-for-non-normal-responses.html#cb133-11" aria-hidden="true" tabindex="-1"></a>  tilde2 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>,K)</span>
+<span id="cb133-12"><a href="alternatives-for-non-normal-responses.html#cb133-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){</span>
+<span id="cb133-13"><a href="alternatives-for-non-normal-responses.html#cb133-13" aria-hidden="true" tabindex="-1"></a>        indices1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">10</span>,<span class="dv">10</span>,<span class="at">replace =</span> <span class="cn">TRUE</span>)  </span>
+<span id="cb133-14"><a href="alternatives-for-non-normal-responses.html#cb133-14" aria-hidden="true" tabindex="-1"></a>        indices2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">9</span>,<span class="dv">9</span>,<span class="at">replace =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb133-15"><a href="alternatives-for-non-normal-responses.html#cb133-15" aria-hidden="true" tabindex="-1"></a>        xstar2 <span class="ot">&lt;-</span> xstar[indices1]</span>
+<span id="cb133-16"><a href="alternatives-for-non-normal-responses.html#cb133-16" aria-hidden="true" tabindex="-1"></a>        ystar2 <span class="ot">&lt;-</span> ystar[indices2]</span>
+<span id="cb133-17"><a href="alternatives-for-non-normal-responses.html#cb133-17" aria-hidden="true" tabindex="-1"></a>        tilde2[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(xstar2)<span class="sc">-</span><span class="fu">mean</span>(ystar2)</span>
+<span id="cb133-18"><a href="alternatives-for-non-normal-responses.html#cb133-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb133-19"><a href="alternatives-for-non-normal-responses.html#cb133-19" aria-hidden="true" tabindex="-1"></a>  q[b] <span class="ot">&lt;-</span> (tildetheta[b] <span class="sc">-</span> hattheta)<span class="sc">/</span><span class="fu">sd</span>(tilde2)</span>
+<span id="cb133-20"><a href="alternatives-for-non-normal-responses.html#cb133-20" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb133-21"><a href="alternatives-for-non-normal-responses.html#cb133-21" aria-hidden="true" tabindex="-1"></a>  intv <span class="ot">&lt;-</span> hattheta <span class="sc">-</span> <span class="fu">sd</span>(tildetheta)<span class="sc">*</span><span class="fu">quantile</span>(q,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>,alpha<span class="sc">/</span><span class="dv">2</span>))</span>
+<span id="cb133-22"><a href="alternatives-for-non-normal-responses.html#cb133-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">as.numeric</span>(intv))</span>
+<span id="cb133-23"><a href="alternatives-for-non-normal-responses.html#cb133-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb133-24"><a href="alternatives-for-non-normal-responses.html#cb133-24" aria-hidden="true" tabindex="-1"></a><span class="fu">my.boot</span>(x,y,<span class="dv">1000</span>,<span class="dv">50</span>,<span class="fl">0.05</span>)</span></code></pre></div>
+<pre><code>## [1] -0.6147748  0.8576096</code></pre>
+</div>
+<div id="bootstrapping-linear-models" class="section level3 hasAnchor" number="5.4.3">
+<h3><span class="header-section-number">5.4.3</span> Bootstrapping linear models<a href="alternatives-for-non-normal-responses.html#bootstrapping-linear-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When we have only one sample of iid data, bootstrapping is straightforward: simply sample with replacement n times from the original data to obtain a single bootstrap-resampled data set. Repeat many times, recording the estimate corresponding to each resampled set. When there is more “structure” present in the data we need to think carefully about how that structure should be treated by the resampling procedure.<br />
+<br><br>
+In linear models, i.e., the Gauss-Markov model, for each response <span class="math inline">\(Y_i\)</span> there is a corresponding covariate vector <span class="math inline">\(X_i\)</span>. How should these pairs <span class="math inline">\((Y_i, X_i)\)</span> be treated by the resampling procedure?
+<br><br>
+One method for bootstrapping a linear model is called row-resampling. Imagine binding the <span class="math inline">\(n\times 1\)</span> column of responses <span class="math inline">\(Y\)</span> to the <span class="math inline">\(n\times p\)</span> matrix of covariates <span class="math inline">\(X\)</span> and then resampling rows with replacement. We can do this by sampling the integers <span class="math inline">\(1, \ldots, n\)</span> with replacement, each time taking the corresponding row of <span class="math inline">\((Y, X)\)</span> as the bootstrap resample. Row resampling treats the pairs <span class="math inline">\((Y_i, X_i)\)</span> as random, but this is not always reasonable. For example, in a two-sample experiment in which we apply a treatment to 10 of 20 subjects at random and keep the remaining 10 as a control group, row resampling will produce resampled data sets with more than ten in one of the two groups and fewer in the other, which is not how the experiment was performed.
+<br><br>
+When the <em>design</em> is fixed, e.g., we have precisely ten subjects in each group, a different bootstrap method, called residual boostrap, makes more sense. The residual bootstrap starts with the residuals <span class="math inline">\(e = y - \hat y = y - X_i\hat\beta\)</span>. We resample the residuals to obtain <span class="math inline">\(e^\star = (e_1^\star, \ldots, e_n^\star)^\top\)</span>. Next, we compute the bootstrapped responses, <span class="math inline">\(y_i^\star = X_i\hat\beta + e_i^\star\)</span>. Finally, we compute <span class="math inline">\(\hat\beta^\star\)</span> using <span class="math inline">\(X\)</span> and <span class="math inline">\(y^\star\)</span>. This way, the design matrix <span class="math inline">\(X\)</span> remains the same throughout the bootstrap procedure, preserving the structure of the experiment.
+<br><br>
+Example: Consider the following experiment to evaluate the effect of a bacterial infection on the lifespan of Guinea pigs as measure in days. First, we apply the ro-resampling method. Admittedly, this method makes little sense if we intend for the experiment to have 64 pigs in the control group and 58 in the treatment group.</p>
+<a href="data:text/csv;base64,UGlnLFRpbWUsVHJlYXRtZW50DQoxLDE4LENvbnRyb2wNCjIsMzYsQ29udHJvbA0KMyw1MCxDb250cm9sDQo0LDUyLENvbnRyb2wNCjUsODYsQ29udHJvbA0KNiw4NyxDb250cm9sDQo3LDg5LENvbnRyb2wNCjgsOTEsQ29udHJvbA0KOSwxMDIsQ29udHJvbA0KMTAsMTA4LENvbnRyb2wNCjExLDExMyxDb250cm9sDQoxMiwxMTQsQ29udHJvbA0KMTMsMTE1LENvbnRyb2wNCjE0LDExOCxDb250cm9sDQoxNSwxMTksQ29udHJvbA0KMTYsMTIwLENvbnRyb2wNCjE3LDE0OSxDb250cm9sDQoxOCwxNjAsQ29udHJvbA0KMTksMTY1LENvbnRyb2wNCjIwLDE2NixDb250cm9sDQoyMSwxNjcsQ29udHJvbA0KMjIsMTY3LENvbnRyb2wNCjIzLDE3MyxDb250cm9sDQoyNCwxNzgsQ29udHJvbA0KMjUsMTg5LENvbnRyb2wNCjI2LDIwOSxDb250cm9sDQoyNywyMTIsQ29udHJvbA0KMjgsMjE2LENvbnRyb2wNCjI5LDI3MyxDb250cm9sDQozMCwyNzgsQ29udHJvbA0KMzEsMjc5LENvbnRyb2wNCjMyLDI5MixDb250cm9sDQozMywzNDEsQ29udHJvbA0KMzQsMzU1LENvbnRyb2wNCjM1LDM2NyxDb250cm9sDQozNiwzODAsQ29udHJvbA0KMzcsMzgyLENvbnRyb2wNCjM4LDQyMSxDb250cm9sDQozOSw0MjEsQ29udHJvbA0KNDAsNDMyLENvbnRyb2wNCjQxLDQ0NixDb250cm9sDQo0Miw0NTUsQ29udHJvbA0KNDMsNDYzLENvbnRyb2wNCjQ0LDQ3NCxDb250cm9sDQo0NSw1MDUsQ29udHJvbA0KNDYsNTQ1LENvbnRyb2wNCjQ3LDU0NixDb250cm9sDQo0OCw1NjksQ29udHJvbA0KNDksNTc2LENvbnRyb2wNCjUwLDU5MCxDb250cm9sDQo1MSw2MDMsQ29udHJvbA0KNTIsNjA3LENvbnRyb2wNCjUzLDYwOCxDb250cm9sDQo1NCw2MjEsQ29udHJvbA0KNTUsNjM0LENvbnRyb2wNCjU2LDYzNyxDb250cm9sDQo1Nyw2MzgsQ29udHJvbA0KNTgsNjQxLENvbnRyb2wNCjU5LDY1MCxDb250cm9sDQo2MCw2NjMsQ29udHJvbA0KNjEsNjg1LENvbnRyb2wNCjYyLDY4OCxDb250cm9sDQo2Myw3MjUsQ29udHJvbA0KNjQsNzM1LENvbnRyb2wNCjY1LDc2LEJhY2lsbGkNCjY2LDkzLEJhY2lsbGkNCjY3LDk3LEJhY2lsbGkNCjY4LDEwNyxCYWNpbGxpDQo2OSwxMDgsQmFjaWxsaQ0KNzAsMTEzLEJhY2lsbGkNCjcxLDExNCxCYWNpbGxpDQo3MiwxMTksQmFjaWxsaQ0KNzMsMTM2LEJhY2lsbGkNCjc0LDEzOCxCYWNpbGxpDQo3NSwxMzksQmFjaWxsaQ0KNzYsMTUyLEJhY2lsbGkNCjc3LDE1NCxCYWNpbGxpDQo3OCwxNTQsQmFjaWxsaQ0KNzksMTYwLEJhY2lsbGkNCjgwLDE2NCxCYWNpbGxpDQo4MSwxNjQsQmFjaWxsaQ0KODIsMTY2LEJhY2lsbGkNCjgzLDE2OCxCYWNpbGxpDQo4NCwxNzgsQmFjaWxsaQ0KODUsMTc5LEJhY2lsbGkNCjg2LDE4MSxCYWNpbGxpDQo4NywxODEsQmFjaWxsaQ0KODgsMTgzLEJhY2lsbGkNCjg5LDE4NSxCYWNpbGxpDQo5MCwxOTQsQmFjaWxsaQ0KOTEsMTk4LEJhY2lsbGkNCjkyLDIxMixCYWNpbGxpDQo5MywyMTMsQmFjaWxsaQ0KOTQsMjE2LEJhY2lsbGkNCjk1LDIyMCxCYWNpbGxpDQo5NiwyMjUsQmFjaWxsaQ0KOTcsMjI1LEJhY2lsbGkNCjk4LDI0NCxCYWNpbGxpDQo5OSwyNTMsQmFjaWxsaQ0KMTAwLDI1NixCYWNpbGxpDQoxMDEsMjU5LEJhY2lsbGkNCjEwMiwyNjUsQmFjaWxsaQ0KMTAzLDI2OCxCYWNpbGxpDQoxMDQsMjcwLEJhY2lsbGkNCjEwNSwyODMsQmFjaWxsaQ0KMTA2LDI4OSxCYWNpbGxpDQoxMDcsMjkxLEJhY2lsbGkNCjEwOCwzMTEsQmFjaWxsaQ0KMTA5LDMxNSxCYWNpbGxpDQoxMTAsMzI2LEJhY2lsbGkNCjExMSwzMjYsQmFjaWxsaQ0KMTEyLDM2MSxCYWNpbGxpDQoxMTMsMzczLEJhY2lsbGkNCjExNCwzNzMsQmFjaWxsaQ0KMTE1LDM3NixCYWNpbGxpDQoxMTYsMzk3LEJhY2lsbGkNCjExNywzOTgsQmFjaWxsaQ0KMTE4LDQwNixCYWNpbGxpDQoxMTksNDU5LEJhY2lsbGkNCjEyMCw0NjYsQmFjaWxsaQ0KMTIxLDU5MixCYWNpbGxpDQoxMjIsNTk4LEJhY2lsbGkNCg==" download="guinea_pigs.csv">Download guinea_pigs.csv</a>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="alternatives-for-non-normal-responses.html#cb135-1" aria-hidden="true" tabindex="-1"></a>pigs <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;guinea_pigs.csv&#39;</span>)</span>
+<span id="cb135-2"><a href="alternatives-for-non-normal-responses.html#cb135-2" aria-hidden="true" tabindex="-1"></a>my.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Time<span class="sc">~</span>Treatment, <span class="at">data =</span> pigs)</span>
+<span id="cb135-3"><a href="alternatives-for-non-normal-responses.html#cb135-3" aria-hidden="true" tabindex="-1"></a>my.lm</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Time ~ Treatment, data = pigs)
+## 
+## Coefficients:
+##      (Intercept)  TreatmentControl  
+##            242.5             102.7</code></pre>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="alternatives-for-non-normal-responses.html#cb137-1" aria-hidden="true" tabindex="-1"></a>my.lm<span class="sc">$</span>coefficients</span></code></pre></div>
+<pre><code>##      (Intercept) TreatmentControl 
+##         242.5345         102.6843</code></pre>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="alternatives-for-non-normal-responses.html#cb139-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(pigs<span class="sc">$</span>Pig)</span>
+<span id="cb139-2"><a href="alternatives-for-non-normal-responses.html#cb139-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-3"><a href="alternatives-for-non-normal-responses.html#cb139-3" aria-hidden="true" tabindex="-1"></a>r.r.coefs <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>,<span class="dv">1000</span>,<span class="dv">2</span>)</span>
+<span id="cb139-4"><a href="alternatives-for-non-normal-responses.html#cb139-4" aria-hidden="true" tabindex="-1"></a>row.resample.boot <span class="ot">&lt;-</span> <span class="cf">function</span>(indices){</span>
+<span id="cb139-5"><a href="alternatives-for-non-normal-responses.html#cb139-5" aria-hidden="true" tabindex="-1"></a>  data.star <span class="ot">&lt;-</span> pigs[indices,]</span>
+<span id="cb139-6"><a href="alternatives-for-non-normal-responses.html#cb139-6" aria-hidden="true" tabindex="-1"></a>  my.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Time<span class="sc">~</span>Treatment, <span class="at">data =</span> data.star)</span>
+<span id="cb139-7"><a href="alternatives-for-non-normal-responses.html#cb139-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">as.numeric</span>(my.lm<span class="sc">$</span>coefficients))</span>
+<span id="cb139-8"><a href="alternatives-for-non-normal-responses.html#cb139-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb139-9"><a href="alternatives-for-non-normal-responses.html#cb139-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>){</span>
+<span id="cb139-10"><a href="alternatives-for-non-normal-responses.html#cb139-10" aria-hidden="true" tabindex="-1"></a>  r.r.coefs[i,] <span class="ot">&lt;-</span> <span class="fu">row.resample.boot</span>(<span class="fu">sample.int</span>(n,n,<span class="cn">TRUE</span>))</span>
+<span id="cb139-11"><a href="alternatives-for-non-normal-responses.html#cb139-11" aria-hidden="true" tabindex="-1"></a>}  </span>
+<span id="cb139-12"><a href="alternatives-for-non-normal-responses.html#cb139-12" aria-hidden="true" tabindex="-1"></a>r.r.means <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(r.r.coefs)</span>
+<span id="cb139-13"><a href="alternatives-for-non-normal-responses.html#cb139-13" aria-hidden="true" tabindex="-1"></a>percentiles1 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(r.r.coefs[,<span class="dv">1</span>], <span class="fu">c</span>(<span class="fl">0.05</span>,<span class="fl">0.95</span>))</span>
+<span id="cb139-14"><a href="alternatives-for-non-normal-responses.html#cb139-14" aria-hidden="true" tabindex="-1"></a>percentiles1</span></code></pre></div>
+<pre><code>##       5%      95% 
+## 218.0000 268.3603</code></pre>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="alternatives-for-non-normal-responses.html#cb141-1" aria-hidden="true" tabindex="-1"></a>percentiles2 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(r.r.coefs[,<span class="dv">2</span>], <span class="fu">c</span>(<span class="fl">0.05</span>,<span class="fl">0.95</span>))</span>
+<span id="cb141-2"><a href="alternatives-for-non-normal-responses.html#cb141-2" aria-hidden="true" tabindex="-1"></a>percentiles2</span></code></pre></div>
+<pre><code>##        5%       95% 
+##  49.40079 154.59927</code></pre>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="alternatives-for-non-normal-responses.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">2</span><span class="sc">*</span>r.r.means[<span class="dv">1</span>] <span class="sc">-</span> percentiles1[<span class="dv">2</span>], <span class="dv">2</span><span class="sc">*</span>r.r.means[<span class="dv">1</span>] <span class="sc">-</span> percentiles1[<span class="dv">1</span>])</span></code></pre></div>
+<pre><code>##      95%       5% 
+## 216.4051 266.7653</code></pre>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="alternatives-for-non-normal-responses.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">2</span><span class="sc">*</span>r.r.means[<span class="dv">2</span>] <span class="sc">-</span> percentiles2[<span class="dv">2</span>], <span class="dv">2</span><span class="sc">*</span>r.r.means[<span class="dv">2</span>] <span class="sc">-</span> percentiles2[<span class="dv">1</span>])</span></code></pre></div>
+<pre><code>##       95%        5% 
+##  50.48009 155.67856</code></pre>
+<p>Next, we implement the residual-bootstrap method. Note the two methods give very similar <span class="math inline">\(90\%\)</span> basic bootstrap CIs for <span class="math inline">\(\beta_2\)</span> but disagree a bit for <span class="math inline">\(\beta_1\)</span>.</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="alternatives-for-non-normal-responses.html#cb147-1" aria-hidden="true" tabindex="-1"></a>pigs <span class="ot">&lt;-</span> </span>
+<span id="cb147-2"><a href="alternatives-for-non-normal-responses.html#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">&#39;guinea_pigs.csv&#39;</span>)</span>
+<span id="cb147-3"><a href="alternatives-for-non-normal-responses.html#cb147-3" aria-hidden="true" tabindex="-1"></a>my.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Time<span class="sc">~</span>Treatment, <span class="at">data =</span> pigs)</span>
+<span id="cb147-4"><a href="alternatives-for-non-normal-responses.html#cb147-4" aria-hidden="true" tabindex="-1"></a>my.lm</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Time ~ Treatment, data = pigs)
+## 
+## Coefficients:
+##      (Intercept)  TreatmentControl  
+##            242.5             102.7</code></pre>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="alternatives-for-non-normal-responses.html#cb149-1" aria-hidden="true" tabindex="-1"></a>my.lm<span class="sc">$</span>coefficients</span></code></pre></div>
+<pre><code>##      (Intercept) TreatmentControl 
+##         242.5345         102.6843</code></pre>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="alternatives-for-non-normal-responses.html#cb151-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(pigs<span class="sc">$</span>Pig)</span>
+<span id="cb151-2"><a href="alternatives-for-non-normal-responses.html#cb151-2" aria-hidden="true" tabindex="-1"></a>resids <span class="ot">&lt;-</span> my.lm<span class="sc">$</span>residuals</span>
+<span id="cb151-3"><a href="alternatives-for-non-normal-responses.html#cb151-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-4"><a href="alternatives-for-non-normal-responses.html#cb151-4" aria-hidden="true" tabindex="-1"></a>r.r.coefs <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>,<span class="dv">1000</span>,<span class="dv">2</span>)</span>
+<span id="cb151-5"><a href="alternatives-for-non-normal-responses.html#cb151-5" aria-hidden="true" tabindex="-1"></a>resid.boot <span class="ot">&lt;-</span> <span class="cf">function</span>(indices){</span>
+<span id="cb151-6"><a href="alternatives-for-non-normal-responses.html#cb151-6" aria-hidden="true" tabindex="-1"></a>  resids.star <span class="ot">&lt;-</span> resids[indices]</span>
+<span id="cb151-7"><a href="alternatives-for-non-normal-responses.html#cb151-7" aria-hidden="true" tabindex="-1"></a>  y.star <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">rep</span>(<span class="dv">1</span>,n), <span class="fu">ifelse</span>(pigs<span class="sc">$</span>Treatment<span class="sc">==</span><span class="st">&quot;Control&quot;</span>,<span class="dv">1</span>,<span class="dv">0</span>))<span class="sc">%*%</span><span class="fu">matrix</span>(<span class="fu">as.numeric</span>(my.lm<span class="sc">$</span>coefficients),<span class="dv">2</span>,<span class="dv">1</span>) <span class="sc">+</span> resids.star</span>
+<span id="cb151-8"><a href="alternatives-for-non-normal-responses.html#cb151-8" aria-hidden="true" tabindex="-1"></a>  data.star <span class="ot">&lt;-</span> pigs</span>
+<span id="cb151-9"><a href="alternatives-for-non-normal-responses.html#cb151-9" aria-hidden="true" tabindex="-1"></a>  data.star<span class="sc">$</span>y.star <span class="ot">&lt;-</span> y.star</span>
+<span id="cb151-10"><a href="alternatives-for-non-normal-responses.html#cb151-10" aria-hidden="true" tabindex="-1"></a>  my.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(y.star<span class="sc">~</span>Treatment, <span class="at">data =</span> data.star)</span>
+<span id="cb151-11"><a href="alternatives-for-non-normal-responses.html#cb151-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">as.numeric</span>(my.lm<span class="sc">$</span>coefficients))</span>
+<span id="cb151-12"><a href="alternatives-for-non-normal-responses.html#cb151-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb151-13"><a href="alternatives-for-non-normal-responses.html#cb151-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>){</span>
+<span id="cb151-14"><a href="alternatives-for-non-normal-responses.html#cb151-14" aria-hidden="true" tabindex="-1"></a>  r.r.coefs[i,] <span class="ot">&lt;-</span> <span class="fu">resid.boot</span>(<span class="fu">sample.int</span>(n,n,<span class="cn">TRUE</span>))</span>
+<span id="cb151-15"><a href="alternatives-for-non-normal-responses.html#cb151-15" aria-hidden="true" tabindex="-1"></a>}  </span>
+<span id="cb151-16"><a href="alternatives-for-non-normal-responses.html#cb151-16" aria-hidden="true" tabindex="-1"></a>r.r.means <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(r.r.coefs)</span>
+<span id="cb151-17"><a href="alternatives-for-non-normal-responses.html#cb151-17" aria-hidden="true" tabindex="-1"></a>percentiles1 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(r.r.coefs[,<span class="dv">1</span>], <span class="fu">c</span>(<span class="fl">0.05</span>,<span class="fl">0.95</span>))</span>
+<span id="cb151-18"><a href="alternatives-for-non-normal-responses.html#cb151-18" aria-hidden="true" tabindex="-1"></a>percentiles1</span></code></pre></div>
+<pre><code>##       5%      95% 
+## 205.1938 281.0952</code></pre>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="alternatives-for-non-normal-responses.html#cb153-1" aria-hidden="true" tabindex="-1"></a>percentiles2 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(r.r.coefs[,<span class="dv">2</span>], <span class="fu">c</span>(<span class="fl">0.05</span>,<span class="fl">0.95</span>))</span>
+<span id="cb153-2"><a href="alternatives-for-non-normal-responses.html#cb153-2" aria-hidden="true" tabindex="-1"></a>percentiles2</span></code></pre></div>
+<pre><code>##        5%       95% 
+##  50.20677 154.69151</code></pre>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="alternatives-for-non-normal-responses.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">2</span><span class="sc">*</span>r.r.means[<span class="dv">1</span>] <span class="sc">-</span> percentiles1[<span class="dv">2</span>], <span class="dv">2</span><span class="sc">*</span>r.r.means[<span class="dv">1</span>] <span class="sc">-</span> percentiles1[<span class="dv">1</span>])</span></code></pre></div>
+<pre><code>##      95%       5% 
+## 203.5823 279.4838</code></pre>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="alternatives-for-non-normal-responses.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">2</span><span class="sc">*</span>r.r.means[<span class="dv">2</span>] <span class="sc">-</span> percentiles2[<span class="dv">2</span>], <span class="dv">2</span><span class="sc">*</span>r.r.means[<span class="dv">2</span>] <span class="sc">-</span> percentiles2[<span class="dv">1</span>])</span></code></pre></div>
+<pre><code>##       95%        5% 
+##  52.21648 156.70123</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="randomization-and-permutation-testing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="one-way-anova.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/04-Non-Normal-Responses.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

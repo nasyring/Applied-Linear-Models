@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 13 \(2^k\) Factorial Experiments | Applied Linear Models</title>
+  <meta name="description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 13 \(2^k\) Factorial Experiments | Applied Linear Models" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 13 \(2^k\) Factorial Experiments | Applied Linear Models" />
+  
+  <meta name="twitter:description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  
+
+<meta name="author" content="Nick Syring" />
+
+
+<meta name="date" content="2022-10-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="strategy-for-analysis-in-two-factor-models.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied Linear Models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html"><i class="fa fa-check"></i><b>2</b> Data Analysis and Statistical Inference</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#data-experiments-and-studies"><i class="fa fa-check"></i><b>2.1</b> Data, Experiments, and Studies</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#james-linds-scurvy-trial"><i class="fa fa-check"></i><b>2.1.1</b> James Lind’s Scurvy Trial</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#framingham-heart-study"><i class="fa fa-check"></i><b>2.1.2</b> Framingham Heart Study</a></li>
+<li class="chapter" data-level="2.1.3" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#harris-bank-sex-pay-study"><i class="fa fa-check"></i><b>2.1.3</b> Harris Bank Sex Pay Study</a></li>
+<li class="chapter" data-level="2.1.4" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#large-aggregated-data-sets"><i class="fa fa-check"></i><b>2.1.4</b> Large, Aggregated Data Sets</a></li>
+<li class="chapter" data-level="2.1.5" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#study-concepts"><i class="fa fa-check"></i><b>2.1.5</b> Study Concepts</a></li>
+<li class="chapter" data-level="2.1.6" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#randomization-control-and-causation"><i class="fa fa-check"></i><b>2.1.6</b> Randomization, control, and causation</a></li>
+<li class="chapter" data-level="2.1.7" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#populations-and-scope-of-inference"><i class="fa fa-check"></i><b>2.1.7</b> Populations and scope of inference</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#data-summaries"><i class="fa fa-check"></i><b>2.2</b> Data Summaries</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#numerical-summaries"><i class="fa fa-check"></i><b>2.2.1</b> Numerical Summaries</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#visual-summaries"><i class="fa fa-check"></i><b>2.2.2</b> Visual Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#statistical-inference"><i class="fa fa-check"></i><b>2.3</b> Statistical Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html"><i class="fa fa-check"></i><b>3</b> Introduction to Linear Models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#defining-the-linear-model"><i class="fa fa-check"></i><b>3.1</b> Defining the linear model</a></li>
+<li class="chapter" data-level="3.2" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#gauss-markov-model-for-one-sample"><i class="fa fa-check"></i><b>3.2</b> Gauss-Markov model for one sample</a></li>
+<li class="chapter" data-level="3.3" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#gauss-markov-model-for-comparing-two-samples"><i class="fa fa-check"></i><b>3.3</b> Gauss-Markov model for comparing two samples</a></li>
+<li class="chapter" data-level="3.4" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#pairwise-testing-and-bonferroni-correction"><i class="fa fa-check"></i><b>3.4</b> Pairwise testing and Bonferroni correction</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#example-co2-uptake-in-echinochloa-crus-galli"><i class="fa fa-check"></i><b>3.4.1</b> Example: Co2 uptake in Echinochloa crus-galli</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#linear-models-for-more-than-two-treatments-populations"><i class="fa fa-check"></i><b>3.5</b> Linear Models for more than two treatments (populations)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html"><i class="fa fa-check"></i><b>4</b> Randomization and Permutation Testing</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#setup"><i class="fa fa-check"></i><b>4.1</b> Setup</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#example-1-the-harris-bank-sex-pay-study"><i class="fa fa-check"></i><b>4.1.1</b> Example 1: The Harris Bank Sex Pay Study</a></li>
+<li class="chapter" data-level="4.1.2" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#difference-in-mean-salaries-between-genders"><i class="fa fa-check"></i><b>4.1.2</b> Difference in mean salaries between genders</a></li>
+<li class="chapter" data-level="4.1.3" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#randomization-test-for-treatment-significance"><i class="fa fa-check"></i><b>4.1.3</b> Randomization test for treatment significance</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html"><i class="fa fa-check"></i><b>5</b> Alternatives for Non-Normal Responses</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#transformations"><i class="fa fa-check"></i><b>5.1</b> Transformations</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#example-cloud-seeding-for-rainfall"><i class="fa fa-check"></i><b>5.1.1</b> Example: Cloud Seeding for Rainfall</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#rank-sum-test"><i class="fa fa-check"></i><b>5.2</b> Rank-Sum Test</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#example-ratio-measurements"><i class="fa fa-check"></i><b>5.2.1</b> Example: ratio measurements</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#signed-rank-test"><i class="fa fa-check"></i><b>5.3</b> Signed-rank test</a></li>
+<li class="chapter" data-level="5.4" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrap"><i class="fa fa-check"></i><b>5.4</b> Bootstrap</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#intro-to-the-bootstrap"><i class="fa fa-check"></i><b>5.4.1</b> Intro to the bootstrap</a></li>
+<li class="chapter" data-level="5.4.2" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>5.4.2</b> Bootstrap Confidence Intervals</a></li>
+<li class="chapter" data-level="5.4.3" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrapping-linear-models"><i class="fa fa-check"></i><b>5.4.3</b> Bootstrapping linear models</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="one-way-anova.html"><a href="one-way-anova.html"><i class="fa fa-check"></i><b>6</b> One Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="one-way-anova.html"><a href="one-way-anova.html#the-gauss-markov-model-for-comparing-i-populations"><i class="fa fa-check"></i><b>6.1</b> The Gauss-Markov Model for comparing I populations</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="one-way-anova.html"><a href="one-way-anova.html#example-donuts-effects-model"><i class="fa fa-check"></i><b>6.1.1</b> Example: Donuts effects model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="one-way-anova.html"><a href="one-way-anova.html#testing-equality-of-means"><i class="fa fa-check"></i><b>6.2</b> Testing equality of means</a></li>
+<li class="chapter" data-level="6.3" data-path="one-way-anova.html"><a href="one-way-anova.html#follow-up-testing"><i class="fa fa-check"></i><b>6.3</b> Follow-up testing</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="one-way-anova.html"><a href="one-way-anova.html#donuts-example"><i class="fa fa-check"></i><b>6.3.1</b> Donuts example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="one-way-anova.html"><a href="one-way-anova.html#inference-for-particular-contrasts"><i class="fa fa-check"></i><b>6.4</b> Inference for particular contrasts</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="one-way-anova.html"><a href="one-way-anova.html#donuts-example-1"><i class="fa fa-check"></i><b>6.4.1</b> Donuts Example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="one-way-anova.html"><a href="one-way-anova.html#checking-assumptions-in-one-way-anova"><i class="fa fa-check"></i><b>6.5</b> Checking Assumptions in one-way ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="one-way-anova.html"><a href="one-way-anova.html#example-cehcking-assumptions-for-donuts-experiment"><i class="fa fa-check"></i><b>6.5.1</b> Example: Cehcking assumptions for donuts experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html"><i class="fa fa-check"></i><b>7</b> Randomized Complete Block Design</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#paired-experiments-as-blocking"><i class="fa fa-check"></i><b>7.1</b> Paired experiments as blocking</a></li>
+<li class="chapter" data-level="7.2" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#randomized-complete-block-designs"><i class="fa fa-check"></i><b>7.2</b> Randomized Complete Block Designs</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#notation"><i class="fa fa-check"></i><b>7.2.1</b> Notation</a></li>
+<li class="chapter" data-level="7.2.2" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-penicillin-manufacturing"><i class="fa fa-check"></i><b>7.2.2</b> Example: Penicillin Manufacturing</a></li>
+<li class="chapter" data-level="7.2.3" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#sums-of-squares-and-f-tests-in-rcbd"><i class="fa fa-check"></i><b>7.2.3</b> Sums of squares and F tests in RCBD</a></li>
+<li class="chapter" data-level="7.2.4" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-significance-of-process-in-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.4</b> Example: Significance of Process in Penicillin experiment</a></li>
+<li class="chapter" data-level="7.2.5" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#follow-up-comparisons-and-contrasts"><i class="fa fa-check"></i><b>7.2.5</b> Follow-up comparisons and contrasts</a></li>
+<li class="chapter" data-level="7.2.6" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-tukey-contrasts-and-scheffe-for-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.6</b> Example: Tukey, contrasts, and Scheffe for penicillin experiment</a></li>
+<li class="chapter" data-level="7.2.7" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#relative-efficiency-of-blocking-vs.-crd"><i class="fa fa-check"></i><b>7.2.7</b> Relative efficiency of Blocking (vs. CRD)</a></li>
+<li class="chapter" data-level="7.2.8" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-re-of-blocking-in-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.8</b> Example: RE of blocking in penicillin experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html"><i class="fa fa-check"></i><b>8</b> Latin Squares for two blocking variables</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#designs-for-multiple-blocks"><i class="fa fa-check"></i><b>8.1</b> Designs for multiple blocks</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-mpg-experiment"><i class="fa fa-check"></i><b>8.1.1</b> Example: MPG experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#model-notation"><i class="fa fa-check"></i><b>8.2</b> Model notation</a></li>
+<li class="chapter" data-level="8.3" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#sums-of-squares-and-test-for-treatment-effects"><i class="fa fa-check"></i><b>8.3</b> Sums of squares and test for treatment effects</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-mpg-experiment-1"><i class="fa fa-check"></i><b>8.3.1</b> Example: MPG experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#relative-efficiency-of-blocking"><i class="fa fa-check"></i><b>8.4</b> Relative efficiency of blocking</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-re-ignoring-driver-blocks"><i class="fa fa-check"></i><b>8.4.1</b> Example: RE ignoring driver blocks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="two-way-anova.html"><a href="two-way-anova.html"><i class="fa fa-check"></i><b>9</b> Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="two-way-anova.html"><a href="two-way-anova.html#the-model"><i class="fa fa-check"></i><b>9.1</b> The Model</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="two-way-anova.html"><a href="two-way-anova.html#example-protein-chemistry"><i class="fa fa-check"></i><b>9.1.1</b> Example: protein chemistry</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="two-way-anova.html"><a href="two-way-anova.html#tests-for-interaction-and-main-effects"><i class="fa fa-check"></i><b>9.2</b> Tests for interaction and main effects</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="two-way-anova.html"><a href="two-way-anova.html#example-protein-and-dietary-metals"><i class="fa fa-check"></i><b>9.2.1</b> Example: Protein and dietary metals</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html"><i class="fa fa-check"></i><b>10</b> Unbalanced data in Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#raw-and-least-squares-means"><i class="fa fa-check"></i><b>10.1</b> Raw and Least-Squares Means</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data"><i class="fa fa-check"></i><b>10.1.1</b> Example: Turbine data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#partial-f-tests-and-type-iii-ss"><i class="fa fa-check"></i><b>10.2</b> Partial F tests and Type III SS</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data-tests"><i class="fa fa-check"></i><b>10.2.1</b> Example: Turbine Data tests</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#follow-up-tests"><i class="fa fa-check"></i><b>10.3</b> Follow-up tests</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data-tukey-corrected-pairwise-comparisons"><i class="fa fa-check"></i><b>10.3.1</b> Example: Turbine data Tukey-corrected pairwise comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#unbalanced-data-and-simpsons-paradox"><i class="fa fa-check"></i><b>10.4</b> Unbalanced data and Simpson’s Paradox</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html"><i class="fa fa-check"></i><b>11</b> Missing Cells in Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#anova-with-missing-at-random-cell"><i class="fa fa-check"></i><b>11.1</b> ANOVA with missing “at random” cell</a></li>
+<li class="chapter" data-level="11.2" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#do-any-of-the-treatments-matter"><i class="fa fa-check"></i><b>11.2</b> Do any of the treatments matter?</a></li>
+<li class="chapter" data-level="11.3" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#fit-a-linear-model-with-additional-constraints"><i class="fa fa-check"></i><b>11.3</b> Fit a linear model with additional constraints</a></li>
+<li class="chapter" data-level="11.4" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#general-linear-test-for-interaction"><i class="fa fa-check"></i><b>11.4</b> General Linear Test for interaction</a></li>
+<li class="chapter" data-level="11.5" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#partial-analysis-for-interaction"><i class="fa fa-check"></i><b>11.5</b> Partial analysis for interaction</a></li>
+<li class="chapter" data-level="11.6" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#tests-for-main-effects-in-the-partial-table"><i class="fa fa-check"></i><b>11.6</b> Tests for main effects in the partial table</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html"><i class="fa fa-check"></i><b>12</b> Strategy for Analysis in Two-Factor models</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#unbalanced-two-factor-experiment-chick-weight"><i class="fa fa-check"></i><b>12.1</b> Unbalanced Two-Factor Experiment: Chick Weight</a></li>
+<li class="chapter" data-level="12.2" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#example-observational-study-on-growth-hormone-deficient-children-with-empty-cell"><i class="fa fa-check"></i><b>12.2</b> Example: observational study on growth-hormone deficient children with empty cell</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#linear-model-analysis-with-extra-constraint"><i class="fa fa-check"></i><b>12.2.1</b> Linear Model analysis with extra constraint</a></li>
+<li class="chapter" data-level="12.2.2" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#partial-table-analysis"><i class="fa fa-check"></i><b>12.2.2</b> Partial Table analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html"><i class="fa fa-check"></i><b>13</b> <span class="math inline">\(2^k\)</span> Factorial Experiments</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#the-model-1"><i class="fa fa-check"></i><b>13.1</b> The Model</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#example-stress-test-study"><i class="fa fa-check"></i><b>13.1.1</b> Example: Stress Test Study</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#unreplicated-factorial-experiments"><i class="fa fa-check"></i><b>13.2</b> Unreplicated Factorial Experiments</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#example-granola-bar-experiment"><i class="fa fa-check"></i><b>13.2.1</b> Example: Granola bar experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Linear Models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="k-factorial-experiments" class="section level1 hasAnchor" number="13">
+<h1><span class="header-section-number">Chapter 13</span> <span class="math inline">\(2^k\)</span> Factorial Experiments<a href="k-factorial-experiments.html#k-factorial-experiments" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>We will wrap up our discussion of ANOVA-type models with <span class="math inline">\(2^k\)</span> factorial experiments. A study of <span class="math inline">\(k\)</span> binary factors and their effects on a response is a <span class="math inline">\(2^k\)</span> factorial experiment. The two distinguishing features of these experiments is the fact all factors have only two levels, and the large number of crossed treatments. These result in some unique challenges, but also some simplifications.</p>
+<div id="the-model-1" class="section level2 hasAnchor" number="13.1">
+<h2><span class="header-section-number">13.1</span> The Model<a href="k-factorial-experiments.html#the-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The ANOVa-type notation becomes cumbersome for <span class="math inline">\(2^k\)</span> factorial experiments, so we favor the regression-type notation. For example, suppose <span class="math inline">\(k=3\)</span> so that there are 8 crossed factors. We have main effects, and interactions involving 2, 3, or all 4 factors. To denote the corresponding parameters we use <span class="math inline">\(\beta_j\)</span> for <span class="math inline">\(j=1, \ldots, 4\)</span> for main effects, <span class="math inline">\(\beta_{jk}\)</span> for two-way interactions, and <span class="math inline">\(\beta_{jk\ell}\)</span> for three-way interactions. Then, using the subscript <span class="math inline">\(i\)</span> for the observation <span class="math inline">\(\i = 1, \ldots, n\)</span>, the model can be written
+<span class="math display">\[Y_i = \beta_0 + \beta_1X_{1i}+\beta_2X_{2i}+\beta_3 X_{3i} + \beta_{12}X_{12i} + \beta_{13}X_{13i}+\beta_{23}X_{23i} + \beta_{123}X_{123i}+\epsilon_i.  \]</span>
+Note we have 8 regression coefficients corresponding to the 8 crossed treatment means.<br><br></p>
+<p>For balanced experiments some interesting simplifications emerge. The design matrix may be easily coded using a sum-to-zero format as follows. Let response <span class="math inline">\(i\)</span> in main effects column <span class="math inline">\(j\)</span> be -1 if it has the first level of the factor and +1 if it has the second level. Note that interaction columns of the design are determined by multiplication of the main effects columns. Suppose for <span class="math inline">\(k=3\)</span> we have 16 responses (2 replicates for each combination of factor levels). The first column of <span class="math inline">\(X\)</span> is all 1’s. The second, third, and fourth columns are for main effects, adn the last four are for interactions. The design matrix is as follows:</p>
+<p><span class="math display">\[\begin{matrix}
+1 &amp; -1 &amp; -1 &amp; -1 &amp;  1&amp; 1&amp; 1&amp; -1 \\
+1 &amp; -1 &amp; -1 &amp; -1 &amp;  1&amp; 1&amp; 1&amp; -1 \\
+1 &amp; 1 &amp; -1 &amp; -1 &amp;  -1&amp; -1&amp; 1&amp; -1 \\
+1 &amp; 1 &amp; -1 &amp; -1 &amp;  -1&amp; -1&amp; 1&amp; -1 \\
+1 &amp; 1 &amp; 1 &amp; -1 &amp;  1&amp; -1&amp; -1&amp; -1 \\
+1 &amp; 1 &amp; 1 &amp; -1 &amp;  1&amp; -1&amp; -1&amp; -1 \\
+1 &amp; 1 &amp; 1 &amp; 1 &amp;  1&amp; 1&amp; 1&amp; 1 \\
+1 &amp; 1 &amp; 1 &amp; 1 &amp;  1&amp; 1&amp; 1&amp; 1 \\
+1 &amp; -1 &amp; 1 &amp; -1 &amp;  -1&amp; 1&amp; -1&amp; 1 \\
+1 &amp; -1 &amp; 1 &amp; -1 &amp;  -1&amp; 1&amp; -1&amp; 1 \\
+1 &amp; -1 &amp; -1 &amp; 1 &amp;  1&amp; -1&amp; -1&amp; 1 \\
+1 &amp; -1 &amp; -1 &amp; 1 &amp;  1&amp; -1&amp; -1&amp; 1 \\
+1 &amp; -1 &amp; 1 &amp; 1 &amp;  -1&amp; -1&amp; 1&amp; -1 \\
+1 &amp; -1 &amp; 1 &amp; 1 &amp;  -1&amp; -1&amp; 1&amp; -1 \\
+1 &amp; 1 &amp; -1 &amp; 1 &amp;  -1&amp; 1&amp; -1&amp; 1 \\
+1 &amp; 1 &amp; -1 &amp; 1 &amp;  -1&amp; 1&amp; -1&amp; 1 \\
+\end{matrix}
+\]</span></p>
+<p>The design matrix <span class="math inline">\(X\)</span> has the interesting property that any two columns are orthogonal, i.e., their inner (dot) product is zero. Therefore, <span class="math inline">\(X^\top X = 16 I_{16}\)</span> and <span class="math inline">\((X^\top X)^{-1} = \frac{1}{16}I_{16}\)</span>. And, <span class="math inline">\(\hat\beta = \frac{1}{16}X^\top Y\)</span>, making computation of the estimated regression coefficients very easy. It also means that the estimated regression coefficients are uncorrelated (because <span class="math inline">\((X^\top X)^{-1}\)</span> has all zeroes on the off-diagonals) with equal variance <span class="math inline">\(\sigma^2 / 16\)</span> (because the diagonal entries are equal).</p>
+<div id="example-stress-test-study" class="section level3 hasAnchor" number="13.1.1">
+<h3><span class="header-section-number">13.1.1</span> Example: Stress Test Study<a href="k-factorial-experiments.html#example-stress-test-study" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The following data records the results of a stress test measuring exercise tolerance on male and female adults who smoke (light or heavy) and who have high or low body fat:</p>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="k-factorial-experiments.html#cb497-1" aria-hidden="true" tabindex="-1"></a>stress <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">24.1</span>,<span class="fl">29.2</span>,<span class="fl">24.6</span>,<span class="fl">20.0</span>,<span class="fl">21.9</span>,<span class="fl">17.6</span>,<span class="fl">14.6</span>,<span class="fl">15.3</span>,<span class="fl">12.3</span>,<span class="fl">16.1</span>,<span class="fl">9.3</span>,<span class="fl">10.8</span>,<span class="fl">17.6</span>,<span class="fl">18.8</span>,<span class="fl">23.2</span>,<span class="fl">14.8</span>,<span class="fl">10.3</span>,<span class="fl">11.3</span>,<span class="fl">14.9</span>,<span class="fl">20.4</span>,<span class="fl">12.8</span>,<span class="fl">10.1</span>,<span class="fl">14.4</span>,<span class="fl">6.1</span>)</span>
+<span id="cb497-2"><a href="k-factorial-experiments.html#cb497-2" aria-hidden="true" tabindex="-1"></a>smoking <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fu">rep</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">12</span>), <span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">12</span>))</span>
+<span id="cb497-3"><a href="k-factorial-experiments.html#cb497-3" aria-hidden="true" tabindex="-1"></a>fat <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">6</span>), <span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">6</span>),<span class="fu">rep</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">6</span>), <span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">6</span>))</span>
+<span id="cb497-4"><a href="k-factorial-experiments.html#cb497-4" aria-hidden="true" tabindex="-1"></a>sex <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb497-5"><a href="k-factorial-experiments.html#cb497-5" aria-hidden="true" tabindex="-1"></a>data.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">stress =</span> stress, <span class="at">smoking =</span> <span class="fu">as.factor</span>(smoking), <span class="at">fat=</span><span class="fu">as.factor</span>(fat), <span class="at">sex=</span><span class="fu">as.factor</span>(sex))</span>
+<span id="cb497-6"><a href="k-factorial-experiments.html#cb497-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb497-7"><a href="k-factorial-experiments.html#cb497-7" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(stress<span class="sc">~</span>smoking<span class="sc">*</span>fat<span class="sc">*</span>sex, <span class="at">data =</span> data.df)</span>
+<span id="cb497-8"><a href="k-factorial-experiments.html#cb497-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb497-9"><a href="k-factorial-experiments.html#cb497-9" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(X)<span class="sc">%*%</span>X</span></code></pre></div>
+<pre><code>##                    (Intercept) smoking1 fat1 sex1 smoking1:fat1 smoking1:sex1
+## (Intercept)                 24       12   12   12             6             6
+## smoking1                    12       12    6    6             6             6
+## fat1                        12        6   12    6             6             3
+## sex1                        12        6    6   12             3             6
+## smoking1:fat1                6        6    6    3             6             3
+## smoking1:sex1                6        6    3    6             3             6
+## fat1:sex1                    6        3    6    6             3             3
+## smoking1:fat1:sex1           3        3    3    3             3             3
+##                    fat1:sex1 smoking1:fat1:sex1
+## (Intercept)                6                  3
+## smoking1                   3                  3
+## fat1                       6                  3
+## sex1                       6                  3
+## smoking1:fat1              3                  3
+## smoking1:sex1              3                  3
+## fat1:sex1                  6                  3
+## smoking1:fat1:sex1         3                  3</code></pre>
+<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="k-factorial-experiments.html#cb499-1" aria-hidden="true" tabindex="-1"></a><span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X)<span class="sc">%*%</span><span class="fu">t</span>(X)<span class="sc">%*%</span><span class="fu">matrix</span>(stress,<span class="dv">24</span>,<span class="dv">1</span>)</span></code></pre></div>
+<pre><code>##                          [,1]
+## (Intercept)         25.966667
+## smoking1            -6.100000
+## fat1               -11.900000
+## sex1                -6.133333
+## smoking1:fat1        8.066667
+## smoking1:sex1       -1.600000
+## fat1:sex1            4.133333
+## smoking1:fat1:sex1  -2.233333</code></pre>
+<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="k-factorial-experiments.html#cb501-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(stress<span class="sc">~</span>smoking<span class="sc">*</span>fat<span class="sc">*</span>sex, <span class="at">data =</span> data.df)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = stress ~ smoking * fat * sex, data = data.df)
+## 
+## Coefficients:
+##        (Intercept)            smoking1                fat1                sex1  
+##             25.967              -6.100             -11.900              -6.133  
+##      smoking1:fat1       smoking1:sex1           fat1:sex1  smoking1:fat1:sex1  
+##              8.067              -1.600               4.133              -2.233</code></pre>
+<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="k-factorial-experiments.html#cb503-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(stress<span class="sc">~</span>smoking<span class="sc">*</span>fat<span class="sc">*</span>sex, <span class="at">data =</span> data.df))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = stress ~ smoking * fat * sex, data = data.df)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -4.100 -1.842 -0.950  2.217  4.367 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)          25.967      1.764  14.720 1.01e-10 ***
+## smoking1             -6.100      2.495  -2.445 0.026427 *  
+## fat1                -11.900      2.495  -4.770 0.000209 ***
+## sex1                 -6.133      2.495  -2.459 0.025730 *  
+## smoking1:fat1         8.067      3.528   2.286 0.036198 *  
+## smoking1:sex1        -1.600      3.528  -0.454 0.656274    
+## fat1:sex1             4.133      3.528   1.172 0.258526    
+## smoking1:fat1:sex1   -2.233      4.989  -0.448 0.660434    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.055 on 16 degrees of freedom
+## Multiple R-squared:  0.7976, Adjusted R-squared:  0.709 
+## F-statistic: 9.007 on 7 and 16 DF,  p-value: 0.0001525</code></pre>
+</div>
+</div>
+<div id="unreplicated-factorial-experiments" class="section level2 hasAnchor" number="13.2">
+<h2><span class="header-section-number">13.2</span> Unreplicated Factorial Experiments<a href="k-factorial-experiments.html#unreplicated-factorial-experiments" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Often, in practice, <span class="math inline">\(k\)</span> is very large, so that not enough sample size is available to run a replicated experiment. When only 1 response is available for each crossed treatment (i.e. <span class="math inline">\(n = 2^k\)</span>), the <span class="math inline">\(2^k\)</span> factorial experiment is called “unreplicated”, and no degrees of freedom are available to estimate the variance <span class="math inline">\(\sigma^2\)</span>. <br><br></p>
+<p>In unreplicated experiments, there are a few strategies available for recovering an estimate of <span class="math inline">\(\sigma^2\)</span>. <br>
+1. We can simply assume some interactions (usually higher-order first) are zero, and then the degrees of freedom associated with these may be put towards estimating <span class="math inline">\(\sigma^2\)</span>.<br>
+2. Graphical methods (Pareto plots).<br>
+3. Center-point replication.<br><br></p>
+<p>The Pareto plot is a graphical display showing the ratio of effect sum of squares to total sum of squares where effect sum of squares is <span class="math inline">\(n\hat\beta_j^2\)</span> for each of the <span class="math inline">\(2^k\)</span> coefficients. A common technique is to use the effects with smallest sums of squares to pool to obtain a variance estimate. The resulting variance estimate is likely to be an underestimate. <br><br></p>
+<p>Center-point replication is sometimes implementable for factors based on underlying continuous variables. For example, suppose a factor is “level of watering” of a plant with levels low and high corresponding to amount of 0.5 and 1 liters. The center-point treatment is 0.75 liters. For estimation of the variance, we have to include replicates with center-point factor levels. The “pure-error” estimate <span class="math inline">\(\hat\sigma^2\)</span> is given by the sample variance of the responses at center-point treatment levels.</p>
+<div id="example-granola-bar-experiment" class="section level3 hasAnchor" number="13.2.1">
+<h3><span class="header-section-number">13.2.1</span> Example: Granola bar experiment<a href="k-factorial-experiments.html#example-granola-bar-experiment" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The following data is from Pecos Foods Company in a <span class="math inline">\(2^4\)</span> unreplicated factorial experiment to assess the effects of processing temperature, preservative, moisture, and acidity on microbial growth in granola bars they produce for human consumption.</p>
+<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="k-factorial-experiments.html#cb505-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&#39;contr.sum&#39;</span>, <span class="st">&#39;contr.sum&#39;</span>))</span>
+<span id="cb505-2"><a href="k-factorial-experiments.html#cb505-2" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.55</span>,<span class="fl">4.47</span>,<span class="fl">5.19</span>,<span class="fl">4.32</span>,<span class="fl">10.54</span>,<span class="fl">11.56</span>,<span class="fl">5.08</span>,<span class="fl">5.45</span>,<span class="fl">5.12</span>,<span class="fl">5.63</span>,<span class="fl">6.18</span>,<span class="fl">5.24</span>,<span class="fl">10.73</span>,<span class="fl">10.33</span>,<span class="fl">6.53</span>,<span class="fl">4.93</span>)</span>
+<span id="cb505-3"><a href="k-factorial-experiments.html#cb505-3" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb505-4"><a href="k-factorial-experiments.html#cb505-4" aria-hidden="true" tabindex="-1"></a>preservative <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb505-5"><a href="k-factorial-experiments.html#cb505-5" aria-hidden="true" tabindex="-1"></a>moisture <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb505-6"><a href="k-factorial-experiments.html#cb505-6" aria-hidden="true" tabindex="-1"></a>acidity <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb505-7"><a href="k-factorial-experiments.html#cb505-7" aria-hidden="true" tabindex="-1"></a>granola <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">response=</span>response, <span class="at">temp=</span><span class="fu">as.factor</span>(temp), <span class="at">preservative =</span> <span class="fu">as.factor</span>(preservative), <span class="at">moisture =</span> <span class="fu">as.factor</span>(moisture), <span class="at">acidity =</span> <span class="fu">as.factor</span>(acidity))</span>
+<span id="cb505-8"><a href="k-factorial-experiments.html#cb505-8" aria-hidden="true" tabindex="-1"></a>my.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(response<span class="sc">~</span>preservative<span class="sc">*</span>moisture<span class="sc">*</span>acidity<span class="sc">*</span>temp, <span class="at">data =</span> granola)</span>
+<span id="cb505-9"><a href="k-factorial-experiments.html#cb505-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my.lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = response ~ preservative * moisture * acidity * temp, 
+##     data = granola)
+## 
+## Residuals:
+## ALL 16 residuals are 0: no residual degrees of freedom!
+## 
+## Coefficients:
+##                                        Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)                             6.67812        NaN     NaN      NaN
+## preservative1                          -1.31312        NaN     NaN      NaN
+## moisture1                               1.46563        NaN     NaN      NaN
+## acidity1                                0.15813        NaN     NaN      NaN
+## temp1                                  -0.18687        NaN     NaN      NaN
+## preservative1:moisture1                -1.33313        NaN     NaN      NaN
+## preservative1:acidity1                  0.19687        NaN     NaN      NaN
+## moisture1:acidity1                     -0.17188        NaN     NaN      NaN
+## preservative1:temp1                    -0.19313        NaN     NaN      NaN
+## moisture1:temp1                         0.11063        NaN     NaN      NaN
+## acidity1:temp1                         -0.11688        NaN     NaN      NaN
+## preservative1:moisture1:acidity1        0.04938        NaN     NaN      NaN
+## preservative1:moisture1:temp1          -0.03812        NaN     NaN      NaN
+## preservative1:acidity1:temp1           -0.13812        NaN     NaN      NaN
+## moisture1:acidity1:temp1               -0.30688        NaN     NaN      NaN
+## preservative1:moisture1:acidity1:temp1  0.06937        NaN     NaN      NaN
+## 
+## Residual standard error: NaN on 0 degrees of freedom
+## Multiple R-squared:      1,  Adjusted R-squared:    NaN 
+## F-statistic:   NaN on 15 and 0 DF,  p-value: NA</code></pre>
+<p>One way to estimate the variance is to assume higher-order interactions are zero. Let’s assume the three-way and four-way interactions are zero. That gives us 5 df with which to estimate the variance.</p>
+<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="k-factorial-experiments.html#cb507-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&#39;contr.sum&#39;</span>, <span class="st">&#39;contr.sum&#39;</span>))</span>
+<span id="cb507-2"><a href="k-factorial-experiments.html#cb507-2" aria-hidden="true" tabindex="-1"></a>my.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(response<span class="sc">~</span>preservative<span class="sc">*</span>moisture <span class="sc">+</span> preservative<span class="sc">*</span>acidity <span class="sc">+</span> preservative<span class="sc">*</span>temp <span class="sc">+</span> moisture <span class="sc">*</span> acidity <span class="sc">+</span> moisture <span class="sc">*</span> temp <span class="sc">+</span> acidity<span class="sc">*</span>temp, <span class="at">data =</span> granola)</span>
+<span id="cb507-3"><a href="k-factorial-experiments.html#cb507-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my.lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = response ~ preservative * moisture + preservative * 
+##     acidity + preservative * temp + moisture * acidity + moisture * 
+##     temp + acidity * temp, data = granola)
+## 
+## Residuals:
+##        1        2        3        4        5        6        7        8 
+##  0.50312 -0.60187  0.11063 -0.01188 -0.22687  0.32563 -0.38688  0.28812 
+##        9       10       11       12       13       14       15       16 
+## -0.42687  0.52563 -0.18688  0.08813  0.15062 -0.24938  0.46313 -0.36437 
+## 
+## Coefficients:
+##                         Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)               6.6781     0.1562  42.760 1.32e-07 ***
+## preservative1            -1.3131     0.1562  -8.408 0.000390 ***
+## moisture1                 1.4656     0.1562   9.384 0.000232 ***
+## acidity1                  0.1581     0.1562   1.012 0.357769    
+## temp1                    -0.1869     0.1562  -1.197 0.285114    
+## preservative1:moisture1  -1.3331     0.1562  -8.536 0.000363 ***
+## preservative1:acidity1    0.1969     0.1562   1.261 0.263080    
+## preservative1:temp1      -0.1931     0.1562  -1.237 0.271156    
+## moisture1:acidity1       -0.1719     0.1562  -1.101 0.321245    
+## moisture1:temp1           0.1106     0.1562   0.708 0.510384    
+## acidity1:temp1           -0.1169     0.1562  -0.748 0.487933    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.6247 on 5 degrees of freedom
+## Multiple R-squared:  0.9795, Adjusted R-squared:  0.9386 
+## F-statistic: 23.95 on 10 and 5 DF,  p-value: 0.001323</code></pre>
+<p>Let’s construct a Pareto chart. Based on the chart, we might only include preservative, preservative:moisture, and the intercept in the model, and use the remaining 13 df to estimate the variance. But, be careful as this is a data-dependent decision.</p>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="k-factorial-experiments.html#cb509-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&#39;contr.sum&#39;</span>, <span class="st">&#39;contr.sum&#39;</span>))</span>
+<span id="cb509-2"><a href="k-factorial-experiments.html#cb509-2" aria-hidden="true" tabindex="-1"></a>my.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(response<span class="sc">~</span>preservative<span class="sc">*</span>moisture<span class="sc">*</span>acidity<span class="sc">*</span>temp, <span class="at">data =</span> granola)</span>
+<span id="cb509-3"><a href="k-factorial-experiments.html#cb509-3" aria-hidden="true" tabindex="-1"></a>SST <span class="ot">&lt;-</span> <span class="fu">sum</span>((response <span class="sc">-</span> <span class="fu">mean</span>(response))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb509-4"><a href="k-factorial-experiments.html#cb509-4" aria-hidden="true" tabindex="-1"></a>beta.ss.ratio <span class="ot">&lt;-</span>(<span class="dv">16</span><span class="sc">*</span>(my.lm<span class="sc">$</span>coefficients)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>SST</span>
+<span id="cb509-5"><a href="k-factorial-experiments.html#cb509-5" aria-hidden="true" tabindex="-1"></a>terms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;intercept&#39;</span>, <span class="fu">attributes</span>(my.lm<span class="sc">$</span>terms)<span class="sc">$</span>term.labels)</span>
+<span id="cb509-6"><a href="k-factorial-experiments.html#cb509-6" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">cbind</span>(terms, <span class="fu">as.numeric</span>(beta.ss.ratio))</span>
+<span id="cb509-7"><a href="k-factorial-experiments.html#cb509-7" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> results[<span class="fu">order</span>(results[,<span class="dv">2</span>], <span class="at">decreasing =</span> <span class="cn">TRUE</span>),]</span>
+<span id="cb509-8"><a href="k-factorial-experiments.html#cb509-8" aria-hidden="true" tabindex="-1"></a>csum <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(results[,<span class="dv">2</span>])</span>
+<span id="cb509-9"><a href="k-factorial-experiments.html#cb509-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>, csum<span class="sc">/</span>csum[<span class="dv">16</span>], <span class="at">type =</span> <span class="st">&#39;o&#39;</span>, <span class="at">xlab =</span> <span class="st">&#39;Coefficients&#39;</span>, <span class="at">ylab =</span> <span class="st">&#39;ratio of SST&#39;</span>, <span class="at">xaxt =</span> <span class="st">&#39;n&#39;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb509-10"><a href="k-factorial-experiments.html#cb509-10" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>)</span></code></pre></div>
+<p><img src="12-FactorialExperiments_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="k-factorial-experiments.html#cb510-1" aria-hidden="true" tabindex="-1"></a>results[,<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>##  [1] &quot;intercept&quot;                          &quot;moisture&quot;                          
+##  [3] &quot;preservative:moisture&quot;              &quot;preservative&quot;                      
+##  [5] &quot;moisture:acidity:temp&quot;              &quot;preservative:acidity&quot;              
+##  [7] &quot;preservative:temp&quot;                  &quot;temp&quot;                              
+##  [9] &quot;moisture:acidity&quot;                   &quot;acidity&quot;                           
+## [11] &quot;preservative:acidity:temp&quot;          &quot;acidity:temp&quot;                      
+## [13] &quot;moisture:temp&quot;                      &quot;preservative:moisture:acidity:temp&quot;
+## [15] &quot;preservative:moisture:acidity&quot;      &quot;preservative:moisture:temp&quot;</code></pre>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="k-factorial-experiments.html#cb512-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(granola<span class="sc">$</span>response)</span>
+<span id="cb512-2"><a href="k-factorial-experiments.html#cb512-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb512-3"><a href="k-factorial-experiments.html#cb512-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(response<span class="sc">~</span>moisture<span class="sc">+</span>preservative <span class="sc">+</span> preservative<span class="sc">*</span>moisture, <span class="at">data =</span> granola)</span>
+<span id="cb512-4"><a href="k-factorial-experiments.html#cb512-4" aria-hidden="true" tabindex="-1"></a>X.r <span class="ot">&lt;-</span> X[,<span class="sc">-</span><span class="dv">2</span>]</span>
+<span id="cb512-5"><a href="k-factorial-experiments.html#cb512-5" aria-hidden="true" tabindex="-1"></a>hat.beta <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X.r)<span class="sc">%*%</span>X.r)<span class="sc">%*%</span><span class="fu">t</span>(X.r)<span class="sc">%*%</span><span class="fu">matrix</span>(granola<span class="sc">$</span>response,n,<span class="dv">1</span>)</span>
+<span id="cb512-6"><a href="k-factorial-experiments.html#cb512-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb512-7"><a href="k-factorial-experiments.html#cb512-7" aria-hidden="true" tabindex="-1"></a>hat.sigma2 <span class="ot">&lt;-</span> <span class="fu">sum</span>((granola<span class="sc">$</span>response <span class="sc">-</span> X.r <span class="sc">%*%</span>hat.beta)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(n<span class="sc">-</span><span class="fu">ncol</span>(X.r))</span>
+<span id="cb512-8"><a href="k-factorial-experiments.html#cb512-8" aria-hidden="true" tabindex="-1"></a>hat.sigma2</span></code></pre></div>
+<pre><code>## [1] 3.029456</code></pre>
+<p>Suppose four center-point replicates are 7.23, 7.89, 7.801, 7.39. Then, the variance estimate is the sample variance of these responses, or, <span class="math inline">\(\hat\sigma^2 = 0.101\)</span>. We may use <span class="math inline">\(\hat\sigma^2\)</span> in t-tests of significance of the fitted regression coefficients.</p>
+<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="k-factorial-experiments.html#cb514-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&#39;contr.sum&#39;</span>, <span class="st">&#39;contr.sum&#39;</span>))</span>
+<span id="cb514-2"><a href="k-factorial-experiments.html#cb514-2" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.55</span>,<span class="fl">4.47</span>,<span class="fl">5.19</span>,<span class="fl">4.32</span>,<span class="fl">10.54</span>,<span class="fl">11.56</span>,<span class="fl">5.08</span>,<span class="fl">5.45</span>,<span class="fl">5.12</span>,<span class="fl">5.63</span>,<span class="fl">6.18</span>,<span class="fl">5.24</span>,<span class="fl">10.73</span>,<span class="fl">10.33</span>,<span class="fl">6.53</span>,<span class="fl">4.93</span>)</span>
+<span id="cb514-3"><a href="k-factorial-experiments.html#cb514-3" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb514-4"><a href="k-factorial-experiments.html#cb514-4" aria-hidden="true" tabindex="-1"></a>preservative <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb514-5"><a href="k-factorial-experiments.html#cb514-5" aria-hidden="true" tabindex="-1"></a>moisture <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb514-6"><a href="k-factorial-experiments.html#cb514-6" aria-hidden="true" tabindex="-1"></a>acidity <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb514-7"><a href="k-factorial-experiments.html#cb514-7" aria-hidden="true" tabindex="-1"></a>granola <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">response=</span>response, <span class="at">temp=</span><span class="fu">as.factor</span>(temp), <span class="at">preservative =</span> <span class="fu">as.factor</span>(preservative), <span class="at">moisture =</span> <span class="fu">as.factor</span>(moisture), <span class="at">acidity =</span> <span class="fu">as.factor</span>(acidity))</span>
+<span id="cb514-8"><a href="k-factorial-experiments.html#cb514-8" aria-hidden="true" tabindex="-1"></a>my.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(response<span class="sc">~</span>preservative<span class="sc">*</span>moisture<span class="sc">*</span>acidity<span class="sc">*</span>temp, <span class="at">data =</span> granola)</span>
+<span id="cb514-9"><a href="k-factorial-experiments.html#cb514-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb514-10"><a href="k-factorial-experiments.html#cb514-10" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pt</span>(<span class="fu">abs</span>(my.lm<span class="sc">$</span>coefficients)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fl">0.101</span>),<span class="dv">3</span>)),<span class="dv">4</span>)</span></code></pre></div>
+<pre><code>##                            (Intercept)                          preservative1 
+##                                 0.0002                                 0.0257 
+##                              moisture1                               acidity1 
+##                                 0.0192                                 0.6530 
+##                                  temp1                preservative1:moisture1 
+##                                 0.5979                                 0.0247 
+##                 preservative1:acidity1                     moisture1:acidity1 
+##                                 0.5795                                 0.6262 
+##                    preservative1:temp1                        moisture1:temp1 
+##                                 0.5863                                 0.7508 
+##                         acidity1:temp1       preservative1:moisture1:acidity1 
+##                                 0.7375                                 0.8864 
+##          preservative1:moisture1:temp1           preservative1:acidity1:temp1 
+##                                 0.9121                                 0.6932 
+##               moisture1:acidity1:temp1 preservative1:moisture1:acidity1:temp1 
+##                                 0.4055                                 0.8412</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="strategy-for-analysis-in-two-factor-models.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/12-FactorialExperiments.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

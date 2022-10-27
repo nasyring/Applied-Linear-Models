@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 One Way ANOVA | Applied Linear Models</title>
+  <meta name="description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 One Way ANOVA | Applied Linear Models" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 One Way ANOVA | Applied Linear Models" />
+  
+  <meta name="twitter:description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  
+
+<meta name="author" content="Nick Syring" />
+
+
+<meta name="date" content="2022-10-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="alternatives-for-non-normal-responses.html"/>
+<link rel="next" href="randomized-complete-block-design.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied Linear Models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html"><i class="fa fa-check"></i><b>2</b> Data Analysis and Statistical Inference</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#data-experiments-and-studies"><i class="fa fa-check"></i><b>2.1</b> Data, Experiments, and Studies</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#james-linds-scurvy-trial"><i class="fa fa-check"></i><b>2.1.1</b> James Lind’s Scurvy Trial</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#framingham-heart-study"><i class="fa fa-check"></i><b>2.1.2</b> Framingham Heart Study</a></li>
+<li class="chapter" data-level="2.1.3" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#harris-bank-sex-pay-study"><i class="fa fa-check"></i><b>2.1.3</b> Harris Bank Sex Pay Study</a></li>
+<li class="chapter" data-level="2.1.4" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#large-aggregated-data-sets"><i class="fa fa-check"></i><b>2.1.4</b> Large, Aggregated Data Sets</a></li>
+<li class="chapter" data-level="2.1.5" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#study-concepts"><i class="fa fa-check"></i><b>2.1.5</b> Study Concepts</a></li>
+<li class="chapter" data-level="2.1.6" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#randomization-control-and-causation"><i class="fa fa-check"></i><b>2.1.6</b> Randomization, control, and causation</a></li>
+<li class="chapter" data-level="2.1.7" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#populations-and-scope-of-inference"><i class="fa fa-check"></i><b>2.1.7</b> Populations and scope of inference</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#data-summaries"><i class="fa fa-check"></i><b>2.2</b> Data Summaries</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#numerical-summaries"><i class="fa fa-check"></i><b>2.2.1</b> Numerical Summaries</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#visual-summaries"><i class="fa fa-check"></i><b>2.2.2</b> Visual Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#statistical-inference"><i class="fa fa-check"></i><b>2.3</b> Statistical Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html"><i class="fa fa-check"></i><b>3</b> Introduction to Linear Models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#defining-the-linear-model"><i class="fa fa-check"></i><b>3.1</b> Defining the linear model</a></li>
+<li class="chapter" data-level="3.2" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#gauss-markov-model-for-one-sample"><i class="fa fa-check"></i><b>3.2</b> Gauss-Markov model for one sample</a></li>
+<li class="chapter" data-level="3.3" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#gauss-markov-model-for-comparing-two-samples"><i class="fa fa-check"></i><b>3.3</b> Gauss-Markov model for comparing two samples</a></li>
+<li class="chapter" data-level="3.4" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#pairwise-testing-and-bonferroni-correction"><i class="fa fa-check"></i><b>3.4</b> Pairwise testing and Bonferroni correction</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#example-co2-uptake-in-echinochloa-crus-galli"><i class="fa fa-check"></i><b>3.4.1</b> Example: Co2 uptake in Echinochloa crus-galli</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#linear-models-for-more-than-two-treatments-populations"><i class="fa fa-check"></i><b>3.5</b> Linear Models for more than two treatments (populations)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html"><i class="fa fa-check"></i><b>4</b> Randomization and Permutation Testing</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#setup"><i class="fa fa-check"></i><b>4.1</b> Setup</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#example-1-the-harris-bank-sex-pay-study"><i class="fa fa-check"></i><b>4.1.1</b> Example 1: The Harris Bank Sex Pay Study</a></li>
+<li class="chapter" data-level="4.1.2" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#difference-in-mean-salaries-between-genders"><i class="fa fa-check"></i><b>4.1.2</b> Difference in mean salaries between genders</a></li>
+<li class="chapter" data-level="4.1.3" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#randomization-test-for-treatment-significance"><i class="fa fa-check"></i><b>4.1.3</b> Randomization test for treatment significance</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html"><i class="fa fa-check"></i><b>5</b> Alternatives for Non-Normal Responses</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#transformations"><i class="fa fa-check"></i><b>5.1</b> Transformations</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#example-cloud-seeding-for-rainfall"><i class="fa fa-check"></i><b>5.1.1</b> Example: Cloud Seeding for Rainfall</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#rank-sum-test"><i class="fa fa-check"></i><b>5.2</b> Rank-Sum Test</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#example-ratio-measurements"><i class="fa fa-check"></i><b>5.2.1</b> Example: ratio measurements</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#signed-rank-test"><i class="fa fa-check"></i><b>5.3</b> Signed-rank test</a></li>
+<li class="chapter" data-level="5.4" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrap"><i class="fa fa-check"></i><b>5.4</b> Bootstrap</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#intro-to-the-bootstrap"><i class="fa fa-check"></i><b>5.4.1</b> Intro to the bootstrap</a></li>
+<li class="chapter" data-level="5.4.2" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>5.4.2</b> Bootstrap Confidence Intervals</a></li>
+<li class="chapter" data-level="5.4.3" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrapping-linear-models"><i class="fa fa-check"></i><b>5.4.3</b> Bootstrapping linear models</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="one-way-anova.html"><a href="one-way-anova.html"><i class="fa fa-check"></i><b>6</b> One Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="one-way-anova.html"><a href="one-way-anova.html#the-gauss-markov-model-for-comparing-i-populations"><i class="fa fa-check"></i><b>6.1</b> The Gauss-Markov Model for comparing I populations</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="one-way-anova.html"><a href="one-way-anova.html#example-donuts-effects-model"><i class="fa fa-check"></i><b>6.1.1</b> Example: Donuts effects model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="one-way-anova.html"><a href="one-way-anova.html#testing-equality-of-means"><i class="fa fa-check"></i><b>6.2</b> Testing equality of means</a></li>
+<li class="chapter" data-level="6.3" data-path="one-way-anova.html"><a href="one-way-anova.html#follow-up-testing"><i class="fa fa-check"></i><b>6.3</b> Follow-up testing</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="one-way-anova.html"><a href="one-way-anova.html#donuts-example"><i class="fa fa-check"></i><b>6.3.1</b> Donuts example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="one-way-anova.html"><a href="one-way-anova.html#inference-for-particular-contrasts"><i class="fa fa-check"></i><b>6.4</b> Inference for particular contrasts</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="one-way-anova.html"><a href="one-way-anova.html#donuts-example-1"><i class="fa fa-check"></i><b>6.4.1</b> Donuts Example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="one-way-anova.html"><a href="one-way-anova.html#checking-assumptions-in-one-way-anova"><i class="fa fa-check"></i><b>6.5</b> Checking Assumptions in one-way ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="one-way-anova.html"><a href="one-way-anova.html#example-cehcking-assumptions-for-donuts-experiment"><i class="fa fa-check"></i><b>6.5.1</b> Example: Cehcking assumptions for donuts experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html"><i class="fa fa-check"></i><b>7</b> Randomized Complete Block Design</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#paired-experiments-as-blocking"><i class="fa fa-check"></i><b>7.1</b> Paired experiments as blocking</a></li>
+<li class="chapter" data-level="7.2" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#randomized-complete-block-designs"><i class="fa fa-check"></i><b>7.2</b> Randomized Complete Block Designs</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#notation"><i class="fa fa-check"></i><b>7.2.1</b> Notation</a></li>
+<li class="chapter" data-level="7.2.2" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-penicillin-manufacturing"><i class="fa fa-check"></i><b>7.2.2</b> Example: Penicillin Manufacturing</a></li>
+<li class="chapter" data-level="7.2.3" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#sums-of-squares-and-f-tests-in-rcbd"><i class="fa fa-check"></i><b>7.2.3</b> Sums of squares and F tests in RCBD</a></li>
+<li class="chapter" data-level="7.2.4" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-significance-of-process-in-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.4</b> Example: Significance of Process in Penicillin experiment</a></li>
+<li class="chapter" data-level="7.2.5" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#follow-up-comparisons-and-contrasts"><i class="fa fa-check"></i><b>7.2.5</b> Follow-up comparisons and contrasts</a></li>
+<li class="chapter" data-level="7.2.6" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-tukey-contrasts-and-scheffe-for-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.6</b> Example: Tukey, contrasts, and Scheffe for penicillin experiment</a></li>
+<li class="chapter" data-level="7.2.7" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#relative-efficiency-of-blocking-vs.-crd"><i class="fa fa-check"></i><b>7.2.7</b> Relative efficiency of Blocking (vs. CRD)</a></li>
+<li class="chapter" data-level="7.2.8" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-re-of-blocking-in-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.8</b> Example: RE of blocking in penicillin experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html"><i class="fa fa-check"></i><b>8</b> Latin Squares for two blocking variables</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#designs-for-multiple-blocks"><i class="fa fa-check"></i><b>8.1</b> Designs for multiple blocks</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-mpg-experiment"><i class="fa fa-check"></i><b>8.1.1</b> Example: MPG experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#model-notation"><i class="fa fa-check"></i><b>8.2</b> Model notation</a></li>
+<li class="chapter" data-level="8.3" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#sums-of-squares-and-test-for-treatment-effects"><i class="fa fa-check"></i><b>8.3</b> Sums of squares and test for treatment effects</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-mpg-experiment-1"><i class="fa fa-check"></i><b>8.3.1</b> Example: MPG experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#relative-efficiency-of-blocking"><i class="fa fa-check"></i><b>8.4</b> Relative efficiency of blocking</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-re-ignoring-driver-blocks"><i class="fa fa-check"></i><b>8.4.1</b> Example: RE ignoring driver blocks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="two-way-anova.html"><a href="two-way-anova.html"><i class="fa fa-check"></i><b>9</b> Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="two-way-anova.html"><a href="two-way-anova.html#the-model"><i class="fa fa-check"></i><b>9.1</b> The Model</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="two-way-anova.html"><a href="two-way-anova.html#example-protein-chemistry"><i class="fa fa-check"></i><b>9.1.1</b> Example: protein chemistry</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="two-way-anova.html"><a href="two-way-anova.html#tests-for-interaction-and-main-effects"><i class="fa fa-check"></i><b>9.2</b> Tests for interaction and main effects</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="two-way-anova.html"><a href="two-way-anova.html#example-protein-and-dietary-metals"><i class="fa fa-check"></i><b>9.2.1</b> Example: Protein and dietary metals</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html"><i class="fa fa-check"></i><b>10</b> Unbalanced data in Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#raw-and-least-squares-means"><i class="fa fa-check"></i><b>10.1</b> Raw and Least-Squares Means</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data"><i class="fa fa-check"></i><b>10.1.1</b> Example: Turbine data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#partial-f-tests-and-type-iii-ss"><i class="fa fa-check"></i><b>10.2</b> Partial F tests and Type III SS</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data-tests"><i class="fa fa-check"></i><b>10.2.1</b> Example: Turbine Data tests</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#follow-up-tests"><i class="fa fa-check"></i><b>10.3</b> Follow-up tests</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data-tukey-corrected-pairwise-comparisons"><i class="fa fa-check"></i><b>10.3.1</b> Example: Turbine data Tukey-corrected pairwise comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#unbalanced-data-and-simpsons-paradox"><i class="fa fa-check"></i><b>10.4</b> Unbalanced data and Simpson’s Paradox</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html"><i class="fa fa-check"></i><b>11</b> Missing Cells in Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#anova-with-missing-at-random-cell"><i class="fa fa-check"></i><b>11.1</b> ANOVA with missing “at random” cell</a></li>
+<li class="chapter" data-level="11.2" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#do-any-of-the-treatments-matter"><i class="fa fa-check"></i><b>11.2</b> Do any of the treatments matter?</a></li>
+<li class="chapter" data-level="11.3" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#fit-a-linear-model-with-additional-constraints"><i class="fa fa-check"></i><b>11.3</b> Fit a linear model with additional constraints</a></li>
+<li class="chapter" data-level="11.4" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#general-linear-test-for-interaction"><i class="fa fa-check"></i><b>11.4</b> General Linear Test for interaction</a></li>
+<li class="chapter" data-level="11.5" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#partial-analysis-for-interaction"><i class="fa fa-check"></i><b>11.5</b> Partial analysis for interaction</a></li>
+<li class="chapter" data-level="11.6" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#tests-for-main-effects-in-the-partial-table"><i class="fa fa-check"></i><b>11.6</b> Tests for main effects in the partial table</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html"><i class="fa fa-check"></i><b>12</b> Strategy for Analysis in Two-Factor models</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#unbalanced-two-factor-experiment-chick-weight"><i class="fa fa-check"></i><b>12.1</b> Unbalanced Two-Factor Experiment: Chick Weight</a></li>
+<li class="chapter" data-level="12.2" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#example-observational-study-on-growth-hormone-deficient-children-with-empty-cell"><i class="fa fa-check"></i><b>12.2</b> Example: observational study on growth-hormone deficient children with empty cell</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#linear-model-analysis-with-extra-constraint"><i class="fa fa-check"></i><b>12.2.1</b> Linear Model analysis with extra constraint</a></li>
+<li class="chapter" data-level="12.2.2" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#partial-table-analysis"><i class="fa fa-check"></i><b>12.2.2</b> Partial Table analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html"><i class="fa fa-check"></i><b>13</b> <span class="math inline">\(2^k\)</span> Factorial Experiments</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#the-model-1"><i class="fa fa-check"></i><b>13.1</b> The Model</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#example-stress-test-study"><i class="fa fa-check"></i><b>13.1.1</b> Example: Stress Test Study</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#unreplicated-factorial-experiments"><i class="fa fa-check"></i><b>13.2</b> Unreplicated Factorial Experiments</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#example-granola-bar-experiment"><i class="fa fa-check"></i><b>13.2.1</b> Example: Granola bar experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Linear Models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="one-way-anova" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> One Way ANOVA<a href="one-way-anova.html#one-way-anova" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="the-gauss-markov-model-for-comparing-i-populations" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> The Gauss-Markov Model for comparing I populations<a href="one-way-anova.html#the-gauss-markov-model-for-comparing-i-populations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As we saw in the second chapter, the Gauss-Markov linear model easily extends to comparisons of <span class="math inline">\(I&gt;2\)</span> populations using either a means or effects parametrization. <br><br></p>
+<p>In this chapter, we discuss how to compare <span class="math inline">\(I\)</span> populations efficiently, follow-up tests when not all populations are the same, and how to check model assumptions.<br><br></p>
+<p>The model we will use throughout is
+<span class="math display">\[Y = X\beta + \epsilon\]</span>
+where <span class="math inline">\(Y\)</span> is the vector of sampled responses for each of <span class="math inline">\(I\)</span> groups/populations, <span class="math inline">\(X\)</span> encodes the group membership structure of the responses, <span class="math inline">\(\beta\)</span> is an <span class="math inline">\(I\times 1\)</span> vector that encodes the population means <span class="math inline">\(\mu_i,\, i=1, \ldots, I\)</span> (not necessarily by the identity function), and <span class="math inline">\(\epsilon\)</span> is a vector of iid Gaussian random residuals with homogeneous variance <span class="math inline">\(\sigma^2\)</span>.</p>
+<div id="example-donuts-effects-model" class="section level3 hasAnchor" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Example: Donuts effects model<a href="one-way-anova.html#example-donuts-effects-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Throughout this chapter we will consider the donuts data: there are 24 observations of oil absorption (in grams above 150 grams) for 4 types of oil (6 replicates per oil, balanced).</p>
+<a href="data:text/csv;base64,T2lsLHkNCjEsMTQNCjEsMjINCjEsMTgNCjEsMjcNCjEsNg0KMSw0NQ0KMiwyOA0KMiw0MQ0KMiw0Nw0KMiwzMg0KMiwzNQ0KMiwyNw0KMywyNQ0KMyw0Mw0KMywyOA0KMywyMQ0KMywxMw0KMywyNg0KNCw1DQo0LDE2DQo0LC0xDQo0LDE0DQo0LDIwDQo0LDE4DQo=" download="donuts.csv">Download donuts.csv</a>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="one-way-anova.html#cb159-1" aria-hidden="true" tabindex="-1"></a>donuts <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;donuts.csv&#39;</span>)</span>
+<span id="cb159-2"><a href="one-way-anova.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(donuts)</span></code></pre></div>
+<pre><code>##   Oil  y
+## 1   1 14
+## 2   1 22
+## 3   1 18
+## 4   1 27
+## 5   1  6
+## 6   1 45</code></pre>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="one-way-anova.html#cb161-1" aria-hidden="true" tabindex="-1"></a>donuts<span class="sc">$</span>Oil <span class="ot">&lt;-</span> <span class="fu">factor</span>(donuts<span class="sc">$</span>Oil, <span class="at">levels =</span> <span class="fu">unique</span>(donuts<span class="sc">$</span>Oil))</span></code></pre></div>
+<p>The default R parametrization is an effects model where <span class="math inline">\(\beta_1\)</span> is the Oil level 1 mean response, and <span class="math inline">\(\beta_2\)</span> through <span class="math inline">\(\beta_4\)</span> are differences from baseline, i.e., <span class="math inline">\(\beta_2 = \mu_{2} - \mu_1\)</span>.</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="one-way-anova.html#cb162-1" aria-hidden="true" tabindex="-1"></a>my.lm<span class="ot">&lt;-</span><span class="fu">lm</span>(y<span class="sc">~</span>Oil, <span class="at">data =</span> donuts)</span>
+<span id="cb162-2"><a href="one-way-anova.html#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(my.lm)</span></code></pre></div>
+<pre><code>##    (Intercept) Oil2 Oil3 Oil4
+## 1            1    0    0    0
+## 2            1    0    0    0
+## 3            1    0    0    0
+## 4            1    0    0    0
+## 5            1    0    0    0
+## 6            1    0    0    0
+## 7            1    1    0    0
+## 8            1    1    0    0
+## 9            1    1    0    0
+## 10           1    1    0    0
+## 11           1    1    0    0
+## 12           1    1    0    0
+## 13           1    0    1    0
+## 14           1    0    1    0
+## 15           1    0    1    0
+## 16           1    0    1    0
+## 17           1    0    1    0
+## 18           1    0    1    0
+## 19           1    0    0    1
+## 20           1    0    0    1
+## 21           1    0    0    1
+## 22           1    0    0    1
+## 23           1    0    0    1
+## 24           1    0    0    1
+## attr(,&quot;assign&quot;)
+## [1] 0 1 1 1
+## attr(,&quot;contrasts&quot;)
+## attr(,&quot;contrasts&quot;)$Oil
+## [1] &quot;contr.treatment&quot;</code></pre>
+</div>
+</div>
+<div id="testing-equality-of-means" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Testing equality of means<a href="one-way-anova.html#testing-equality-of-means" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The ANOVA null hypothesis is equalit of all population means <span class="math inline">\(H_0:\mu_1 = \mu_2 = \cdots = \mu_I\)</span> versus <span class="math inline">\(H_a:\text{not all means are equal}\)</span>. Given the other assumptions (normality and homogeneous variance) the null hypothesis implies equality of all I populations. <br><br></p>
+<p>Somewhat counterintuitively, the key to efficiently testing equality of means lies in comparing two different estimators of the common variance <span class="math inline">\(\sigma^2\)</span>. Consider the pooled variance estimator:
+<span class="math display">\[MSE = \frac{1}{N-I}\sum_{i=1}^I\sum_{j=1}^{n_i}(Y_{ij} - \bar Y_{i\cdot})^2\]</span>
+where the subscript <span class="math inline">\(i\)</span> denotes the group membership and the subscript <span class="math inline">\(j\)</span> denotes the individual within group <span class="math inline">\(i\)</span>; <span class="math inline">\(N = \sum_{i=1}^I n_i\)</span> where <span class="math inline">\(n_i\)</span> is the <span class="math inline">\(i^{th}\)</span> group’s sample size. Clearly, the mean squared error (MSE, also called mean within group variability or MSW) is a pooled variance estimator, equal to the pooled sample variance <span class="math inline">\(S_p^2\)</span> when <span class="math inline">\(I=2\)</span>. It is straightforward to show <span class="math inline">\(MSE\)</span> is unbiased for <span class="math inline">\(\sigma^2\)</span>, given that the sample variance in each group is unbiased for the variance. Furthermore, since <span class="math inline">\(\sum_{j=1}^{n_i}(Y_{ij} - \bar Y_{i\cdot})^2\)</span> divided by <span class="math inline">\(\sigma^2\)</span> follows a Chi-squared distribution with <span class="math inline">\(n_i - 1\)</span> degrees of freedom, and since sums of independent Chi-squared r.v.’s are Chi-squared with df equal to the sum of degrees of freedom of the summand r.v.’s it follows that
+<span class="math display">\[\frac{MSE}{\sigma^2}\sim \chi^2(N-I).\]</span>
+<br></p>
+<p>Similarly, suppose the null hypothesis above is true and all the means are the same. Then, <span class="math inline">\(\bar Y_{i\cdot}\stackrel{ind}{\sim}N(\mu, \sigma^2/n_i)\)</span>, and another unbiased estimator of <span class="math inline">\(\sigma^2\)</span> is given by
+<span class="math display">\[MSTr = \sum_{i=1}^I n_i(\bar Y_{i\cdot}-\bar Y_{\cdot\cdot})^2,\]</span>
+which is the mean square of treatments (or mean between group variation MSB). However, this is clearly only unbiased under <span class="math inline">\(H_0\)</span>, because under <span class="math inline">\(H_a\)</span> the observed residuals inside the sum of squares are not centered. Indeed, under the alternative hypothesis, it is not hard (but is tedious) to show that
+<span class="math display">\[E(MSTr) = \sigma^2 + \frac{1}{I-1}\sum_{i=1}^I n_i(\mu_i - \bar\mu)^2\]</span>
+where <span class="math inline">\(\bar\mu = N^{-1}\sum_{i=1}^In_i\mu_i\)</span>. The bias term is positive, which suggests a one-sided test of <span class="math inline">\(H_0\)</span> determined by the ratio <span class="math inline">\(MSTr/MSE\)</span>. All we need is the sampling distribution of that statistic. For essentially the same reason as above, it follows that <span class="math inline">\(MSTr\)</span> follows a Chi-squared distribution with df <span class="math inline">\(I-1\)</span> under <span class="math inline">\(H_0\)</span>. It’s less obvious that MSTr and MSE are independent, but they are. Very briefly, the reason is that both of these statistics are <em>quadratic forms</em> that may be written <span class="math inline">\(MSE = Y^\top AY\)</span> and <span class="math inline">\(MSTr = Y^\top BY\)</span> for some matrices <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. Multivariate normal distribution theory says that quadratic forms are independent if <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are orthogonal matrices. Some careful work will show MSE and MSTr satisfy this property. Then, their ratio is a ratio of independent Chi-squared r.v.’s, which is an F r.v.:
+<span class="math display">\[F=\frac{MSTr}{MSE}\stackrel{H_0}{\sim}F(I-1, N-I).\]</span>
+Recall that only large values of this ratio suggest the null hypothesis is incorrect, and, therefore, we reject <span class="math inline">\(H_0\)</span> at level <span class="math inline">\(\alpha\)</span> if <span class="math inline">\(F&gt;F_{1-\alpha, I-1, N-I}\)</span>. This is called the analysis of variance (ANOVA) F test.</p>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+### Example: Donuts</p>
+<p>Below we evaluate the F test for equality of mean oil absorption across all four types of oil. ``By hand” we find a p-value of 0.0069, which suggests we should reject the null hypothesis of equal means and conclude different oils have different average absorption. Alternatively, the built-in <span class="math inline">\({\tt aov}\)</span> function will compute the F statistic and p-value, and display both using the <span class="math inline">\({\tt summary}\)</span> utility function.</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="one-way-anova.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
+## ✔ readr   2.1.2      ✔ forcats 0.5.2 
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="one-way-anova.html#cb166-1" aria-hidden="true" tabindex="-1"></a>by_oil <span class="ot">&lt;-</span> <span class="fu">group_by</span>(donuts, Oil)</span>
+<span id="cb166-2"><a href="one-way-anova.html#cb166-2" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">summarise</span>(by_oil, <span class="at">means =</span> <span class="fu">mean</span>(y))</span>
+<span id="cb166-3"><a href="one-way-anova.html#cb166-3" aria-hidden="true" tabindex="-1"></a>SSE <span class="ot">&lt;-</span> <span class="fu">sum</span>((donuts<span class="sc">$</span>y[donuts<span class="sc">$</span>Oil<span class="sc">==</span><span class="dv">1</span>] <span class="sc">-</span> means<span class="sc">$</span>means[<span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">sum</span>((donuts<span class="sc">$</span>y[donuts<span class="sc">$</span>Oil<span class="sc">==</span><span class="dv">2</span>] <span class="sc">-</span> means<span class="sc">$</span>means[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">sum</span>((donuts<span class="sc">$</span>y[donuts<span class="sc">$</span>Oil<span class="sc">==</span><span class="dv">3</span>] <span class="sc">-</span> means<span class="sc">$</span>means[<span class="dv">3</span>])<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">sum</span>((donuts<span class="sc">$</span>y[donuts<span class="sc">$</span>Oil<span class="sc">==</span><span class="dv">4</span>] <span class="sc">-</span> means<span class="sc">$</span>means[<span class="dv">4</span>])<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb166-4"><a href="one-way-anova.html#cb166-4" aria-hidden="true" tabindex="-1"></a>SSTr <span class="ot">&lt;-</span> <span class="dv">6</span><span class="sc">*</span>((means<span class="sc">$</span>means[<span class="dv">1</span>] <span class="sc">-</span> <span class="fu">mean</span>(donuts<span class="sc">$</span>y))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="dv">6</span><span class="sc">*</span>((means<span class="sc">$</span>means[<span class="dv">2</span>] <span class="sc">-</span> <span class="fu">mean</span>(donuts<span class="sc">$</span>y))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="dv">6</span><span class="sc">*</span>((means<span class="sc">$</span>means[<span class="dv">3</span>] <span class="sc">-</span> <span class="fu">mean</span>(donuts<span class="sc">$</span>y))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="dv">6</span><span class="sc">*</span>((means<span class="sc">$</span>means[<span class="dv">4</span>] <span class="sc">-</span> <span class="fu">mean</span>(donuts<span class="sc">$</span>y))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb166-5"><a href="one-way-anova.html#cb166-5" aria-hidden="true" tabindex="-1"></a>F <span class="ot">&lt;-</span> (SSTr<span class="sc">/</span><span class="dv">3</span>)<span class="sc">/</span>(SSE<span class="sc">/</span>(<span class="dv">6</span><span class="sc">*</span><span class="dv">4-4</span>))</span>
+<span id="cb166-6"><a href="one-way-anova.html#cb166-6" aria-hidden="true" tabindex="-1"></a>SSE</span></code></pre></div>
+<pre><code>## [1] 2018</code></pre>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="one-way-anova.html#cb168-1" aria-hidden="true" tabindex="-1"></a>SSTr</span></code></pre></div>
+<pre><code>## [1] 1636.5</code></pre>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="one-way-anova.html#cb170-1" aria-hidden="true" tabindex="-1"></a>F</span></code></pre></div>
+<pre><code>## [1] 5.406343</code></pre>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="one-way-anova.html#cb172-1" aria-hidden="true" tabindex="-1"></a>p.value <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">pf</span>(F, <span class="dv">4-1</span>, <span class="dv">6</span><span class="sc">*</span><span class="dv">4</span> <span class="sc">-</span> <span class="dv">4</span>)</span>
+<span id="cb172-2"><a href="one-way-anova.html#cb172-2" aria-hidden="true" tabindex="-1"></a>p.value</span></code></pre></div>
+<pre><code>## [1] 0.006875948</code></pre>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="one-way-anova.html#cb174-1" aria-hidden="true" tabindex="-1"></a>my.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(y<span class="sc">~</span>Oil, <span class="at">data=</span>donuts)</span>
+<span id="cb174-2"><a href="one-way-anova.html#cb174-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my.aov)</span></code></pre></div>
+<pre><code>##             Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+## Oil          3   1636   545.5   5.406 0.00688 **
+## Residuals   20   2018   100.9                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="follow-up-testing" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Follow-up testing<a href="one-way-anova.html#follow-up-testing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>When we reject the null hypothesis of equal means we usually want to know the answer to the follow-up question “which means are actually different”? It may be that one population mean is different from the others, which are all the same; or, it could be that every mean is different. If this question affects the actions the experimenters would take or recommend, then a follow-up test to evaluate these possibilities is valuable.<br><br></p>
+<p>The most straightforward way to conduct such a follow-up test would be to compare all the means pairwise and use a Bonferroni correction to account for the multiple tests. This is not the most powerful testing method. A much better method was developed by Tukey for use specifically with one-way ANOVA. <br><br></p>
+<p>Tukey’s procedure is based on a sampling distribution he derived called <strong>Tukey’s Studentized Range distribution</strong>. If <span class="math inline">\(Z_i\)</span> for <span class="math inline">\(i=1,\ldots, n\)</span> are iid standard normal random variables and <span class="math inline">\(W\)</span> is a Chi-Squared random variable with <span class="math inline">\(\nu\)</span> degrees of freedom independent from the <span class="math inline">\(Z_i\)</span>’s then the random variable
+<span class="math display">\[T = \frac{\max_{i\ne j}|Z_i - Z_j|}{\sqrt{W/\nu}}\]</span>
+follows Tukey’s distribution with two degrees of freedom parameters, <span class="math inline">\(n\)</span> and <span class="math inline">\(\nu\)</span>. <br><br></p>
+<p>First, consider a balanced experiment, meaning we collect a random sample <span class="math inline">\(Y_{i1, \ldots, Y_{i,n}}\)</span> of size <span class="math inline">\(n\)</span> from every population, <span class="math inline">\(i=1, \ldots, I\)</span>. We know that <span class="math inline">\(n(I-1)MSE/\sigma^2\)</span> has a Chi-squared distribution with <span class="math inline">\(nI-I = n(I-1)\)</span> degrees of freedom, and is independent from <span class="math inline">\(\overline Y_{i\cdot}\)</span> for <span class="math inline">\(i=1, \ldots, I\)</span> (essentially by Student’s Theorem). The variance of <span class="math inline">\(\overline Y_{i\cdot} - \overline Y_{j\cdot}\)</span> is <span class="math inline">\(\sigma^2(1/n + 1/n)\)</span>. Therefore,
+<span class="math display">\[T = \frac{\max_{i\ne j}\left|\frac{\overline Y_{i\cdot}}{\sigma\sqrt{1/n}} - \frac{\overline Y_{j\cdot}}{{\sigma\sqrt{1/n}}}\right|}{\sqrt{n(I-1)MSE/\sigma^2}} = \frac{\max_{i\ne j}\left|\overline Y_{i\cdot} - \overline Y_{j\cdot}\right|}{\sqrt{MSE/n}}\]</span>
+follows Tukey’s distribution with degrees of freedom <span class="math inline">\(I\)</span> and <span class="math inline">\(n(I-1)\)</span>. <br><br></p>
+<p>Another way Tukey’s test statistic is often written is
+<span class="math display">\[T = \frac{\max_{i\ne j}\left|\overline Y_{i\cdot} - \overline Y_{j\cdot}\right|}{2^{-1/2}\sqrt{MSE(2/n)}},\]</span>
+which may be easier to remember because the standard error of <span class="math inline">\(\overline Y_{i\cdot} - \overline Y_{j\cdot}\)</span> is <span class="math inline">\(2\sigma^2/n\)</span>.</p>
+<p>Tukey’s procedure says to do the following:<br>
+1. Evaluate the test statistics <span class="math inline">\(T_{i,j}\)</span> for all <span class="math inline">\({n\choose 2}\)</span> pairs where
+<span class="math display">\[T_{i,j} = \frac{\left|\overline Y_{i\cdot} - \overline Y_{j\cdot}\right|}{2^{-1/2}\sqrt{MSE(2/n)}}.\]</span>
+2. Conclude <span class="math inline">\(\mu_i\)</span> and <span class="math inline">\(\mu_j\)</span> are significantly different at level <span class="math inline">\(\alpha\)</span> if <span class="math inline">\(T_{i,j} &gt; q_{1-\alpha, n, n(I-1)}\)</span> where <span class="math inline">\(q_{\alpha,u,v}\)</span> is the <span class="math inline">\(\alpha^{th}\)</span> quantile of Tukey’s distribution with <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> degrees of freedom.<br>
+-OR-
+1. Evaluate the <span class="math inline">\({n\choose 2}\)</span> confidence intervals
+<span class="math display">\[(\overline Y_{i\cdot} - \overline Y_{j\cdot}\pm 2^{-1/2}q_{1-\alpha, n, n(I-1)}\sqrt{MSE(2/n)}).\]</span>
+2. For every interval <strong>not</strong> including zero, conclude the corresponding means are significantly different.<br><br></p>
+<p>Both procedures, the testing procedure and the confidence interval procedure, maintain Type 1 error at level <span class="math inline">\(\alpha\)</span> collectively over all <span class="math inline">\({n \choose 2}\)</span> pairwise comparisons.</p>
+<p><br><br></p>
+<p>When the experiment is <strong>unbalanced</strong>—meaning that the sample sizes of the samples taken from each of the <span class="math inline">\(I\)</span> populations are not all equal, Tukey’s procedure is approximate. In that case, Tukey’s statistic
+<span class="math display">\[T_{i,j} = \frac{\left|\overline Y_{i\cdot} - \overline Y_{j\cdot}\right|}{2^{-1/2}\sqrt{MSE\left(\frac{1}{n_i}+\frac{1}{n_j}\right)}}\]</span>
+only approximately follows Tukey’s studentized range distribution with degrees of freedom <span class="math inline">\(I\)</span> and <span class="math inline">\(N-I\)</span> where <span class="math inline">\(N = \sum_{i=1}^I n_i\)</span>. Tukey’s procedure for unbalanced experiments is exactly the same, but the family-wise (over all comparisons) Type 1 error is only approximately controlled at level <span class="math inline">\(\alpha\)</span>.</p>
+<div id="donuts-example" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Donuts example<a href="one-way-anova.html#donuts-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Tukey’s simultaneous pairwise comparisons may be performed in R using either the built-in TukeyHSD function or the emmeans and contrast functions in the emmeans package. The former performs the confidence interval procedure whereas the latter performs the test statistic procedure, but either way you will obtain the same results.<br><br></p>
+<p>At level <span class="math inline">\(5\%\)</span> only oils 2 and 4 had significantly different mean absorption. Note that the 4-2 CI does not contain zero, or, alternatively, that Oil2 - Oil4 p-value if 0.0039, the only one smaller than 0.05.</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="one-way-anova.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(my.aov)</span></code></pre></div>
+<pre><code>##   Tukey multiple comparisons of means
+##     95% family-wise confidence level
+## 
+## Fit: aov(formula = y ~ Oil, data = donuts)
+## 
+## $Oil
+##     diff        lwr       upr     p adj
+## 2-1   13  -3.232221 29.232221 0.1461929
+## 3-1    4 -12.232221 20.232221 0.8998057
+## 4-1  -10 -26.232221  6.232221 0.3378150
+## 3-2   -9 -25.232221  7.232221 0.4270717
+## 4-2  -23 -39.232221 -6.767779 0.0039064
+## 4-3  -14 -30.232221  2.232221 0.1065573</code></pre>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="one-way-anova.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans) </span>
+<span id="cb178-2"><a href="one-way-anova.html#cb178-2" aria-hidden="true" tabindex="-1"></a>fit.emm <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(my.aov, <span class="st">&quot;Oil&quot;</span>)</span>
+<span id="cb178-3"><a href="one-way-anova.html#cb178-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">contrast</span>(fit.emm, <span class="at">method =</span> <span class="st">&quot;pairwise&quot;</span>))</span></code></pre></div>
+<pre><code>##  contrast    estimate  SE df t.ratio p.value
+##  Oil1 - Oil2      -13 5.8 20  -2.242  0.1462
+##  Oil1 - Oil3       -4 5.8 20  -0.690  0.8998
+##  Oil1 - Oil4       10 5.8 20   1.724  0.3378
+##  Oil2 - Oil3        9 5.8 20   1.552  0.4271
+##  Oil2 - Oil4       23 5.8 20   3.966  0.0039
+##  Oil3 - Oil4       14 5.8 20   2.414  0.1066
+## 
+## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre>
+</div>
+</div>
+<div id="inference-for-particular-contrasts" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Inference for particular contrasts<a href="one-way-anova.html#inference-for-particular-contrasts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Besides pairwise comparisons, experimenters may be interested in comparing particular combinations of treatment means. For example, they may want to answer the question: “Is Oil 4 significantly different than Oils 1-3 combined?” in the contest of the donuts experiment. This is not a pairwise comparison; rather, it’s a linear combination (or contrast) defined by <span class="math inline">\(\mu_4 - \tfrac13(\mu_1+\mu_2+\mu_3)\)</span>. It is important that we decide which contrasts to test <em>apriori</em>—that is, before we do the experiment. We do not want to bias our test procedures by using the data to suggest which contrasts might be significant and then testing those in particular. That practice leads to inflated Type 1 error. Likewise, when testing multiple contrasts, it is a good idea to make a Type 1 correction for multiple tests if a decision or action hinges on the outcome of the tests in total. For this correction we need something new, because Tukey’s procedure only works for pairwise comparisons, and contrasts are more general objects. <br><br></p>
+<p>In general, a contrast may be written <span class="math inline">\(\gamma = \sum_{i=1}^I c_i\mu_i = c^\top \mu\)</span> where <span class="math inline">\(0=\sum_{i=1}^I c_i\)</span>. The estimated contrast is <span class="math inline">\(\hat\gamma = \sum_{i=1}^n c_i\overline Y_{i\cdot}\)</span> and it has standard error <span class="math inline">\(\sqrt{\sigma^2\sum_{i=1}^n (c_i^2/n_i)}\)</span>. It follows that tests and CIs for <span class="math inline">\(\gamma\)</span> are based on the follow Student’s t r.v.:
+<span class="math display">\[\frac{\hat\gamma - \gamma}{\sqrt{\sigma^2\sum_{i=1}^n (c_i^2/n_i)}}\sim t_{N-I}.\]</span></p>
+<p>Scheff'e developed a correction for simultaneous inference on several (even all possible) contrasts. This method is prefereable to Bonferroni for more than a few contrasts, but will be overly conservative for just two or three contrasts. Scheff'e says to use cutoffs of the form <span class="math inline">\(\sqrt{(I-1)F_{1-\alpha, I-1, N-I}}\)</span> rather than Student’s t quantiles <span class="math inline">\(t_{1-\alpha/2, N-I}\)</span> for tests of contrasts and for margin of error expressions for CIs of contrasts. In particular, Scheff'e’s CIs for contrasts <span class="math inline">\(\gamma_\ell\)</span>, <span class="math inline">\(\ell=1,\ldots\)</span> are
+<span class="math display">\[\left(\hat\gamma_\ell \pm \sqrt{(I-1)F_{1-\alpha, I-1, N-I}}\sqrt{MSE\sum_{i=1}^n (c_i^2/n_i)}\right).\]</span>
+This collection of CIs has coverage <span class="math inline">\(100(1-\alpha)\%\)</span> for any vector of contrasts <span class="math inline">\(\gamma = (\gamma_1, \gamma_2, \ldots )\)</span>.</p>
+<div id="donuts-example-1" class="section level3 hasAnchor" number="6.4.1">
+<h3><span class="header-section-number">6.4.1</span> Donuts Example<a href="one-way-anova.html#donuts-example-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Below we compute CIs for the contrast comparing Oil 4 to the average of Oils 1-3 and p-values for the test of <span class="math inline">\(\gamma = 0\)</span> using both the single contrast methods based on the Student’s t sampling distribution and Scheffe’s correction for inference on all simultaneous contrasts. Using the emmeans package we can do these computations with built-in functions rather than “by hand”. Note that the p-value using Scheff'e’s method is about ten times higher than the single contrast method, which demonstrates the correction for inference on all contrasts is substantial.</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="one-way-anova.html#cb180-1" aria-hidden="true" tabindex="-1"></a>MSE <span class="ot">&lt;-</span> SSE<span class="sc">/</span>(<span class="dv">6</span><span class="sc">*</span><span class="dv">4-4</span>)</span>
+<span id="cb180-2"><a href="one-way-anova.html#cb180-2" aria-hidden="true" tabindex="-1"></a>c1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb180-3"><a href="one-way-anova.html#cb180-3" aria-hidden="true" tabindex="-1"></a>gamma.hat <span class="ot">&lt;-</span> <span class="fu">sum</span>(c1<span class="sc">*</span>means<span class="sc">$</span>means)</span>
+<span id="cb180-4"><a href="one-way-anova.html#cb180-4" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(MSE<span class="sc">*</span><span class="fu">sum</span>((c1<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>)))</span>
+<span id="cb180-5"><a href="one-way-anova.html#cb180-5" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(gamma.hat <span class="sc">-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>,<span class="dv">4</span><span class="sc">*</span><span class="dv">6-4</span>)<span class="sc">*</span>se,gamma.hat <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.975</span>,<span class="dv">4</span><span class="sc">*</span><span class="dv">6-4</span>)<span class="sc">*</span>se)</span></code></pre></div>
+<pre><code>## [1] -25.54414  -5.78919</code></pre>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="one-way-anova.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span><span class="fu">pt</span>(gamma.hat<span class="sc">/</span>se, <span class="dv">4</span><span class="sc">*</span><span class="dv">6-4</span>)</span></code></pre></div>
+<pre><code>## [1] 0.003506899</code></pre>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="one-way-anova.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(gamma.hat <span class="sc">-</span> <span class="fu">sqrt</span>((<span class="dv">4-1</span>)<span class="sc">*</span><span class="fu">qf</span>(<span class="fl">0.95</span>,<span class="dv">4-1</span>,<span class="dv">4</span><span class="sc">*</span><span class="dv">6-4</span>))<span class="sc">*</span>se,gamma.hat <span class="sc">+</span> <span class="fu">sqrt</span>((<span class="dv">4-1</span>)<span class="sc">*</span><span class="fu">qf</span>(<span class="fl">0.95</span>,<span class="dv">4-1</span>,<span class="dv">4</span><span class="sc">*</span><span class="dv">6-4</span>))<span class="sc">*</span>se)</span></code></pre></div>
+<pre><code>## [1] -30.103372  -1.229962</code></pre>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="one-way-anova.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pf</span>((gamma.hat<span class="sc">/</span>(se<span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">4-1</span>)))<span class="sc">^</span><span class="dv">2</span>, <span class="dv">4-1</span>,<span class="dv">4</span><span class="sc">*</span><span class="dv">6-4</span>)</span></code></pre></div>
+<pre><code>## [1] 0.03014771</code></pre>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="one-way-anova.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans) <span class="co"># may need to install.packages(&#39;emmeans&#39;)</span></span>
+<span id="cb188-2"><a href="one-way-anova.html#cb188-2" aria-hidden="true" tabindex="-1"></a>fit.emm <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(my.aov, <span class="st">&quot;Oil&quot;</span>)</span>
+<span id="cb188-3"><a href="one-way-anova.html#cb188-3" aria-hidden="true" tabindex="-1"></a><span class="co"># unadjusted, just testing one contrast</span></span>
+<span id="cb188-4"><a href="one-way-anova.html#cb188-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">contrast</span>(fit.emm, <span class="at">method =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">1</span>))))</span></code></pre></div>
+<pre><code>##  contrast                                                       estimate   SE
+##  c(-0.333333333333333, -0.333333333333333, -0.333333333333333,     -15.7 4.74
+##  df t.ratio p.value
+##  20  -3.309  0.0035</code></pre>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="one-way-anova.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scheffe adjustment so that we could test all linear contrasts</span></span>
+<span id="cb190-2"><a href="one-way-anova.html#cb190-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">contrast</span>(fit.emm, <span class="at">method =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">1</span>)), </span>
+<span id="cb190-3"><a href="one-way-anova.html#cb190-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">adjust =</span> <span class="st">&quot;scheffe&quot;</span>), <span class="at">scheffe.rank =</span> <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##  contrast                                                       estimate   SE
+##  c(-0.333333333333333, -0.333333333333333, -0.333333333333333,     -15.7 4.74
+##  df t.ratio p.value
+##  20  -3.309  0.0301
+## 
+## P value adjustment: scheffe method with rank 3</code></pre>
+</div>
+</div>
+<div id="checking-assumptions-in-one-way-anova" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Checking Assumptions in one-way ANOVA<a href="one-way-anova.html#checking-assumptions-in-one-way-anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The ANOVA F test requires the residuals are normally distributed with homogeneous (equal/same) variance. The F test also requires independence, but we will not consider checking that assumption. <br><br></p>
+<p>To check for equal variances we may apply Levene’s test, which is essentially a generalization of the two-sample F test for equality of two normal population variances. To apply Levene’s test we compute the residuals <span class="math inline">\(e_{ij} = Y_{ij} - \overline Y_{i\cdot}\)</span> and perform the ANOVA F test on the absolute residuals <span class="math inline">\(|e_{ij}|\)</span>. The null and alternative hypotheses of Levene’s test (ANOVA F test on residuals) are <span class="math inline">\(H_0:\sigma_i^2 = \sigma^2, \, \text{for all }i=1, \ldots, I\)</span> versus <span class="math inline">\(H_a:\)</span> at least one population variance is different than the other <span class="math inline">\(I-1\)</span> variances.</p>
+<p><br><br></p>
+<p>We may check for normality visually using qq-plots of (studentized) residuals. If the assumption is true, we expect almost all the points to fall between <span class="math inline">\((-2,2)\)</span> and close to the diagonal. There are formal tests for normality (Kolmogorov-Smirnov, Anderson-Darling, etc.) but these are not very powerful.
+<br><br></p>
+<p>If qq-plots suggest the normality assumption may not be satisfied, then we can apply a non-parametric test to evaluate equality of the several population distributions. Just the like rank-sum test for comparing two populations, a procedure based on ranks can be used to compare <span class="math inline">\(I\)</span> populations. Let <span class="math inline">\(r_{ij}\)</span> be the ranks of the <span class="math inline">\(y_{ij}\)</span> and let <span class="math inline">\(\bar r_{i\cdot}\)</span> and <span class="math inline">\(\bar r_{\cdot\cdot}\)</span> be the averages of ranks in each population sample and overall, respectively. Then, the Kruskal-Wallis test statistic is the ratio of the SSB (or called SSTr) to SST of the ranks, multiplied by <span class="math inline">\(N-1\)</span>:</p>
+<p><span class="math display">\[\chi^2 = (N-1) \cdot \frac{\sum_{i=1}^I n_{i}(\bar r_{i\cdot} - \bar r_{\cdot\cdot})^2}{\sum_{i=1}^I\sum_{j=1}^{n_i}(r_{ij} - \bar r_{\cdot\cdot})^2}.\]</span></p>
+<p><br>
+The null hypothesis of the Kruskall-Wallis test is that the <span class="math inline">\(I\)</span> populations are really all the same population (the <span class="math inline">\(I\)</span> distributions are equal). In the special case in which we assume all populations are normal with the same mean, this null hypothesis is equivalent to the assertion all the means are equal. Under the Kruskal-Wallis null hypothesis, the test statistic <span class="math inline">\(\chi^2\)</span> is <em>approximately</em> distributed as a Chi-squared r.v. with <span class="math inline">\(I-1\)</span> degrees of freedom.<br />
+<br><br></p>
+<div id="example-cehcking-assumptions-for-donuts-experiment" class="section level3 hasAnchor" number="6.5.1">
+<h3><span class="header-section-number">6.5.1</span> Example: Cehcking assumptions for donuts experiment<a href="one-way-anova.html#example-cehcking-assumptions-for-donuts-experiment" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can use the residuals computed by the aov function when we performed the ANOVA F test on the responses to perform Levene’s test (the ANOVA F test on the residuals). alternatively, we can use the built-in functions for Bartlett’s test or Levene’s test in the car package. Bartlett’s test is similar to Levene’s test, but is said to be more sensitive to non-normality of responses. Sometimes Leven’s test is performed with sample medians replacing sample means, and is referred to as the Brown-Forsythe test. That test is even less sensitive to departures from the normality assumption.
+<br><br></p>
+<p>For the donuts data we do not reject the hypothesis of equal variances—our assumption seems reasonable.</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="one-way-anova.html#cb192-1" aria-hidden="true" tabindex="-1"></a>donuts<span class="sc">$</span>residuals <span class="ot">&lt;-</span> <span class="fu">abs</span>(my.aov<span class="sc">$</span>residuals)</span>
+<span id="cb192-2"><a href="one-way-anova.html#cb192-2" aria-hidden="true" tabindex="-1"></a>my.aov.resid <span class="ot">&lt;-</span> <span class="fu">aov</span>(residuals<span class="sc">~</span>Oil, <span class="at">data =</span> donuts)</span>
+<span id="cb192-3"><a href="one-way-anova.html#cb192-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my.aov.resid)</span></code></pre></div>
+<pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)
+## Oil          3   41.8   13.94   0.361  0.782
+## Residuals   20  772.0   38.60</code></pre>
+<p>In R you can perform the Brow-Forsythe test using the leveneTest function in teh car package with option center = “median”; by default, the function performs Levene’s test.</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="one-way-anova.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div>
+<pre><code>## Loading required package: carData</code></pre>
+<pre><code>## 
+## Attaching package: &#39;car&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     recode</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     some</code></pre>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="one-way-anova.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(y <span class="sc">~</span> Oil, <span class="at">data =</span> donuts)</span></code></pre></div>
+<pre><code>## 
+##  Bartlett test of homogeneity of variances
+## 
+## data:  y by Oil
+## Bartlett&#39;s K-squared = 1.7504, df = 3, p-value = 0.6258</code></pre>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="one-way-anova.html#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(y <span class="sc">~</span> Oil, <span class="at">data =</span> donuts)</span></code></pre></div>
+<pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = median)
+##       Df F value Pr(&gt;F)
+## group  3  0.3434 0.7942
+##       20</code></pre>
+<p>Below we perform the Kruskal-Wallis test “by hand” and using its built-in function. For the donuts data, there is no reason to do this, however, because the qq-plot suggests normality is reasonable.</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="one-way-anova.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(my.aov<span class="sc">$</span>residuals)</span>
+<span id="cb203-2"><a href="one-way-anova.html#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(my.aov<span class="sc">$</span>residuals)</span></code></pre></div>
+<p><img src="05-OneWayANOVA_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="one-way-anova.html#cb204-1" aria-hidden="true" tabindex="-1"></a>rij <span class="ot">&lt;-</span> <span class="fu">rank</span>(donuts<span class="sc">$</span>y)</span>
+<span id="cb204-2"><a href="one-way-anova.html#cb204-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb204-3"><a href="one-way-anova.html#cb204-3" aria-hidden="true" tabindex="-1"></a>r1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(rij[donuts<span class="sc">$</span>Oil <span class="sc">==</span> <span class="dv">1</span>])</span>
+<span id="cb204-4"><a href="one-way-anova.html#cb204-4" aria-hidden="true" tabindex="-1"></a>r2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(rij[donuts<span class="sc">$</span>Oil<span class="sc">==</span> <span class="dv">2</span>])</span>
+<span id="cb204-5"><a href="one-way-anova.html#cb204-5" aria-hidden="true" tabindex="-1"></a>r3 <span class="ot">&lt;-</span> <span class="fu">mean</span>(rij[donuts<span class="sc">$</span>Oil <span class="sc">==</span> <span class="dv">3</span>])</span>
+<span id="cb204-6"><a href="one-way-anova.html#cb204-6" aria-hidden="true" tabindex="-1"></a>r4 <span class="ot">&lt;-</span> <span class="fu">mean</span>(rij[donuts<span class="sc">$</span>Oil <span class="sc">==</span> <span class="dv">4</span>])</span>
+<span id="cb204-7"><a href="one-way-anova.html#cb204-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb204-8"><a href="one-way-anova.html#cb204-8" aria-hidden="true" tabindex="-1"></a><span class="co"># SSE</span></span>
+<span id="cb204-9"><a href="one-way-anova.html#cb204-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb204-10"><a href="one-way-anova.html#cb204-10" aria-hidden="true" tabindex="-1"></a>SSE <span class="ot">&lt;-</span> <span class="fu">sum</span>((rij[donuts<span class="sc">$</span>Oil <span class="sc">==</span> <span class="dv">1</span>] <span class="sc">-</span> r1)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">sum</span>((rij[donuts<span class="sc">$</span>Oil <span class="sc">==</span> <span class="dv">2</span>] <span class="sc">-</span> r2)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">sum</span>((rij[donuts<span class="sc">$</span>Oil <span class="sc">==</span> <span class="dv">3</span>] <span class="sc">-</span> r3)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">sum</span>((rij[donuts<span class="sc">$</span>Oil <span class="sc">==</span> <span class="dv">4</span>] <span class="sc">-</span> r4)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb204-11"><a href="one-way-anova.html#cb204-11" aria-hidden="true" tabindex="-1"></a>SSE</span></code></pre></div>
+<pre><code>## [1] 557.4167</code></pre>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="one-way-anova.html#cb206-1" aria-hidden="true" tabindex="-1"></a>SST <span class="ot">&lt;-</span> <span class="fu">sum</span>((rij <span class="sc">-</span> <span class="fu">mean</span>(rij))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb206-2"><a href="one-way-anova.html#cb206-2" aria-hidden="true" tabindex="-1"></a>SST</span></code></pre></div>
+<pre><code>## [1] 1148</code></pre>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="one-way-anova.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SSTr</span></span>
+<span id="cb208-2"><a href="one-way-anova.html#cb208-2" aria-hidden="true" tabindex="-1"></a>SSTr <span class="ot">&lt;-</span> SST<span class="sc">-</span>SSE</span>
+<span id="cb208-3"><a href="one-way-anova.html#cb208-3" aria-hidden="true" tabindex="-1"></a>SSTr</span></code></pre></div>
+<pre><code>## [1] 590.5833</code></pre>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="one-way-anova.html#cb210-1" aria-hidden="true" tabindex="-1"></a>test.stat <span class="ot">&lt;-</span> (<span class="dv">6</span><span class="sc">*</span><span class="dv">4</span> <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span>(SSTr <span class="sc">/</span> SST)</span>
+<span id="cb210-2"><a href="one-way-anova.html#cb210-2" aria-hidden="true" tabindex="-1"></a>test.stat</span></code></pre></div>
+<pre><code>## [1] 11.83224</code></pre>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="one-way-anova.html#cb212-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pchisq</span>(test.stat, <span class="dv">4-1</span>)</span></code></pre></div>
+<pre><code>## [1] 0.007980479</code></pre>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="one-way-anova.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(y <span class="sc">~</span> Oil, <span class="at">data =</span> donuts)</span></code></pre></div>
+<pre><code>## 
+##  Kruskal-Wallis rank sum test
+## 
+## data:  y by Oil
+## Kruskal-Wallis chi-squared = 11.832, df = 3, p-value = 0.00798</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="alternatives-for-non-normal-responses.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="randomized-complete-block-design.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/05-OneWayANOVA.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

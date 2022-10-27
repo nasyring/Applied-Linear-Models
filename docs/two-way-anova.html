@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 Two-Way ANOVA | Applied Linear Models</title>
+  <meta name="description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 9 Two-Way ANOVA | Applied Linear Models" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 9 Two-Way ANOVA | Applied Linear Models" />
+  
+  <meta name="twitter:description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  
+
+<meta name="author" content="Nick Syring" />
+
+
+<meta name="date" content="2022-10-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="latin-squares-for-two-blocking-variables.html"/>
+<link rel="next" href="unbalanced-data-in-two-way-anova.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied Linear Models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html"><i class="fa fa-check"></i><b>2</b> Data Analysis and Statistical Inference</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#data-experiments-and-studies"><i class="fa fa-check"></i><b>2.1</b> Data, Experiments, and Studies</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#james-linds-scurvy-trial"><i class="fa fa-check"></i><b>2.1.1</b> James Lind’s Scurvy Trial</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#framingham-heart-study"><i class="fa fa-check"></i><b>2.1.2</b> Framingham Heart Study</a></li>
+<li class="chapter" data-level="2.1.3" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#harris-bank-sex-pay-study"><i class="fa fa-check"></i><b>2.1.3</b> Harris Bank Sex Pay Study</a></li>
+<li class="chapter" data-level="2.1.4" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#large-aggregated-data-sets"><i class="fa fa-check"></i><b>2.1.4</b> Large, Aggregated Data Sets</a></li>
+<li class="chapter" data-level="2.1.5" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#study-concepts"><i class="fa fa-check"></i><b>2.1.5</b> Study Concepts</a></li>
+<li class="chapter" data-level="2.1.6" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#randomization-control-and-causation"><i class="fa fa-check"></i><b>2.1.6</b> Randomization, control, and causation</a></li>
+<li class="chapter" data-level="2.1.7" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#populations-and-scope-of-inference"><i class="fa fa-check"></i><b>2.1.7</b> Populations and scope of inference</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#data-summaries"><i class="fa fa-check"></i><b>2.2</b> Data Summaries</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#numerical-summaries"><i class="fa fa-check"></i><b>2.2.1</b> Numerical Summaries</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#visual-summaries"><i class="fa fa-check"></i><b>2.2.2</b> Visual Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#statistical-inference"><i class="fa fa-check"></i><b>2.3</b> Statistical Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html"><i class="fa fa-check"></i><b>3</b> Introduction to Linear Models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#defining-the-linear-model"><i class="fa fa-check"></i><b>3.1</b> Defining the linear model</a></li>
+<li class="chapter" data-level="3.2" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#gauss-markov-model-for-one-sample"><i class="fa fa-check"></i><b>3.2</b> Gauss-Markov model for one sample</a></li>
+<li class="chapter" data-level="3.3" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#gauss-markov-model-for-comparing-two-samples"><i class="fa fa-check"></i><b>3.3</b> Gauss-Markov model for comparing two samples</a></li>
+<li class="chapter" data-level="3.4" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#pairwise-testing-and-bonferroni-correction"><i class="fa fa-check"></i><b>3.4</b> Pairwise testing and Bonferroni correction</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#example-co2-uptake-in-echinochloa-crus-galli"><i class="fa fa-check"></i><b>3.4.1</b> Example: Co2 uptake in Echinochloa crus-galli</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#linear-models-for-more-than-two-treatments-populations"><i class="fa fa-check"></i><b>3.5</b> Linear Models for more than two treatments (populations)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html"><i class="fa fa-check"></i><b>4</b> Randomization and Permutation Testing</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#setup"><i class="fa fa-check"></i><b>4.1</b> Setup</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#example-1-the-harris-bank-sex-pay-study"><i class="fa fa-check"></i><b>4.1.1</b> Example 1: The Harris Bank Sex Pay Study</a></li>
+<li class="chapter" data-level="4.1.2" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#difference-in-mean-salaries-between-genders"><i class="fa fa-check"></i><b>4.1.2</b> Difference in mean salaries between genders</a></li>
+<li class="chapter" data-level="4.1.3" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#randomization-test-for-treatment-significance"><i class="fa fa-check"></i><b>4.1.3</b> Randomization test for treatment significance</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html"><i class="fa fa-check"></i><b>5</b> Alternatives for Non-Normal Responses</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#transformations"><i class="fa fa-check"></i><b>5.1</b> Transformations</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#example-cloud-seeding-for-rainfall"><i class="fa fa-check"></i><b>5.1.1</b> Example: Cloud Seeding for Rainfall</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#rank-sum-test"><i class="fa fa-check"></i><b>5.2</b> Rank-Sum Test</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#example-ratio-measurements"><i class="fa fa-check"></i><b>5.2.1</b> Example: ratio measurements</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#signed-rank-test"><i class="fa fa-check"></i><b>5.3</b> Signed-rank test</a></li>
+<li class="chapter" data-level="5.4" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrap"><i class="fa fa-check"></i><b>5.4</b> Bootstrap</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#intro-to-the-bootstrap"><i class="fa fa-check"></i><b>5.4.1</b> Intro to the bootstrap</a></li>
+<li class="chapter" data-level="5.4.2" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>5.4.2</b> Bootstrap Confidence Intervals</a></li>
+<li class="chapter" data-level="5.4.3" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrapping-linear-models"><i class="fa fa-check"></i><b>5.4.3</b> Bootstrapping linear models</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="one-way-anova.html"><a href="one-way-anova.html"><i class="fa fa-check"></i><b>6</b> One Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="one-way-anova.html"><a href="one-way-anova.html#the-gauss-markov-model-for-comparing-i-populations"><i class="fa fa-check"></i><b>6.1</b> The Gauss-Markov Model for comparing I populations</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="one-way-anova.html"><a href="one-way-anova.html#example-donuts-effects-model"><i class="fa fa-check"></i><b>6.1.1</b> Example: Donuts effects model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="one-way-anova.html"><a href="one-way-anova.html#testing-equality-of-means"><i class="fa fa-check"></i><b>6.2</b> Testing equality of means</a></li>
+<li class="chapter" data-level="6.3" data-path="one-way-anova.html"><a href="one-way-anova.html#follow-up-testing"><i class="fa fa-check"></i><b>6.3</b> Follow-up testing</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="one-way-anova.html"><a href="one-way-anova.html#donuts-example"><i class="fa fa-check"></i><b>6.3.1</b> Donuts example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="one-way-anova.html"><a href="one-way-anova.html#inference-for-particular-contrasts"><i class="fa fa-check"></i><b>6.4</b> Inference for particular contrasts</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="one-way-anova.html"><a href="one-way-anova.html#donuts-example-1"><i class="fa fa-check"></i><b>6.4.1</b> Donuts Example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="one-way-anova.html"><a href="one-way-anova.html#checking-assumptions-in-one-way-anova"><i class="fa fa-check"></i><b>6.5</b> Checking Assumptions in one-way ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="one-way-anova.html"><a href="one-way-anova.html#example-cehcking-assumptions-for-donuts-experiment"><i class="fa fa-check"></i><b>6.5.1</b> Example: Cehcking assumptions for donuts experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html"><i class="fa fa-check"></i><b>7</b> Randomized Complete Block Design</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#paired-experiments-as-blocking"><i class="fa fa-check"></i><b>7.1</b> Paired experiments as blocking</a></li>
+<li class="chapter" data-level="7.2" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#randomized-complete-block-designs"><i class="fa fa-check"></i><b>7.2</b> Randomized Complete Block Designs</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#notation"><i class="fa fa-check"></i><b>7.2.1</b> Notation</a></li>
+<li class="chapter" data-level="7.2.2" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-penicillin-manufacturing"><i class="fa fa-check"></i><b>7.2.2</b> Example: Penicillin Manufacturing</a></li>
+<li class="chapter" data-level="7.2.3" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#sums-of-squares-and-f-tests-in-rcbd"><i class="fa fa-check"></i><b>7.2.3</b> Sums of squares and F tests in RCBD</a></li>
+<li class="chapter" data-level="7.2.4" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-significance-of-process-in-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.4</b> Example: Significance of Process in Penicillin experiment</a></li>
+<li class="chapter" data-level="7.2.5" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#follow-up-comparisons-and-contrasts"><i class="fa fa-check"></i><b>7.2.5</b> Follow-up comparisons and contrasts</a></li>
+<li class="chapter" data-level="7.2.6" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-tukey-contrasts-and-scheffe-for-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.6</b> Example: Tukey, contrasts, and Scheffe for penicillin experiment</a></li>
+<li class="chapter" data-level="7.2.7" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#relative-efficiency-of-blocking-vs.-crd"><i class="fa fa-check"></i><b>7.2.7</b> Relative efficiency of Blocking (vs. CRD)</a></li>
+<li class="chapter" data-level="7.2.8" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-re-of-blocking-in-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.8</b> Example: RE of blocking in penicillin experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html"><i class="fa fa-check"></i><b>8</b> Latin Squares for two blocking variables</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#designs-for-multiple-blocks"><i class="fa fa-check"></i><b>8.1</b> Designs for multiple blocks</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-mpg-experiment"><i class="fa fa-check"></i><b>8.1.1</b> Example: MPG experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#model-notation"><i class="fa fa-check"></i><b>8.2</b> Model notation</a></li>
+<li class="chapter" data-level="8.3" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#sums-of-squares-and-test-for-treatment-effects"><i class="fa fa-check"></i><b>8.3</b> Sums of squares and test for treatment effects</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-mpg-experiment-1"><i class="fa fa-check"></i><b>8.3.1</b> Example: MPG experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#relative-efficiency-of-blocking"><i class="fa fa-check"></i><b>8.4</b> Relative efficiency of blocking</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-re-ignoring-driver-blocks"><i class="fa fa-check"></i><b>8.4.1</b> Example: RE ignoring driver blocks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="two-way-anova.html"><a href="two-way-anova.html"><i class="fa fa-check"></i><b>9</b> Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="two-way-anova.html"><a href="two-way-anova.html#the-model"><i class="fa fa-check"></i><b>9.1</b> The Model</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="two-way-anova.html"><a href="two-way-anova.html#example-protein-chemistry"><i class="fa fa-check"></i><b>9.1.1</b> Example: protein chemistry</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="two-way-anova.html"><a href="two-way-anova.html#tests-for-interaction-and-main-effects"><i class="fa fa-check"></i><b>9.2</b> Tests for interaction and main effects</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="two-way-anova.html"><a href="two-way-anova.html#example-protein-and-dietary-metals"><i class="fa fa-check"></i><b>9.2.1</b> Example: Protein and dietary metals</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html"><i class="fa fa-check"></i><b>10</b> Unbalanced data in Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#raw-and-least-squares-means"><i class="fa fa-check"></i><b>10.1</b> Raw and Least-Squares Means</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data"><i class="fa fa-check"></i><b>10.1.1</b> Example: Turbine data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#partial-f-tests-and-type-iii-ss"><i class="fa fa-check"></i><b>10.2</b> Partial F tests and Type III SS</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data-tests"><i class="fa fa-check"></i><b>10.2.1</b> Example: Turbine Data tests</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#follow-up-tests"><i class="fa fa-check"></i><b>10.3</b> Follow-up tests</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data-tukey-corrected-pairwise-comparisons"><i class="fa fa-check"></i><b>10.3.1</b> Example: Turbine data Tukey-corrected pairwise comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#unbalanced-data-and-simpsons-paradox"><i class="fa fa-check"></i><b>10.4</b> Unbalanced data and Simpson’s Paradox</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html"><i class="fa fa-check"></i><b>11</b> Missing Cells in Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#anova-with-missing-at-random-cell"><i class="fa fa-check"></i><b>11.1</b> ANOVA with missing “at random” cell</a></li>
+<li class="chapter" data-level="11.2" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#do-any-of-the-treatments-matter"><i class="fa fa-check"></i><b>11.2</b> Do any of the treatments matter?</a></li>
+<li class="chapter" data-level="11.3" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#fit-a-linear-model-with-additional-constraints"><i class="fa fa-check"></i><b>11.3</b> Fit a linear model with additional constraints</a></li>
+<li class="chapter" data-level="11.4" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#general-linear-test-for-interaction"><i class="fa fa-check"></i><b>11.4</b> General Linear Test for interaction</a></li>
+<li class="chapter" data-level="11.5" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#partial-analysis-for-interaction"><i class="fa fa-check"></i><b>11.5</b> Partial analysis for interaction</a></li>
+<li class="chapter" data-level="11.6" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#tests-for-main-effects-in-the-partial-table"><i class="fa fa-check"></i><b>11.6</b> Tests for main effects in the partial table</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html"><i class="fa fa-check"></i><b>12</b> Strategy for Analysis in Two-Factor models</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#unbalanced-two-factor-experiment-chick-weight"><i class="fa fa-check"></i><b>12.1</b> Unbalanced Two-Factor Experiment: Chick Weight</a></li>
+<li class="chapter" data-level="12.2" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#example-observational-study-on-growth-hormone-deficient-children-with-empty-cell"><i class="fa fa-check"></i><b>12.2</b> Example: observational study on growth-hormone deficient children with empty cell</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#linear-model-analysis-with-extra-constraint"><i class="fa fa-check"></i><b>12.2.1</b> Linear Model analysis with extra constraint</a></li>
+<li class="chapter" data-level="12.2.2" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#partial-table-analysis"><i class="fa fa-check"></i><b>12.2.2</b> Partial Table analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html"><i class="fa fa-check"></i><b>13</b> <span class="math inline">\(2^k\)</span> Factorial Experiments</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#the-model-1"><i class="fa fa-check"></i><b>13.1</b> The Model</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#example-stress-test-study"><i class="fa fa-check"></i><b>13.1.1</b> Example: Stress Test Study</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#unreplicated-factorial-experiments"><i class="fa fa-check"></i><b>13.2</b> Unreplicated Factorial Experiments</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#example-granola-bar-experiment"><i class="fa fa-check"></i><b>13.2.1</b> Example: Granola bar experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Linear Models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="two-way-anova" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Two-Way ANOVA<a href="two-way-anova.html#two-way-anova" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Two-way ANOVA models represent experiments with two categorical treatment variables and aim to quantify uncertainty about differences in mean response over the levels of these treatments. Superficially, these models appear similar to RCBDs, but neither categorical variable is a block, rather, the effects of both on the response are of interest. We could simply cross the levels of the two treatments and perform a one-way ANOVA, but that will make it challenging to sort out which treatment variable drives the differences in mean response. If we were to apply Tukey tests afterwards, we would have difficulties interpreting comparisons of different levels of different treatment variables. The main advantage of the two-way setup is the presence of explicit ``interaction” effects for the crossed treatments. If these are insignificant in their effects on the mean response, then the model is simply additive, i.e., the effects of the two treatments are separable and therefore easily interpretable.</p>
+<div id="the-model" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> The Model<a href="two-way-anova.html#the-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let <span class="math inline">\(i = 1, \ldots, a\)</span> denote the number of levels of treatment variable A, <span class="math inline">\(j = 1, \ldots, b\)</span> denote the same for treatment variable B, and let <span class="math inline">\(k = 1, \ldots, n\)</span> denote the number of replications at each pair of crossed levels. We consider only balanced designs (for now). Then, the effects model may be written
+<span class="math display">\[Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \epsilon_{ijk}\]</span>
+where <span class="math inline">\(\alpha_i\)</span> and <span class="math inline">\(\beta_j\)</span> are the “main effects” parameters for the treatment variables A and B and the <span class="math inline">\((\alpha\beta)_{ij}\)</span> parameters are “interaction” effects representing synergistic effects between the two treatment variables—in other words, allowing for the treatment effects to be non-additive. As written, the model contains too many parameters—there are 1 + a + b + ab for a total of ab crossed treatment mean responses. So, we need 1+a+b constraints. One choice is the baseline constraints in which we set <span class="math inline">\(\alpha_a = \beta_b = (\alpha\beta)_{i,b} = (\alpha\beta)_{a,j} = 0\)</span>. This zeroes out <span class="math inline">\(1+1+a+b-1\)</span> parameters. (Note, there is a redundancy because <span class="math inline">\(((\alpha\beta)_{a,b})\)</span> appears twice in the constraint set, hence the minus 1.) It is also possible to specify sum-to-zero constraints.</p>
+<div id="example-protein-chemistry" class="section level3 hasAnchor" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> Example: protein chemistry<a href="two-way-anova.html#example-protein-chemistry" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>An experiment is done in which minnows are fed diets with different amounts of zinc and copper supplements. The experimenters record the protein content of the minnows once harvested. Let the levels of copper be 0 and 100 and for zinc be 0, 100 and 200. Then, there are 6 treatment mean responses. Using the baseline constraint, we have the parameters <span class="math inline">\(\mu, \alpha_1, \beta_1, \beta_2, (\alpha\beta)_{11}, (\alpha\beta)_{12}\)</span>.</p>
+</div>
+</div>
+<div id="tests-for-interaction-and-main-effects" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Tests for interaction and main effects<a href="two-way-anova.html#tests-for-interaction-and-main-effects" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The most important questions to be answered are: “do the treatments effect the mean response?” and “are those effects separable/additive?” We may answer these questions using tests of interaction and main effects. <br><br>
+The test for interaction has null hypothesis <span class="math inline">\(H_0: (\alpha\beta)_{ij} = 0, \, \forall i,j\)</span>, versus the alternative that at least one interaction term is non-zero. If we fail to reject the null hypothesis, it means the effects of the treatments (if there are any) are separable/additive, i.e., the model is <span class="math inline">\(Y_{ijk} = \mu + \alpha_i + \beta_j + \epsilon_{ijk}\)</span>. This means we can interpret the treatment effects separately.<br />
+<br><br>
+If we fail to reject the null hypothesis of the interaction test then we may move on to testing main effects: <span class="math inline">\(H_0:\alpha_i = 0, \,\forall i\)</span> and <span class="math inline">\(H_0:\beta_j = 0, \, \forall j\)</span> versus the alternatives that at least one main effect is non-zero. There is no point in doing these tests if there are interaction effects—in that case the treatments must have an effect on the mean response.<br />
+<br><br>
+The sums of squares for testing interaction and main effects are given by the following:
+<span class="math display">\[\begin{align*}
+SS_A &amp;= \sum_{i=1}^a \sum_{j = 1}^b \sum_{k=1}^n (\bar Y_{i\cdot\cdot} - \bar Y_{\cdot\cdot\cdot})^2\\
+SS_B &amp;= \sum_{i=1}^a \sum_{j = 1}^b \sum_{k=1}^n (\bar Y_{\cdot j\cdot} - \bar Y_{\cdot\cdot\cdot})^2\\
+SS_{Int} &amp;= \sum_{i=1}^a \sum_{j = 1}^b \sum_{k=1}^n (\bar Y_{ij\cdot} - \bar Y_{i\cdot\cdot} - \bar Y_{\cdot j\cdot} +\bar Y_{\cdot\cdot\cdot})^2\\
+SST &amp; = \sum_{i=1}^a \sum_{j = 1}^b \sum_{k=1}^n ( Y_{ijk} -\bar Y_{\cdot\cdot\cdot})^2
+SSE &amp; = SST - SS_A - SS_B - SS_{Int}
+\end{align*}\]</span></p>
+<p>The degrees of freedom associated with <span class="math inline">\(SS_A\)</span> is <span class="math inline">\(a-1\)</span>, for <span class="math inline">\(SS_B\)</span> it is <span class="math inline">\(b-1\)</span>, for <span class="math inline">\(SS_{Int}\)</span> it is <span class="math inline">\((a-1)(b-1)\)</span> and for <span class="math inline">\(SSE\)</span> we find it by subtraction <span class="math inline">\((abn-1) - (a-1) - (b-1) - (a-1)(b-1)\)</span>. Then, the F test for interaction has test statistic
+<span class="math display">\[F_{Int} = \frac{SS_{Int} / (a-1)(b-1)}{SSE / df_{SSE}}\stackrel{H_0}{\sim} F_{(a-1)(b-1), df_{SSE}}.\]</span>
+Similarly, for testing the main effect A
+<span class="math display">\[F_A = \frac{SS_{A} / (a-1)}{SSE / df_{SSE}}\stackrel{H_0}{\sim} F_{a-1, df_{SSE}}.\]</span></p>
+<div id="example-protein-and-dietary-metals" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Example: Protein and dietary metals<a href="two-way-anova.html#example-protein-and-dietary-metals" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Experimenters raised minnows in 36 water tanks under different dietary regimes. The experimenters varied the levels of zinc and copper in the minnow’s diets and recorded the average protein content of the minnows at harvest.</p>
+<a href="data:text/plain;base64,MCAwIDIwMQ0KMCAwIDE4Ng0KMCA3NTAgMTczDQowIDc1MCAxNjINCjAgMTUwMCAxMTUNCjAgMTUwMCAxMjQNCjE1MCAwIDE2Mw0KMTUwIDAgMTgyDQoxNTAgNzUwIDE4NA0KMTUwIDc1MCAxNTcNCjE1MCAxNTAwIDExNA0KMTUwIDE1MDAgMTA4" download="protein.txt">Download protein.txt</a>
+<p>We can code the design matrix for a two way model under sum-two-zero constraints by hand and compute the estimated effects:</p>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="two-way-anova.html#cb268-1" aria-hidden="true" tabindex="-1"></a>protein.df<span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;protein.txt&#39;</span>)</span>
+<span id="cb268-2"><a href="two-way-anova.html#cb268-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(protein.df) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&#39;Copper&#39;</span>, <span class="st">&#39;Zinc&#39;</span>, <span class="st">&#39;Protein&#39;</span>)</span>
+<span id="cb268-3"><a href="two-way-anova.html#cb268-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-4"><a href="two-way-anova.html#cb268-4" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">201</span>, <span class="dv">186</span>, <span class="dv">173</span>, <span class="dv">162</span>, <span class="dv">115</span>, <span class="dv">124</span>, <span class="dv">163</span>, <span class="dv">182</span>, <span class="dv">184</span>, <span class="dv">157</span>, <span class="dv">114</span>, <span class="dv">108</span>)</span>
+<span id="cb268-5"><a href="two-way-anova.html#cb268-5" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb268-6"><a href="two-way-anova.html#cb268-6" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb268-7"><a href="two-way-anova.html#cb268-7" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb268-8"><a href="two-way-anova.html#cb268-8" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb268-9"><a href="two-way-anova.html#cb268-9" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb268-10"><a href="two-way-anova.html#cb268-10" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb268-11"><a href="two-way-anova.html#cb268-11" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div>
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6]
+##  [1,]    1    1    1    0    1    0
+##  [2,]    1    1    1    0    1    0
+##  [3,]    1    1    0    1    0    1
+##  [4,]    1    1    0    1    0    1
+##  [5,]    1    1   -1   -1   -1   -1
+##  [6,]    1    1   -1   -1   -1   -1
+##  [7,]    1   -1    1    0   -1    0
+##  [8,]    1   -1    1    0   -1    0
+##  [9,]    1   -1    0    1    0   -1
+## [10,]    1   -1    0    1    0   -1
+## [11,]    1   -1   -1   -1    1    1
+## [12,]    1   -1   -1   -1    1    1</code></pre>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="two-way-anova.html#cb270-1" aria-hidden="true" tabindex="-1"></a>beta.hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X)<span class="sc">%*%</span><span class="fu">t</span>(X)<span class="sc">%*%</span>Y</span>
+<span id="cb270-2"><a href="two-way-anova.html#cb270-2" aria-hidden="true" tabindex="-1"></a>beta.hat</span></code></pre></div>
+<pre><code>##            [,1]
+## [1,] 155.750000
+## [2,]   4.416667
+## [3,]  27.250000
+## [4,]  13.250000
+## [5,]   6.083333
+## [6,]  -5.916667</code></pre>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="two-way-anova.html#cb272-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X)<span class="sc">%*%</span><span class="fu">t</span>(X)</span></code></pre></div>
+<pre><code>##             [,1]        [,2]        [,3]        [,4]        [,5]        [,6]
+## [1,]  0.08333333  0.08333333  0.08333333  0.08333333  0.08333333  0.08333333
+## [2,]  0.08333333  0.08333333  0.08333333  0.08333333  0.08333333  0.08333333
+## [3,]  0.16666667  0.16666667 -0.08333333 -0.08333333 -0.08333333 -0.08333333
+## [4,] -0.08333333 -0.08333333  0.16666667  0.16666667 -0.08333333 -0.08333333
+## [5,]  0.16666667  0.16666667 -0.08333333 -0.08333333 -0.08333333 -0.08333333
+## [6,] -0.08333333 -0.08333333  0.16666667  0.16666667 -0.08333333 -0.08333333
+##             [,7]        [,8]        [,9]       [,10]       [,11]       [,12]
+## [1,]  0.08333333  0.08333333  0.08333333  0.08333333  0.08333333  0.08333333
+## [2,] -0.08333333 -0.08333333 -0.08333333 -0.08333333 -0.08333333 -0.08333333
+## [3,]  0.16666667  0.16666667 -0.08333333 -0.08333333 -0.08333333 -0.08333333
+## [4,] -0.08333333 -0.08333333  0.16666667  0.16666667 -0.08333333 -0.08333333
+## [5,] -0.16666667 -0.16666667  0.08333333  0.08333333  0.08333333  0.08333333
+## [6,]  0.08333333  0.08333333 -0.16666667 -0.16666667  0.08333333  0.08333333</code></pre>
+<p>Note the the estimates are response contrasts. for example,
+<span class="math display">\[  \hat\alpha_1 =  (1/6, 1/6, 1/6, 1/6, 1/6, 1/6, -1/6, -1/6, -1/6, -1/6, -1/6, -1/6)^\top Y = \bar Y_{1\cdot} - \bar Y_{2\cdot} \]</span></p>
+<p>Under the sum-to-zero constraints the effects estimates are the following linear combinations of marginal response means:</p>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="two-way-anova.html#cb274-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(Y)</span></code></pre></div>
+<pre><code>## [1] 155.75</code></pre>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="two-way-anova.html#cb276-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(Y[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]) <span class="sc">-</span> <span class="fu">mean</span>(Y) </span></code></pre></div>
+<pre><code>## [1] 4.416667</code></pre>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="two-way-anova.html#cb278-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(Y[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">7</span>,<span class="dv">8</span>)]) <span class="sc">-</span> <span class="fu">mean</span>(Y)</span></code></pre></div>
+<pre><code>## [1] 27.25</code></pre>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="two-way-anova.html#cb280-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(Y[<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">9</span>,<span class="dv">10</span>)]) <span class="sc">-</span> <span class="fu">mean</span>(Y)</span></code></pre></div>
+<pre><code>## [1] 13.25</code></pre>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="two-way-anova.html#cb282-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(Y[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]) <span class="sc">-</span> <span class="fu">mean</span>(Y[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">7</span>,<span class="dv">8</span>)]) <span class="sc">-</span> <span class="fu">mean</span>(Y[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]) <span class="sc">+</span> <span class="fu">mean</span>(Y)</span></code></pre></div>
+<pre><code>## [1] 6.083333</code></pre>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="two-way-anova.html#cb284-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(Y[<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)]) <span class="sc">-</span> <span class="fu">mean</span>(Y[<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">9</span>,<span class="dv">10</span>)]) <span class="sc">-</span> <span class="fu">mean</span>(Y[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]) <span class="sc">+</span> <span class="fu">mean</span>(Y)</span></code></pre></div>
+<pre><code>## [1] -5.916667</code></pre>
+<p>Alternatively, we can compute the effects estimates in R using the options/contrasts statement to use sum-to-zero constraints:</p>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="two-way-anova.html#cb286-1" aria-hidden="true" tabindex="-1"></a>protein <span class="ot">=</span> protein.df</span>
+<span id="cb286-2"><a href="two-way-anova.html#cb286-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(protein) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Copper&quot;</span>, <span class="st">&quot;Zinc&quot;</span>, <span class="st">&quot;Protein&quot;</span>)</span>
+<span id="cb286-3"><a href="two-way-anova.html#cb286-3" aria-hidden="true" tabindex="-1"></a>protein<span class="sc">$</span>Copper <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(protein<span class="sc">$</span>Copper)</span>
+<span id="cb286-4"><a href="two-way-anova.html#cb286-4" aria-hidden="true" tabindex="-1"></a>protein<span class="sc">$</span>Zinc <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(protein<span class="sc">$</span>Zinc)</span>
+<span id="cb286-5"><a href="two-way-anova.html#cb286-5" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&quot;contr.sum&quot;</span>, <span class="st">&quot;contr.sum&quot;</span>))</span>
+<span id="cb286-6"><a href="two-way-anova.html#cb286-6" aria-hidden="true" tabindex="-1"></a>my.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(Protein<span class="sc">~</span>Copper <span class="sc">+</span> Zinc <span class="sc">+</span> Copper<span class="sc">*</span>Zinc, <span class="at">data =</span> protein)</span>
+<span id="cb286-7"><a href="two-way-anova.html#cb286-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my.aov)</span></code></pre></div>
+<pre><code>##             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+## Copper       1    234     234   1.809 0.227264    
+## Zinc         2  10234    5117  39.537 0.000351 ***
+## Copper:Zinc  2    288     144   1.113 0.387957    
+## Residuals    6    777     129                     
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="two-way-anova.html#cb288-1" aria-hidden="true" tabindex="-1"></a>my.aov<span class="sc">$</span>coefficients</span></code></pre></div>
+<pre><code>##   (Intercept)       Copper1         Zinc1         Zinc2 Copper1:Zinc1 
+##    155.750000      4.416667     27.250000     13.250000      6.083333 
+## Copper1:Zinc2 
+##     -5.916667</code></pre>
+<p>We can verify the t-tests in the lm output using our formulas for testing contrasts:</p>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="two-way-anova.html#cb290-1" aria-hidden="true" tabindex="-1"></a> c1<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>,<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>)</span>
+<span id="cb290-2"><a href="two-way-anova.html#cb290-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(c1<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [1] 0.1666667</code></pre>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="two-way-anova.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="dv">129</span><span class="sc">/</span><span class="dv">6</span></span></code></pre></div>
+<pre><code>## [1] 21.5</code></pre>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="two-way-anova.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(c1<span class="sc">*</span>protein<span class="sc">$</span>Protein)</span></code></pre></div>
+<pre><code>## [1] 27.25</code></pre>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="two-way-anova.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="fl">27.25</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="fl">21.5</span>)</span></code></pre></div>
+<pre><code>## [1] 5.876886</code></pre>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="two-way-anova.html#cb298-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pt</span>(<span class="fl">5.876886</span>, <span class="dv">6</span>))</span></code></pre></div>
+<pre><code>## [1] 0.001075079</code></pre>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="two-way-anova.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(Protein<span class="sc">~</span>Copper <span class="sc">+</span> Zinc <span class="sc">+</span> Copper<span class="sc">*</span>Zinc, <span class="at">data =</span> protein))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Protein ~ Copper + Zinc + Copper * Zinc, data = protein)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -13.5   -6.0    0.0    6.0   13.5 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    155.750      3.284  47.427 5.89e-09 ***
+## Copper1          4.417      3.284   1.345  0.22726    
+## Zinc1           27.250      4.644   5.867  0.00108 ** 
+## Zinc2           13.250      4.644   2.853  0.02907 *  
+## Copper1:Zinc1    6.083      4.644   1.310  0.23816    
+## Copper1:Zinc2   -5.917      4.644  -1.274  0.24980    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 11.38 on 6 degrees of freedom
+## Multiple R-squared:  0.9327, Adjusted R-squared:  0.8766 
+## F-statistic: 16.62 on 5 and 6 DF,  p-value: 0.001854</code></pre>
+<p>R includes the “interaction.plot” function to graphically investigate interactions. The fact the lines only slightly cross in one plot supports no interaction. We also see the F test for interaction is not significant.</p>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="two-way-anova.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(protein<span class="sc">$</span>Copper, protein<span class="sc">$</span>Zinc, protein<span class="sc">$</span>Protein)</span></code></pre></div>
+<p><img src="08-TwoWayANOVA_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="two-way-anova.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interaction.plot</span>(protein<span class="sc">$</span>Zinc, protein<span class="sc">$</span>Copper, protein<span class="sc">$</span>Protein)</span></code></pre></div>
+<p><img src="08-TwoWayANOVA_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="latin-squares-for-two-blocking-variables.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="unbalanced-data-in-two-way-anova.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/08-TwoWayANOVA.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+# Randomization and Permutation Testing
+
+## Setup
+
+Randomization/permutation testing is performed in the context of randomized intervention experiments or observational studies to examine the differences in response between two groups.  The setting is similar to the setting in which the two-sample t-test is often used, but there are few other similarities.  
+<br><br>
+A general algorithm for a randomization test of two groups, labelled, say, 0 and 1, is as follows:
+1. Choose some statistic, say $T$, quantifying the response difference between the groups and compute this $T = t_0$ for the observed data.<br>
+For m in 1:M repeat:<br>
+2. Permute the 0,1 labels of the responses.  If the data comes from a randomized experiment this is like saying the randomization of subjects to treatments turned out differently, hence the name randomization test. <br>
+3. Compute the $m^{th}$ statistic value $t_m$ on the responses with permuted/re-randomized labels.<br><br>
+
+At the end of this algorithm we end up with the values $t_1, \ldots, t_m$.  What do we make of these?  Here's the idea.  For a concrete example, suppose $T$ is the Student's $t$ two-sample test statistic, i.e., $T = \frac{\overline x_0 - \overline x_1}{\sqrt{S_0^2/n_0 + S_1^2/n_1}}$.  Let $x$ denote all the responses of both groups pooled together, i.e., $x = (x_{0,1}, ..., x_{0,n_0}, x_{1,1}, ...,x_{1,n_1})$.  $x$ has some sample mean value; call it $\overline x$.  If we randomly label $n_0$ of the x's 0 and the other $n_1$ of them 1, we should expect the average value of $\overline x_0 - \overline x_1$ to be about 0 when averaging over repeated re-labeling.  That's because $\overline x_0$ and $\overline x_1$ are both approximately unbiased for $\overline x$.  So the distribution/histogram of the $t_1, ..., t_m$ values will look roughly symmetric around zero.  Then, we compare the observed value $t_0$ to this distribution and observe whether $t_0$ is a "typical" value or and "extreme" value compared to  $t_1, ..., t_m$; that is, we compare $t_0$ the the quantiles of $t_1, ..., t_m$.  If $t_0$ is extreme compared to these values, then either we observed such a value by a small chance or the labels really do have an effect on the responses which is reflected in the statistic $T$.  <br><br>
+
+This description should sound very similar to null hypothesis testing and rejection rules defined by comparing a test statistic to a null distribution.  But,there are some differences.  In this case, the "population" consists only of the observed values.  And, the *randomization distribution*---the histogram/quantiles of $t_1, ..., t_m$---is only related to the observed data, not any larger population.  This means that the "null hypothesis" that a randomization test tests is related only to the observed data.  I think of the null and alternative hypotheses as the following: $H_0: \text{the observed value } t_0 \text{ is consistent with labels being randomly assigned to responses}$ versus $H_a: \text{the observed value } t_0 \text{ is NOT consistent with labels being randomly assigned to responses}$.  Because the test references no population, the conclusion is only pertinent to the sampled subjects.  If the original labels were assigned by randomization (i.e., they represent an intervention) then the conclusion may claim causation.
+
+
+### Example 1: The Harris Bank Sex Pay Study
+
+We have worked with this data before: there are 93 salaries of Harris Bank employees from 1969-1971.  The workers are all entry-level clerical workers.  We're interested in whether males and females are paid differently.  
+
+```{r echo=FALSE}
+xfun::embed_file('salaries.csv')
+```
+
+```{r, echo = T, eval = T}
+salaries.df <- read.csv('salaries.csv')
+salaries.df
+```
+
+
+### Difference in mean salaries between genders
+```{r, echo = T, eval = T}
+n0 <- sum(salaries.df$Sex==0)
+n1 <- sum(salaries.df$Sex==1)
+m0 <- mean(salaries.df$Salary[salaries.df$Sex==0])
+m1 <- mean(salaries.df$Salary[salaries.df$Sex==1])
+s0 <- var(salaries.df$Salary[salaries.df$Sex==0])
+s1 <- var(salaries.df$Salary[salaries.df$Sex==1])
+t0 <- (m0 - m1)/sqrt(s0/n0+s1/n1)
+c(t0,m0,m1,sqrt(s0),sqrt(s1))
+```
+
+
+### Randomization test for treatment significance
+
+Algorithm:
+for 1000 loops do:
+1. randomly shuffle the sex labels over salaries
+2. compute the two-sample t-test stat for the reshuffled labels
+return all 1000 differences
+
+```{r, echo = T, eval = T}
+n0 <- sum(salaries.df$Sex==0)
+n1 <- sum(salaries.df$Sex==1)
+n <- n0+n1
+randomization.test <- function(M){
+  ts <- rep(NA,M)
+  for(m in 1:M){
+    permute.n <- sample.int(n,n,replace = F)
+    re.randomized.group <- salaries.df$Sex[permute.n]
+    m0 <- mean(salaries.df$Salary[re.randomized.group==0])
+    m1 <- mean(salaries.df$Salary[re.randomized.group==1])
+    s0 <- var(salaries.df$Salary[re.randomized.group==0])
+    s1 <- var(salaries.df$Salary[re.randomized.group==1])
+    ts[m] <- (m0 - m1)/sqrt(s0/n0+s1/n1)
+    }
+  return(ts)
+}
+
+ts <- randomization.test(1000)
+hist(ts)
+abline(v = quantile(ts, 0.975), col = 'blue')
+abline(v = quantile(ts, 0.025), col = 'blue')
+```
+
+
+The $t_0$ value of $-5.83$ is off the chart (literally).  How do we interpret this?  The test randomly labels observed sexes with observed salaries.  The observed test statistic suggests this is not how the salaries were actually assigned to workers. That's pretty obvious---companies do not tend to assign salaries in a random fashion.  But, if the salary assignment was not random with respect to sex, then it either depended on sex or depends on a hidden variable closely associated with sex.  Since the job, time frame, and experience level were controlled for, it is certainly plausible that the salary assignment depended on sex.  
+
+<br><br>
+
+
+```{r, echo = T, eval = T}
+n0 <- sum(salaries.df$Sex==0)
+n1 <- sum(salaries.df$Sex==1)
+n <- n0+n1
+randomization.test <- function(M, df){
+  ts <- rep(NA,M)
+  for(m in 1:M){
+    permute.n <- sample.int(n,n,replace = F)
+    re.randomized.group <- df$Sex[permute.n]
+    m0 <- mean(df$Salary[re.randomized.group==0])
+    m1 <- mean(df$Salary[re.randomized.group==1])
+    s0 <- var(df$Salary[re.randomized.group==0])
+    s1 <- var(df$Salary[re.randomized.group==1])
+    ts[m] <- (m0 - m1)/sqrt(s0/n0+s1/n1)
+    }
+  return(ts)
+}
+
+
+grid.delta <- seq(from = 400, to = 1400, length.out = 100)
+L <- length(grid.delta)
+p.value <- rep(NA,L)
+reject<-rep(NA, L)            
+for(j in 1:L){
+temp.df <- salaries.df
+temp.df$Salary[temp.df$Sex==1]<-temp.df$Salary[temp.df$Sex==1]-grid.delta[j]
+m0 <- mean(temp.df$Salary[temp.df$Sex==0])
+m1 <- mean(temp.df$Salary[temp.df$Sex==1])
+s0 <- var(temp.df$Salary[temp.df$Sex==0])
+s1 <- var(temp.df$Salary[temp.df$Sex==1])
+t0 <- (m0 - m1)/sqrt(s0/n0+s1/n1)
+test.vals.j <- randomization.test(10000, temp.df)
+mean.randomization <- mean(test.vals.j)
+p.value[j] <- ifelse(t0 > mean.randomization,sum(abs(test.vals.j)>t0)/10000,sum(-abs(test.vals.j)<t0)/10000)
+}
+cbind(grid.delta, p.value)
+midpoint <- which.max(p.value)
+lower.endpoint <- grid.delta[which.min(abs(0.05-p.value[1:midpoint]))]
+upper.endpoint <- grid.delta[midpoint+which.min(abs(0.05-p.value[(midpoint+1):L]))]
+c(lower.endpoint, upper.endpoint)
+```
+
+
+

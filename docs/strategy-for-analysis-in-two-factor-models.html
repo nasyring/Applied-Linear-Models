@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 12 Strategy for Analysis in Two-Factor models | Applied Linear Models</title>
+  <meta name="description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 12 Strategy for Analysis in Two-Factor models | Applied Linear Models" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 12 Strategy for Analysis in Two-Factor models | Applied Linear Models" />
+  
+  <meta name="twitter:description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  
+
+<meta name="author" content="Nick Syring" />
+
+
+<meta name="date" content="2022-10-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="missing-cells-in-two-way-anova.html"/>
+<link rel="next" href="k-factorial-experiments.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied Linear Models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html"><i class="fa fa-check"></i><b>2</b> Data Analysis and Statistical Inference</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#data-experiments-and-studies"><i class="fa fa-check"></i><b>2.1</b> Data, Experiments, and Studies</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#james-linds-scurvy-trial"><i class="fa fa-check"></i><b>2.1.1</b> James Lind’s Scurvy Trial</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#framingham-heart-study"><i class="fa fa-check"></i><b>2.1.2</b> Framingham Heart Study</a></li>
+<li class="chapter" data-level="2.1.3" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#harris-bank-sex-pay-study"><i class="fa fa-check"></i><b>2.1.3</b> Harris Bank Sex Pay Study</a></li>
+<li class="chapter" data-level="2.1.4" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#large-aggregated-data-sets"><i class="fa fa-check"></i><b>2.1.4</b> Large, Aggregated Data Sets</a></li>
+<li class="chapter" data-level="2.1.5" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#study-concepts"><i class="fa fa-check"></i><b>2.1.5</b> Study Concepts</a></li>
+<li class="chapter" data-level="2.1.6" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#randomization-control-and-causation"><i class="fa fa-check"></i><b>2.1.6</b> Randomization, control, and causation</a></li>
+<li class="chapter" data-level="2.1.7" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#populations-and-scope-of-inference"><i class="fa fa-check"></i><b>2.1.7</b> Populations and scope of inference</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#data-summaries"><i class="fa fa-check"></i><b>2.2</b> Data Summaries</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#numerical-summaries"><i class="fa fa-check"></i><b>2.2.1</b> Numerical Summaries</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#visual-summaries"><i class="fa fa-check"></i><b>2.2.2</b> Visual Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#statistical-inference"><i class="fa fa-check"></i><b>2.3</b> Statistical Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html"><i class="fa fa-check"></i><b>3</b> Introduction to Linear Models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#defining-the-linear-model"><i class="fa fa-check"></i><b>3.1</b> Defining the linear model</a></li>
+<li class="chapter" data-level="3.2" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#gauss-markov-model-for-one-sample"><i class="fa fa-check"></i><b>3.2</b> Gauss-Markov model for one sample</a></li>
+<li class="chapter" data-level="3.3" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#gauss-markov-model-for-comparing-two-samples"><i class="fa fa-check"></i><b>3.3</b> Gauss-Markov model for comparing two samples</a></li>
+<li class="chapter" data-level="3.4" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#pairwise-testing-and-bonferroni-correction"><i class="fa fa-check"></i><b>3.4</b> Pairwise testing and Bonferroni correction</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#example-co2-uptake-in-echinochloa-crus-galli"><i class="fa fa-check"></i><b>3.4.1</b> Example: Co2 uptake in Echinochloa crus-galli</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#linear-models-for-more-than-two-treatments-populations"><i class="fa fa-check"></i><b>3.5</b> Linear Models for more than two treatments (populations)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html"><i class="fa fa-check"></i><b>4</b> Randomization and Permutation Testing</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#setup"><i class="fa fa-check"></i><b>4.1</b> Setup</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#example-1-the-harris-bank-sex-pay-study"><i class="fa fa-check"></i><b>4.1.1</b> Example 1: The Harris Bank Sex Pay Study</a></li>
+<li class="chapter" data-level="4.1.2" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#difference-in-mean-salaries-between-genders"><i class="fa fa-check"></i><b>4.1.2</b> Difference in mean salaries between genders</a></li>
+<li class="chapter" data-level="4.1.3" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#randomization-test-for-treatment-significance"><i class="fa fa-check"></i><b>4.1.3</b> Randomization test for treatment significance</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html"><i class="fa fa-check"></i><b>5</b> Alternatives for Non-Normal Responses</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#transformations"><i class="fa fa-check"></i><b>5.1</b> Transformations</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#example-cloud-seeding-for-rainfall"><i class="fa fa-check"></i><b>5.1.1</b> Example: Cloud Seeding for Rainfall</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#rank-sum-test"><i class="fa fa-check"></i><b>5.2</b> Rank-Sum Test</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#example-ratio-measurements"><i class="fa fa-check"></i><b>5.2.1</b> Example: ratio measurements</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#signed-rank-test"><i class="fa fa-check"></i><b>5.3</b> Signed-rank test</a></li>
+<li class="chapter" data-level="5.4" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrap"><i class="fa fa-check"></i><b>5.4</b> Bootstrap</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#intro-to-the-bootstrap"><i class="fa fa-check"></i><b>5.4.1</b> Intro to the bootstrap</a></li>
+<li class="chapter" data-level="5.4.2" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>5.4.2</b> Bootstrap Confidence Intervals</a></li>
+<li class="chapter" data-level="5.4.3" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrapping-linear-models"><i class="fa fa-check"></i><b>5.4.3</b> Bootstrapping linear models</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="one-way-anova.html"><a href="one-way-anova.html"><i class="fa fa-check"></i><b>6</b> One Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="one-way-anova.html"><a href="one-way-anova.html#the-gauss-markov-model-for-comparing-i-populations"><i class="fa fa-check"></i><b>6.1</b> The Gauss-Markov Model for comparing I populations</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="one-way-anova.html"><a href="one-way-anova.html#example-donuts-effects-model"><i class="fa fa-check"></i><b>6.1.1</b> Example: Donuts effects model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="one-way-anova.html"><a href="one-way-anova.html#testing-equality-of-means"><i class="fa fa-check"></i><b>6.2</b> Testing equality of means</a></li>
+<li class="chapter" data-level="6.3" data-path="one-way-anova.html"><a href="one-way-anova.html#follow-up-testing"><i class="fa fa-check"></i><b>6.3</b> Follow-up testing</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="one-way-anova.html"><a href="one-way-anova.html#donuts-example"><i class="fa fa-check"></i><b>6.3.1</b> Donuts example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="one-way-anova.html"><a href="one-way-anova.html#inference-for-particular-contrasts"><i class="fa fa-check"></i><b>6.4</b> Inference for particular contrasts</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="one-way-anova.html"><a href="one-way-anova.html#donuts-example-1"><i class="fa fa-check"></i><b>6.4.1</b> Donuts Example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="one-way-anova.html"><a href="one-way-anova.html#checking-assumptions-in-one-way-anova"><i class="fa fa-check"></i><b>6.5</b> Checking Assumptions in one-way ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="one-way-anova.html"><a href="one-way-anova.html#example-cehcking-assumptions-for-donuts-experiment"><i class="fa fa-check"></i><b>6.5.1</b> Example: Cehcking assumptions for donuts experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html"><i class="fa fa-check"></i><b>7</b> Randomized Complete Block Design</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#paired-experiments-as-blocking"><i class="fa fa-check"></i><b>7.1</b> Paired experiments as blocking</a></li>
+<li class="chapter" data-level="7.2" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#randomized-complete-block-designs"><i class="fa fa-check"></i><b>7.2</b> Randomized Complete Block Designs</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#notation"><i class="fa fa-check"></i><b>7.2.1</b> Notation</a></li>
+<li class="chapter" data-level="7.2.2" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-penicillin-manufacturing"><i class="fa fa-check"></i><b>7.2.2</b> Example: Penicillin Manufacturing</a></li>
+<li class="chapter" data-level="7.2.3" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#sums-of-squares-and-f-tests-in-rcbd"><i class="fa fa-check"></i><b>7.2.3</b> Sums of squares and F tests in RCBD</a></li>
+<li class="chapter" data-level="7.2.4" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-significance-of-process-in-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.4</b> Example: Significance of Process in Penicillin experiment</a></li>
+<li class="chapter" data-level="7.2.5" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#follow-up-comparisons-and-contrasts"><i class="fa fa-check"></i><b>7.2.5</b> Follow-up comparisons and contrasts</a></li>
+<li class="chapter" data-level="7.2.6" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-tukey-contrasts-and-scheffe-for-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.6</b> Example: Tukey, contrasts, and Scheffe for penicillin experiment</a></li>
+<li class="chapter" data-level="7.2.7" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#relative-efficiency-of-blocking-vs.-crd"><i class="fa fa-check"></i><b>7.2.7</b> Relative efficiency of Blocking (vs. CRD)</a></li>
+<li class="chapter" data-level="7.2.8" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-re-of-blocking-in-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.8</b> Example: RE of blocking in penicillin experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html"><i class="fa fa-check"></i><b>8</b> Latin Squares for two blocking variables</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#designs-for-multiple-blocks"><i class="fa fa-check"></i><b>8.1</b> Designs for multiple blocks</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-mpg-experiment"><i class="fa fa-check"></i><b>8.1.1</b> Example: MPG experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#model-notation"><i class="fa fa-check"></i><b>8.2</b> Model notation</a></li>
+<li class="chapter" data-level="8.3" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#sums-of-squares-and-test-for-treatment-effects"><i class="fa fa-check"></i><b>8.3</b> Sums of squares and test for treatment effects</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-mpg-experiment-1"><i class="fa fa-check"></i><b>8.3.1</b> Example: MPG experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#relative-efficiency-of-blocking"><i class="fa fa-check"></i><b>8.4</b> Relative efficiency of blocking</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-re-ignoring-driver-blocks"><i class="fa fa-check"></i><b>8.4.1</b> Example: RE ignoring driver blocks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="two-way-anova.html"><a href="two-way-anova.html"><i class="fa fa-check"></i><b>9</b> Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="two-way-anova.html"><a href="two-way-anova.html#the-model"><i class="fa fa-check"></i><b>9.1</b> The Model</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="two-way-anova.html"><a href="two-way-anova.html#example-protein-chemistry"><i class="fa fa-check"></i><b>9.1.1</b> Example: protein chemistry</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="two-way-anova.html"><a href="two-way-anova.html#tests-for-interaction-and-main-effects"><i class="fa fa-check"></i><b>9.2</b> Tests for interaction and main effects</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="two-way-anova.html"><a href="two-way-anova.html#example-protein-and-dietary-metals"><i class="fa fa-check"></i><b>9.2.1</b> Example: Protein and dietary metals</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html"><i class="fa fa-check"></i><b>10</b> Unbalanced data in Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#raw-and-least-squares-means"><i class="fa fa-check"></i><b>10.1</b> Raw and Least-Squares Means</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data"><i class="fa fa-check"></i><b>10.1.1</b> Example: Turbine data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#partial-f-tests-and-type-iii-ss"><i class="fa fa-check"></i><b>10.2</b> Partial F tests and Type III SS</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data-tests"><i class="fa fa-check"></i><b>10.2.1</b> Example: Turbine Data tests</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#follow-up-tests"><i class="fa fa-check"></i><b>10.3</b> Follow-up tests</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data-tukey-corrected-pairwise-comparisons"><i class="fa fa-check"></i><b>10.3.1</b> Example: Turbine data Tukey-corrected pairwise comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#unbalanced-data-and-simpsons-paradox"><i class="fa fa-check"></i><b>10.4</b> Unbalanced data and Simpson’s Paradox</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html"><i class="fa fa-check"></i><b>11</b> Missing Cells in Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#anova-with-missing-at-random-cell"><i class="fa fa-check"></i><b>11.1</b> ANOVA with missing “at random” cell</a></li>
+<li class="chapter" data-level="11.2" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#do-any-of-the-treatments-matter"><i class="fa fa-check"></i><b>11.2</b> Do any of the treatments matter?</a></li>
+<li class="chapter" data-level="11.3" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#fit-a-linear-model-with-additional-constraints"><i class="fa fa-check"></i><b>11.3</b> Fit a linear model with additional constraints</a></li>
+<li class="chapter" data-level="11.4" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#general-linear-test-for-interaction"><i class="fa fa-check"></i><b>11.4</b> General Linear Test for interaction</a></li>
+<li class="chapter" data-level="11.5" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#partial-analysis-for-interaction"><i class="fa fa-check"></i><b>11.5</b> Partial analysis for interaction</a></li>
+<li class="chapter" data-level="11.6" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#tests-for-main-effects-in-the-partial-table"><i class="fa fa-check"></i><b>11.6</b> Tests for main effects in the partial table</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html"><i class="fa fa-check"></i><b>12</b> Strategy for Analysis in Two-Factor models</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#unbalanced-two-factor-experiment-chick-weight"><i class="fa fa-check"></i><b>12.1</b> Unbalanced Two-Factor Experiment: Chick Weight</a></li>
+<li class="chapter" data-level="12.2" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#example-observational-study-on-growth-hormone-deficient-children-with-empty-cell"><i class="fa fa-check"></i><b>12.2</b> Example: observational study on growth-hormone deficient children with empty cell</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#linear-model-analysis-with-extra-constraint"><i class="fa fa-check"></i><b>12.2.1</b> Linear Model analysis with extra constraint</a></li>
+<li class="chapter" data-level="12.2.2" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#partial-table-analysis"><i class="fa fa-check"></i><b>12.2.2</b> Partial Table analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html"><i class="fa fa-check"></i><b>13</b> <span class="math inline">\(2^k\)</span> Factorial Experiments</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#the-model-1"><i class="fa fa-check"></i><b>13.1</b> The Model</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#example-stress-test-study"><i class="fa fa-check"></i><b>13.1.1</b> Example: Stress Test Study</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#unreplicated-factorial-experiments"><i class="fa fa-check"></i><b>13.2</b> Unreplicated Factorial Experiments</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#example-granola-bar-experiment"><i class="fa fa-check"></i><b>13.2.1</b> Example: Granola bar experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Linear Models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="strategy-for-analysis-in-two-factor-models" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Strategy for Analysis in Two-Factor models<a href="strategy-for-analysis-in-two-factor-models.html#strategy-for-analysis-in-two-factor-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this section we synthesize the main points from our discussion of two-way ANOVA to outline a general strategy for analyzing data from two-factor experiments.<br><br></p>
+<p>For experiments in which it is known that factors do not interact, comparisons for treatments are made on the basis of factor-level means <span class="math inline">\(\mu_{i\cdot}\)</span> and <span class="math inline">\(\mu_{\cdot j}\)</span>:<rb>
+1. Fit the additive model
+<span class="math display">\[Y_{ijk} = \mu+\alpha_i +\tau_j + \epsilon_{jik},\]</span>
+and test for significance of the model using a partial F test comparing the intercept-only model to the full model. If the hypothesis <span class="math inline">\(H_0:\text{only the intercept is nonzero}\)</span> is rejected, then move to step 2.
+2. Test for significance of Factor A main effects, <span class="math inline">\(H_0:\alpha_i = 0, \text{ for all }i\)</span> versus <span class="math inline">\(H_a:\text{not all }\alpha_i = 0\)</span>.<br>
+3. If we reject <span class="math inline">\(H_0\)</span>, move to 4. Otherwise, perform follow-up comparisons of the factor level means <span class="math inline">\(\mu_{i\cdot}\)</span>. These comparisons may be pairwise, or more general contrasts, but should be corrected by Tukey’s or Scheff'e’s technique. <br>
+4. Test for significance of Factor B main effects, <span class="math inline">\(H_0:\tau_j = 0, \text{ for all }j\)</span> versus <span class="math inline">\(H_a:\text{not all }\tau_j = 0\)</span>. And, again, if we reject <span class="math inline">\(H_0\)</span>, then perform corrected follow-up comparisons of <span class="math inline">\(\mu_{\cdot j}\)</span>’s.
+<br><br>
+The above tests for main effects may be conducted using Type 1 sums of squares for balanced experiments, and Type 3 sums of squares (equivalently partial F tests) for unbalanced experiments. For experiments with one or more missing cells, fit a linear model (with extra constraint(s)) and test the main effects using partial F tests.<br><br></p>
+<p>When interactions may be present, the analysis is more complicated.<br>
+1. Fit the model with interactions
+<span class="math display">\[Y_{ijk} = \mu+\alpha_i +\tau_j + (\alpha\tau)_{ij} + \epsilon_{jik},\]</span>
+and test for significance of the model using a partial F test comparing the intercept-only model to the full model. If the hypothesis <span class="math inline">\(H_0:\text{only the intercept is nonzero}\)</span> is rejected, then move to step 2.
+2. Test for significance of the interaction terms <span class="math inline">\(H_0:(\alpha\tau)_{ij} = 0 \text{ for all }i,j\)</span> versus <span class="math inline">\(H_a:\text{not all }(\alpha\tau)_{ij}=0\)</span>. <br>
+3. If we reject <span class="math inline">\(H_0\)</span>, then perform any desired follow-up tests (CIs) for pairwise comparisons or contrasts of the crossed factor treatment means, the <span class="math inline">\(\mu_{ij}\)</span>’s. For multiple such comparisons use Tukey or Scheff'e adjustments.<br>
+4. If we fail to reject the null hypothesis of no interaction, then carry out the tests for main effects. The test for Factor A main effects has null and alternative hypotheses <span class="math inline">\(H_0:\alpha_i = 0 \text{ for all }i\)</span> versus <span class="math inline">\(H_a:\text{not all }\alpha_i = 0\)</span>. Likewise, the test for Factor B main effects has hypotheses <span class="math inline">\(H_0:\tau_j = 0, \text{ for all }j\)</span> versus <span class="math inline">\(H_a:\text{not all }\tau_j = 0\)</span>. <br>
+5. For each test of main effects, if we reject the null hypothesis, then we may consider conducting follow-up tests to compare the factor-level mean responses, the <span class="math inline">\(\mu_{i\cdot}\)</span>’s and/or <span class="math inline">\(\mu_{\cdot j}\)</span>’s. For multiple such comparisons, again, use Tukey or Scheff'e corrections.</p>
+<p><br><br></p>
+<p>Remarks:<br>
+1. For the model fit with interaction terms, should we fail to reject the null hypothesis of no interaction, it is generally not appropriate to refit the model without interaction terms. Consider the following reasoning. We used some degrees of freedom (we used data) to estimate the interaction parameters, and we tested and found them to be insignificant. If we then refit the model without those terms, we reuse those degrees of freedom to estimate <span class="math inline">\(\sigma^2\)</span>; this is an overly optimistic quantification of uncertainty. And, it constitutes a statistical test performed using data conditional on the same data, which often can cause Type 1 error inflation. It is more honest to use the MSE from the full model, with the interaction effects, in all subsequent tests and CIs.<br><br>
+2. When we learn ANOVA we often start with sums of squares. These are especially useful in one-way ANOVA because the derivation of the F test as a comparison of variance estimators under null and alternative hypotheses about the treatment means (the <span class="math inline">\(\mu_i\)</span>’s) is particularly instructive. However, once we encounter unbalanced data, sums of squares become far less useful. My advice is to always associate ANOVA-type tests with partial F tests, because these always “work”, while the sums of squares approach falls apart when we have unbalanced data and/or missing cells.<br><br>
+3. The two-factor model with one (or more) missing (at random) cell(s) is the most troublesome to analyze. There are (at least) three strategies for dealing with the missing cell. One is to simply treat the crossed treatments as a single “treatment” variable and perform one-way ANOVA. The second is to perform “partial-table” analyses. And the third, (and my personal favorite) is to use a multiple linear regression model with an additional constraint for each missing cell. For strategies 2 and 3 we again proceed by testing for interactions, and, if insignificant, testing for main effects. In all three strategies we may perform the appropriate, corrected, follow-up tests.</p>
+<p><br><br></p>
+<p>Let’s try out our general strategy using two examples, unbalanced data, and data with a missing cell. The case of balanced data is baseically the same as the unbalanced case.</p>
+<div id="unbalanced-two-factor-experiment-chick-weight" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> Unbalanced Two-Factor Experiment: Chick Weight<a href="strategy-for-analysis-in-two-factor-models.html#unbalanced-two-factor-experiment-chick-weight" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<a href="data:text/csv;base64,IiIsImdyb3d0aCIsImZlZWQiLCJicmVlZCINCiIxIiwzLjMxLDEsMQ0KIjIiLDMuNDgsMSwxDQoiMyIsMy4zNiwxLDENCiI0IiwzLjkyLDEsMg0KIjUiLDUuMjYsMSwyDQoiNiIsNC43MiwxLDINCiI3Iiw1LjU2LDEsMw0KIjgiLDUuNzUsMSwzDQoiOSIsNS42MiwxLDMNCiIxMCIsNi4xMiwxLDQNCiIxMSIsNC4zNSwyLDENCiIxMiIsMy42OSwyLDENCiIxMyIsNS45MSwyLDINCiIxNCIsNC43NywyLDINCiIxNSIsNS4yMiwyLDINCiIxNiIsNS41NywyLDMNCiIxNyIsNi4yLDIsMw0KIjE4Iiw2LjAzLDIsMw0KIjE5Iiw3LjI4LDIsNA0KIjIwIiw3LjM0LDIsNA0KIjIxIiw3Ljc3LDIsNA0KIjIyIiw0LjY1LDMsMQ0KIjIzIiw0LjQyLDMsMQ0KIjI0Iiw1LjM5LDMsMg0KIjI1Iiw1Ljg3LDMsMg0KIjI2Iiw2LjQ1LDMsMw0KIjI3Iiw2LjMyLDMsMw0KIjI4Iiw3LjIyLDMsNA0KIjI5Iiw2LjY1LDMsNA0K" download="chick.csv">Download chick.csv</a>
+<p>The following data comes from an animal breeding experiment where chicks of different breeds are fed different diets and their weights are recorded. The data is unbalanced, but each combination of breeds and feeds is observed.</p>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb439-1" aria-hidden="true" tabindex="-1"></a>chickgrowth<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;chick.csv&#39;</span>)</span>
+<span id="cb439-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb439-2" aria-hidden="true" tabindex="-1"></a>chickgrowth<span class="sc">$</span>feed<span class="ot">&lt;-</span><span class="fu">as.factor</span>(chickgrowth<span class="sc">$</span>feed)</span>
+<span id="cb439-3"><a href="strategy-for-analysis-in-two-factor-models.html#cb439-3" aria-hidden="true" tabindex="-1"></a>chickgrowth<span class="sc">$</span>breed<span class="ot">&lt;-</span><span class="fu">as.factor</span>(chickgrowth<span class="sc">$</span>breed)</span>
+<span id="cb439-4"><a href="strategy-for-analysis-in-two-factor-models.html#cb439-4" aria-hidden="true" tabindex="-1"></a>chickgrowth</span></code></pre></div>
+<pre><code>##     X growth feed breed
+## 1   1   3.31    1     1
+## 2   2   3.48    1     1
+## 3   3   3.36    1     1
+## 4   4   3.92    1     2
+## 5   5   5.26    1     2
+## 6   6   4.72    1     2
+## 7   7   5.56    1     3
+## 8   8   5.75    1     3
+## 9   9   5.62    1     3
+## 10 10   6.12    1     4
+## 11 11   4.35    2     1
+## 12 12   3.69    2     1
+## 13 13   5.91    2     2
+## 14 14   4.77    2     2
+## 15 15   5.22    2     2
+## 16 16   5.57    2     3
+## 17 17   6.20    2     3
+## 18 18   6.03    2     3
+## 19 19   7.28    2     4
+## 20 20   7.34    2     4
+## 21 21   7.77    2     4
+## 22 22   4.65    3     1
+## 23 23   4.42    3     1
+## 24 24   5.39    3     2
+## 25 25   5.87    3     2
+## 26 26   6.45    3     3
+## 27 27   6.32    3     3
+## 28 28   7.22    3     4
+## 29 29   6.65    3     4</code></pre>
+<p>We begin our analysis with a model F test. Since the p-value basically zero we reject the null hypothesis that only the intercept term is non-zero. The interpretation is that at least one of the crossed treatments of breed-by-feed has a mean weight significantly different from the mean weights of the other breed-by-feed treatment groups.</p>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb441-1" aria-hidden="true" tabindex="-1"></a>full.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth<span class="sc">~</span>feed<span class="sc">*</span>breed, <span class="at">data =</span> chickgrowth)</span>
+<span id="cb441-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb441-2" aria-hidden="true" tabindex="-1"></a>SSE.full <span class="ot">&lt;-</span> <span class="fu">sum</span>(full.model<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb441-3"><a href="strategy-for-analysis-in-two-factor-models.html#cb441-3" aria-hidden="true" tabindex="-1"></a>int.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth<span class="sc">~</span><span class="dv">1</span>, <span class="at">data =</span> chickgrowth)</span>
+<span id="cb441-4"><a href="strategy-for-analysis-in-two-factor-models.html#cb441-4" aria-hidden="true" tabindex="-1"></a>SSE.int <span class="ot">&lt;-</span> <span class="fu">sum</span>(int.model<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb441-5"><a href="strategy-for-analysis-in-two-factor-models.html#cb441-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(chickgrowth<span class="sc">$</span>growth)</span>
+<span id="cb441-6"><a href="strategy-for-analysis-in-two-factor-models.html#cb441-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb441-7"><a href="strategy-for-analysis-in-two-factor-models.html#cb441-7" aria-hidden="true" tabindex="-1"></a>F <span class="ot">&lt;-</span> ((SSE.int <span class="sc">-</span> SSE.full) <span class="sc">/</span> <span class="dv">11</span>) <span class="sc">/</span> (SSE.full<span class="sc">/</span>(n <span class="sc">-</span> <span class="dv">12</span>))</span>
+<span id="cb441-8"><a href="strategy-for-analysis-in-two-factor-models.html#cb441-8" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pf</span>(F,<span class="dv">11</span>,n<span class="dv">-12</span>)</span></code></pre></div>
+<pre><code>## [1] 2.478104e-08</code></pre>
+<p>Therefore, we consider testing for interaction effects. (I should have mentioned that since we have no reason to suspect there are no interactions we, by default, include interactions in the full model.)</p>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb443-1" aria-hidden="true" tabindex="-1"></a>no.inter.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth<span class="sc">~</span>feed <span class="sc">+</span> breed, <span class="at">data =</span> chickgrowth)</span>
+<span id="cb443-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb443-2" aria-hidden="true" tabindex="-1"></a>SSE.no.inter <span class="ot">&lt;-</span> <span class="fu">sum</span>(no.inter.model<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb443-3"><a href="strategy-for-analysis-in-two-factor-models.html#cb443-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb443-4"><a href="strategy-for-analysis-in-two-factor-models.html#cb443-4" aria-hidden="true" tabindex="-1"></a>F <span class="ot">&lt;-</span> ((SSE.no.inter <span class="sc">-</span> SSE.full) <span class="sc">/</span> <span class="dv">6</span>) <span class="sc">/</span> (SSE.full<span class="sc">/</span>(n <span class="sc">-</span> <span class="dv">12</span>))</span>
+<span id="cb443-5"><a href="strategy-for-analysis-in-two-factor-models.html#cb443-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pf</span>(F,<span class="dv">6</span>,n<span class="dv">-12</span>)</span></code></pre></div>
+<pre><code>## [1] 0.3159945</code></pre>
+<p>Another way to perform the test is by using type 3 SS. Note we matched the p-value.</p>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div>
+<pre><code>## Loading required package: carData</code></pre>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb447-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(<span class="fu">lm</span>(growth<span class="sc">~</span>feed<span class="sc">*</span>breed, <span class="at">data =</span> chickgrowth), <span class="at">type =</span> <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## Anova Table (Type III tests)
+## 
+## Response: growth
+##             Sum Sq Df  F value    Pr(&gt;F)    
+## (Intercept) 34.341  1 234.6172 2.220e-11 ***
+## feed         1.636  2   5.5881   0.01364 *  
+## breed        9.899  3  22.5438 3.693e-06 ***
+## feed:breed   1.128  6   1.2842   0.31599    
+## Residuals    2.488 17                       
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The test for interactions does not reject the null hypothesis of no interaction. This means the additive model fits the data just fine, and that all relevant comparisons may be performed using factor-level means, rather than crossed treatment means. However, keep hold of the MSE for the full model, as we will use this for subsequent follow-up tests…<br><br></p>
+<p>The interaction plots below help illustrate why the interaction effects were not significant.</p>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb449-1" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(growth<span class="sc">~</span>feed<span class="sc">*</span>breed, <span class="at">data =</span> chickgrowth, <span class="at">FUN=</span>mean)</span>
+<span id="cb449-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb449-2" aria-hidden="true" tabindex="-1"></a>sub1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">10</span>)</span>
+<span id="cb449-3"><a href="strategy-for-analysis-in-two-factor-models.html#cb449-3" aria-hidden="true" tabindex="-1"></a>sub2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">11</span>)</span>
+<span id="cb449-4"><a href="strategy-for-analysis-in-two-factor-models.html#cb449-4" aria-hidden="true" tabindex="-1"></a>sub3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">12</span>)</span>
+<span id="cb449-5"><a href="strategy-for-analysis-in-two-factor-models.html#cb449-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">as.numeric</span>(means[sub1,<span class="dv">2</span>]), means[sub1,<span class="dv">3</span>], <span class="at">type =</span> <span class="st">&#39;l&#39;</span>, <span class="at">xlab =</span> <span class="st">&#39;breed&#39;</span>, <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>, <span class="at">ylab =</span> <span class="st">&#39;mean growth&#39;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">3.0</span>,<span class="fl">7.5</span>), <span class="at">xaxt=</span><span class="st">&#39;n&#39;</span>)</span>
+<span id="cb449-6"><a href="strategy-for-analysis-in-two-factor-models.html#cb449-6" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">at =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>))</span>
+<span id="cb449-7"><a href="strategy-for-analysis-in-two-factor-models.html#cb449-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(means[sub2,<span class="dv">2</span>], means[sub2,<span class="dv">3</span>], <span class="at">col =</span> <span class="st">&#39;red&#39;</span>)</span>
+<span id="cb449-8"><a href="strategy-for-analysis-in-two-factor-models.html#cb449-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(means[sub3,<span class="dv">2</span>], means[sub3,<span class="dv">3</span>], <span class="at">col =</span> <span class="st">&#39;green&#39;</span>)</span></code></pre></div>
+<p><img src="11-StrategyForAnalysis_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Given we can assume interactions are not present, let’s test for main effects… Ope, we already have these from the Type III SS ANOVA results above! Based on the p-values (<span class="math inline">\(\approx 0.014\)</span> and <span class="math inline">\(0.000004\)</span>), both main effects are significant. So, it makes sense to conduct follow-up tests based on factor-level means. I don’t have any specific contrasts in mind to test, so I’ll simply conduct pairwise comparisons.<br><br></p>
+<p>Given it seems that breed and feed effects are additive/separable, the experimenters will likely make recommendations about breed and feed based on comparisons between levels of breeds and comparisons between levels of feed. Therefore, Tukey corrections for feed and for breed separately make the most sense. What I’m saying is that there are not likely to be decisions based on breed-feed comparisons jointly, so we can correct for comparing 3 pairs within feed and 6 pairs within breed separately.</p>
+<p>Just for brevity, I’ll only compute one Tukey-corrected pairwise comparison “by hand”. Note, I match the p-value and the LS means computed using the emmeans package. However, I do not match the “t.ratio” in the table initially. The “t.ratio” in the table does not include the <span class="math inline">\(\frac{1}{\sqrt{2}}\)</span> factor in the margin of error necessary for comparing to Tukey quantiles… That’s fine, just be careful you know exactly what you’re looking at.
+<br><br></p>
+<p>Based on the results, if the experimenters are interested in the breed and feed combinations with highest weight (which makes sense) then we see breed 4 has highest weight, and feeds 2 and 3 have higher weight than feed 1, although 2 and 3 are not distinguishable. The conclusion of this experiment is that feed and breed factors largely have additive effects on weight, and that breed 4 and feeds 2 and 3 seem to produce the highest weight chicks.</p>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-1" aria-hidden="true" tabindex="-1"></a>MSE <span class="ot">&lt;-</span> (SSE.full<span class="sc">/</span>(n <span class="sc">-</span> <span class="dv">12</span>))</span>
+<span id="cb450-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb450-3"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb450-4"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-4" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(growth<span class="sc">~</span>feed<span class="sc">*</span>breed, <span class="at">data =</span> chickgrowth, <span class="at">FUN=</span>mean)</span>
+<span id="cb450-5"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-5" aria-hidden="true" tabindex="-1"></a>LS.means.feed1 <span class="ot">&lt;-</span> <span class="fl">0.25</span><span class="sc">*</span>(means[<span class="dv">1</span>,<span class="dv">3</span>]<span class="sc">+</span>means[<span class="dv">4</span>,<span class="dv">3</span>]<span class="sc">+</span>means[<span class="dv">7</span>,<span class="dv">3</span>]<span class="sc">+</span>means[<span class="dv">10</span>,<span class="dv">3</span>])</span>
+<span id="cb450-6"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-6" aria-hidden="true" tabindex="-1"></a>n11 <span class="ot">&lt;-</span> <span class="fu">sum</span>(chickgrowth<span class="sc">$</span>feed<span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> chickgrowth<span class="sc">$</span>breed<span class="sc">==</span><span class="dv">1</span>)</span>
+<span id="cb450-7"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-7" aria-hidden="true" tabindex="-1"></a>n12 <span class="ot">&lt;-</span> <span class="fu">sum</span>(chickgrowth<span class="sc">$</span>feed<span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> chickgrowth<span class="sc">$</span>breed<span class="sc">==</span><span class="dv">2</span>)</span>
+<span id="cb450-8"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-8" aria-hidden="true" tabindex="-1"></a>n13 <span class="ot">&lt;-</span> <span class="fu">sum</span>(chickgrowth<span class="sc">$</span>feed<span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> chickgrowth<span class="sc">$</span>breed<span class="sc">==</span><span class="dv">3</span>)</span>
+<span id="cb450-9"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-9" aria-hidden="true" tabindex="-1"></a>n14 <span class="ot">&lt;-</span> <span class="fu">sum</span>(chickgrowth<span class="sc">$</span>feed<span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> chickgrowth<span class="sc">$</span>breed<span class="sc">==</span><span class="dv">4</span>)</span>
+<span id="cb450-10"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-10" aria-hidden="true" tabindex="-1"></a>LS.means.feed2 <span class="ot">&lt;-</span> <span class="fl">0.25</span><span class="sc">*</span>(means[<span class="dv">2</span>,<span class="dv">3</span>]<span class="sc">+</span>means[<span class="dv">5</span>,<span class="dv">3</span>]<span class="sc">+</span>means[<span class="dv">8</span>,<span class="dv">3</span>]<span class="sc">+</span>means[<span class="dv">11</span>,<span class="dv">3</span>])</span>
+<span id="cb450-11"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-11" aria-hidden="true" tabindex="-1"></a>n21 <span class="ot">&lt;-</span> <span class="fu">sum</span>(chickgrowth<span class="sc">$</span>feed<span class="sc">==</span><span class="dv">2</span> <span class="sc">&amp;</span> chickgrowth<span class="sc">$</span>breed<span class="sc">==</span><span class="dv">1</span>)</span>
+<span id="cb450-12"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-12" aria-hidden="true" tabindex="-1"></a>n22 <span class="ot">&lt;-</span> <span class="fu">sum</span>(chickgrowth<span class="sc">$</span>feed<span class="sc">==</span><span class="dv">2</span> <span class="sc">&amp;</span> chickgrowth<span class="sc">$</span>breed<span class="sc">==</span><span class="dv">2</span>)</span>
+<span id="cb450-13"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-13" aria-hidden="true" tabindex="-1"></a>n23 <span class="ot">&lt;-</span> <span class="fu">sum</span>(chickgrowth<span class="sc">$</span>feed<span class="sc">==</span><span class="dv">2</span> <span class="sc">&amp;</span> chickgrowth<span class="sc">$</span>breed<span class="sc">==</span><span class="dv">3</span>)</span>
+<span id="cb450-14"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-14" aria-hidden="true" tabindex="-1"></a>n24 <span class="ot">&lt;-</span> <span class="fu">sum</span>(chickgrowth<span class="sc">$</span>feed<span class="sc">==</span><span class="dv">2</span> <span class="sc">&amp;</span> chickgrowth<span class="sc">$</span>breed<span class="sc">==</span><span class="dv">4</span>)</span>
+<span id="cb450-15"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb450-16"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb450-17"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-17" aria-hidden="true" tabindex="-1"></a>tukey.feed12 <span class="ot">&lt;-</span> (LS.means.feed1<span class="sc">-</span>LS.means.feed2) <span class="sc">/</span> ((<span class="dv">1</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">2</span>))<span class="sc">*</span><span class="fu">sqrt</span>(MSE<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">16</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span>n11<span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>n12 <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>n13 <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>n14<span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>n21<span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>n22 <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>n23 <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>n24)))</span>
+<span id="cb450-18"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb450-19"><a href="strategy-for-analysis-in-two-factor-models.html#cb450-19" aria-hidden="true" tabindex="-1"></a>tukey.feed12</span></code></pre></div>
+<pre><code>## [1] -5.802434</code></pre>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb452-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">ptukey</span>(<span class="fu">abs</span>(tukey.feed12), <span class="dv">3</span>, n<span class="dv">-12</span>)</span></code></pre></div>
+<pre><code>## [1] 0.002031653</code></pre>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb454-1" aria-hidden="true" tabindex="-1"></a>t.ratio <span class="ot">&lt;-</span> (LS.means.feed1<span class="sc">-</span>LS.means.feed2) <span class="sc">/</span> (<span class="fu">sqrt</span>(MSE<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">16</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span>n11<span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>n12 <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>n13 <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>n14<span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>n21<span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>n22 <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>n23 <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>n24)))</span>
+<span id="cb454-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb454-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb454-3"><a href="strategy-for-analysis-in-two-factor-models.html#cb454-3" aria-hidden="true" tabindex="-1"></a>t.ratio</span></code></pre></div>
+<pre><code>## [1] -4.10294</code></pre>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb456-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb456-2" aria-hidden="true" tabindex="-1"></a>em.feed <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(<span class="fu">lm</span>(growth<span class="sc">~</span>feed<span class="sc">*</span>breed, <span class="at">data =</span> chickgrowth), <span class="fu">c</span>(<span class="st">&#39;feed&#39;</span>))</span></code></pre></div>
+<pre><code>## NOTE: Results may be misleading due to involvement in interactions</code></pre>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb458-1" aria-hidden="true" tabindex="-1"></a>em.feed</span></code></pre></div>
+<pre><code>##  feed emmean    SE df lower.CL upper.CL
+##  1      4.95 0.135 17     4.66     5.23
+##  2      5.68 0.117 17     5.43     5.93
+##  3      5.87 0.135 17     5.59     6.16
+## 
+## Results are averaged over the levels of: breed 
+## Confidence level used: 0.95</code></pre>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb460-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(em.feed, <span class="at">adjust =</span> <span class="st">&#39;tukey&#39;</span>)</span></code></pre></div>
+<pre><code>##  contrast      estimate    SE df t.ratio p.value
+##  feed1 - feed2   -0.734 0.179 17  -4.103  0.0020
+##  feed1 - feed3   -0.926 0.191 17  -4.842  0.0004
+##  feed2 - feed3   -0.192 0.179 17  -1.073  0.5427
+## 
+## Results are averaged over the levels of: breed 
+## P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb462-1" aria-hidden="true" tabindex="-1"></a>em.breed <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(<span class="fu">lm</span>(growth<span class="sc">~</span>feed<span class="sc">*</span>breed, <span class="at">data =</span> chickgrowth), <span class="fu">c</span>(<span class="st">&#39;breed&#39;</span>))</span></code></pre></div>
+<pre><code>## NOTE: Results may be misleading due to involvement in interactions</code></pre>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb464-1" aria-hidden="true" tabindex="-1"></a>em.breed</span></code></pre></div>
+<pre><code>##  breed emmean    SE df lower.CL upper.CL
+##  1       3.98 0.147 17     3.67     4.29
+##  2       5.19 0.138 17     4.90     5.48
+##  3       5.99 0.138 17     5.70     6.28
+##  4       6.84 0.173 17     6.48     7.20
+## 
+## Results are averaged over the levels of: feed 
+## Confidence level used: 0.95</code></pre>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb466-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(em.breed, <span class="at">adjust =</span> <span class="st">&#39;tukey&#39;</span>)</span></code></pre></div>
+<pre><code>##  contrast        estimate    SE df t.ratio p.value
+##  breed1 - breed2   -1.208 0.202 17  -5.993  0.0001
+##  breed1 - breed3   -2.008 0.202 17  -9.957  &lt;.0001
+##  breed1 - breed4   -2.860 0.227 17 -12.603  &lt;.0001
+##  breed2 - breed3   -0.799 0.195 17  -4.104  0.0037
+##  breed2 - breed4   -1.652 0.221 17  -7.478  &lt;.0001
+##  breed3 - breed4   -0.852 0.221 17  -3.858  0.0063
+## 
+## Results are averaged over the levels of: feed 
+## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre>
+</div>
+<div id="example-observational-study-on-growth-hormone-deficient-children-with-empty-cell" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> Example: observational study on growth-hormone deficient children with empty cell<a href="strategy-for-analysis-in-two-factor-models.html#example-observational-study-on-growth-hormone-deficient-children-with-empty-cell" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>From Applied Linear Statistical Models (Fifth Edition) by Kutner et al.:
+“Synthetic growth hormone was administered at a cI inical research center to growth hormone deficient, short children who had not yet reached pubel1y. The investigator was interested in the effects of a child’s gender (Factor A) and bone development (Factor B) on the rate of growth induced by hormone administration. A child’s bone development was classified into one of three categories: severely depressed, moderately depressed, mildly depressed. Three children were randomly selected for each gender-bone development group. The response variable (Y) of interest was the difference between the growth rate during growth hormone treatment and the normal growth rate prior to the treatment, expressed in centimeters per month. Four of the 18 children were unable to complete the year-long study, thus creating unequal treatment sample sizes. Note that this is an observational study. All children received the same hormone therapy, and, subsequently, changes in growth rates were observed for children in each bone development-by-gender category. No randomization of treatments to subjects was employed.”
+<br><br>
+We will examine a modified data set where an additional (fifth) response is missing so that we have an empty cell; in particular, the Female-Severely depressed combination is unobserved.<br></p>
+<table>
+<thead>
+<tr class="header">
+<th>Sex</th>
+<th>Bone Development Depression</th>
+<th>Mean(n)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Male</td>
+<td>Severe</td>
+<td>2.0(3)</td>
+</tr>
+<tr class="even">
+<td>Male</td>
+<td>Moderate</td>
+<td>1.9(2)</td>
+</tr>
+<tr class="odd">
+<td>Male</td>
+<td>Mild</td>
+<td>0.9(2)</td>
+</tr>
+<tr class="even">
+<td>Female</td>
+<td>Severe</td>
+<td>–</td>
+</tr>
+<tr class="odd">
+<td>Female</td>
+<td>Moderate</td>
+<td>2.1(3)</td>
+</tr>
+<tr class="even">
+<td>Female</td>
+<td>Mild</td>
+<td>0.9(3)</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb468-1" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.4</span>,<span class="fl">2.4</span>,<span class="fl">2.2</span>,<span class="fl">2.1</span>,<span class="fl">1.7</span>,<span class="fl">0.7</span>,<span class="fl">1.1</span>,<span class="fl">2.5</span>,<span class="fl">1.8</span>,<span class="fl">2.0</span>,<span class="fl">0.5</span>,<span class="fl">0.9</span>,<span class="fl">1.3</span>)</span>
+<span id="cb468-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb468-2" aria-hidden="true" tabindex="-1"></a>bone <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;severe&#39;</span>,<span class="st">&#39;severe&#39;</span>,<span class="st">&#39;severe&#39;</span>,<span class="st">&#39;moderate&#39;</span>,<span class="st">&#39;moderate&#39;</span>,<span class="st">&#39;mild&#39;</span>,<span class="st">&#39;mild&#39;</span>,<span class="st">&#39;moderate&#39;</span>,<span class="st">&#39;moderate&#39;</span>,<span class="st">&#39;moderate&#39;</span>,<span class="st">&#39;mild&#39;</span>,<span class="st">&#39;mild&#39;</span>,<span class="st">&#39;mild&#39;</span>)</span>
+<span id="cb468-3"><a href="strategy-for-analysis-in-two-factor-models.html#cb468-3" aria-hidden="true" tabindex="-1"></a>sex <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;male&#39;</span>,<span class="st">&#39;male&#39;</span>,<span class="st">&#39;male&#39;</span>,<span class="st">&#39;male&#39;</span>,<span class="st">&#39;male&#39;</span>,<span class="st">&#39;male&#39;</span>,<span class="st">&#39;male&#39;</span>,<span class="st">&#39;female&#39;</span>,<span class="st">&#39;female&#39;</span>,<span class="st">&#39;female&#39;</span>,<span class="st">&#39;female&#39;</span>,<span class="st">&#39;female&#39;</span>,<span class="st">&#39;female&#39;</span>)</span>
+<span id="cb468-4"><a href="strategy-for-analysis-in-two-factor-models.html#cb468-4" aria-hidden="true" tabindex="-1"></a>growth <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">response =</span> response, <span class="at">bone =</span> bone, <span class="at">sex =</span> sex)</span></code></pre></div>
+<div id="linear-model-analysis-with-extra-constraint" class="section level3 hasAnchor" number="12.2.1">
+<h3><span class="header-section-number">12.2.1</span> Linear Model analysis with extra constraint<a href="strategy-for-analysis-in-two-factor-models.html#linear-model-analysis-with-extra-constraint" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If we impose sum-to-zero constraints, and remove the interaction corresponding to the missing cell, then we can analyze the available data using one linear model.<br><br>
+Since there are a total of 5 cell means, we should have 5 regression parameters, 1 intercept, 2 for bone, 1 for sex, and 1 interaction term. I have chosen to design my own interaction term, which contrasts the mal-female difference in the moderate bone group to the male female difference in the mild bone group. If there is no interaction, these differences should be the same (because they are additive in sex and bone effects). Specifically, the interaction term I am testing is
+<span class="math display">\[(\mu_{21}-\mu_{22}) - (\mu_{31} - \mu_{32})\]</span>
+where the first index <span class="math inline">\(i\)</span> denotes sex (<span class="math inline">\(i=1\)</span> male and <span class="math inline">\(i=2\)</span> female) and the second index <span class="math inline">\(j\)</span> denotes bone (<span class="math inline">\(j=1\)</span> severe, <span class="math inline">\(j=2\)</span> moderate, <span class="math inline">\(j = 3\)</span> mild).</p>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb469-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">&#39;contr.sum&#39;</span>, <span class="st">&#39;contr.sum&#39;</span>))</span>
+<span id="cb469-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb469-2" aria-hidden="true" tabindex="-1"></a>X.full <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(response <span class="sc">~</span> bone<span class="sc">*</span>sex, <span class="at">data =</span> growth)</span>
+<span id="cb469-3"><a href="strategy-for-analysis-in-two-factor-models.html#cb469-3" aria-hidden="true" tabindex="-1"></a>X.obs <span class="ot">&lt;-</span> X.full[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb469-4"><a href="strategy-for-analysis-in-two-factor-models.html#cb469-4" aria-hidden="true" tabindex="-1"></a>X.obs <span class="ot">&lt;-</span> <span class="fu">cbind</span>(X.obs,<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb469-5"><a href="strategy-for-analysis-in-two-factor-models.html#cb469-5" aria-hidden="true" tabindex="-1"></a><span class="fu">solve</span>(<span class="fu">t</span>(X.obs)<span class="sc">%*%</span>X.obs)<span class="sc">%*%</span><span class="fu">t</span>(X.obs)</span></code></pre></div>
+<pre><code>##                         1             2             3           4           5
+## (Intercept)  1.111111e-01  1.111111e-01  1.111111e-01  0.04166667  0.04166667
+## bone1       -1.111111e-01 -1.111111e-01 -1.111111e-01 -0.04166667 -0.04166667
+## bone2       -1.111111e-01 -1.111111e-01 -1.111111e-01  0.20833333  0.20833333
+## sex1         1.387779e-17  1.387779e-17  1.387779e-17 -0.12500000 -0.12500000
+##              0.000000e+00  0.000000e+00  0.000000e+00  0.12500000  0.12500000
+##                       6           7           8           9          10
+## (Intercept)  0.04166667  0.04166667  0.08333333  0.08333333  0.08333333
+## bone1        0.20833333  0.20833333 -0.08333333 -0.08333333 -0.08333333
+## bone2       -0.04166667 -0.04166667  0.08333333  0.08333333  0.08333333
+## sex1        -0.12500000 -0.12500000  0.08333333  0.08333333  0.08333333
+##             -0.12500000 -0.12500000 -0.08333333 -0.08333333 -0.08333333
+##                      11          12          13
+## (Intercept)  0.08333333  0.08333333  0.08333333
+## bone1        0.08333333  0.08333333  0.08333333
+## bone2       -0.08333333 -0.08333333 -0.08333333
+## sex1         0.08333333  0.08333333  0.08333333
+##              0.08333333  0.08333333  0.08333333</code></pre>
+<p>Using this design I can test for interaction using a partial F test. The p-value is 0.711 which implies there is no significant interaction. Be careful about what this test is saying. The interaction term compares responses over sex and mild to moderate bone development disorder. Since we lack data for female-severe, we cannot say whether or not some interaction may occur for that level of bone development disorder.</p>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb471-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(X.obs)</span>
+<span id="cb471-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb471-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ncol</span>(X.obs)</span>
+<span id="cb471-3"><a href="strategy-for-analysis-in-two-factor-models.html#cb471-3" aria-hidden="true" tabindex="-1"></a>hat.beta <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X.obs)<span class="sc">%*%</span>X.obs)<span class="sc">%*%</span><span class="fu">t</span>(X.obs)<span class="sc">%*%</span><span class="fu">matrix</span>(response, n,<span class="dv">1</span>)</span>
+<span id="cb471-4"><a href="strategy-for-analysis-in-two-factor-models.html#cb471-4" aria-hidden="true" tabindex="-1"></a>hat.beta</span></code></pre></div>
+<pre><code>##              [,1]
+## (Intercept)  1.65
+## bone1       -0.75
+## bone2        0.35
+## sex1         0.05
+##             -0.05</code></pre>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb473-1" aria-hidden="true" tabindex="-1"></a>SSE.obs <span class="ot">&lt;-</span> <span class="fu">sum</span>((<span class="fu">matrix</span>(response, n,<span class="dv">1</span>) <span class="sc">-</span> X.obs<span class="sc">%*%</span>hat.beta)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb473-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb473-2" aria-hidden="true" tabindex="-1"></a>X.nointeraction <span class="ot">&lt;-</span> X.obs[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb473-3"><a href="strategy-for-analysis-in-two-factor-models.html#cb473-3" aria-hidden="true" tabindex="-1"></a>hat.beta.nointer <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X.nointeraction)<span class="sc">%*%</span>X.nointeraction)<span class="sc">%*%</span><span class="fu">t</span>(X.nointeraction)<span class="sc">%*%</span><span class="fu">matrix</span>(response, n,<span class="dv">1</span>)</span>
+<span id="cb473-4"><a href="strategy-for-analysis-in-two-factor-models.html#cb473-4" aria-hidden="true" tabindex="-1"></a>SSE.nointer <span class="ot">&lt;-</span> <span class="fu">sum</span>((<span class="fu">matrix</span>(response, n,<span class="dv">1</span>) <span class="sc">-</span> X.nointeraction<span class="sc">%*%</span>hat.beta.nointer)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb473-5"><a href="strategy-for-analysis-in-two-factor-models.html#cb473-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb473-6"><a href="strategy-for-analysis-in-two-factor-models.html#cb473-6" aria-hidden="true" tabindex="-1"></a>F <span class="ot">&lt;-</span> ((SSE.nointer <span class="sc">-</span> SSE.obs)<span class="sc">/</span><span class="dv">1</span>)<span class="sc">/</span>(SSE.obs<span class="sc">/</span>(n<span class="sc">-</span>p))</span>
+<span id="cb473-7"><a href="strategy-for-analysis-in-two-factor-models.html#cb473-7" aria-hidden="true" tabindex="-1"></a>F</span></code></pre></div>
+<pre><code>## [1] 0.1476923</code></pre>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb475-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pf</span>(F,<span class="dv">1</span>,n<span class="sc">-</span>p)</span></code></pre></div>
+<pre><code>## [1] 0.7107643</code></pre>
+<p>Given the only testable interaction is not significant, we move on to examining the main effects. The first estimated main effect for bone is given by<br />
+<span class="math display">\[-1/11Y_1 -1/11Y_2 -1/11Y_3  -1/24Y_4 - 1/24Y_5  +5/24Y_6 + 5/24Y_7 -1/12Y_8 - 1/12Y_9 - 1/12Y_10 + 1/12Y_11 + 1/12Y_12 + 1/12Y_13.\]</span>
+This is an estimate of the following contrast:
+<span class="math display">\[-1/3\mu_{11}-1/12\mu_{21}+5/12\mu_{31}  +    1/4(\mu_{22}-\mu_{32})\]</span>
+The difference <span class="math inline">\(\mu_{22}-\mu_{32}\)</span> is the difference in mean response for females in groups moderate and mild. If there is no difference between bone groups (no bone effects) then this difference should be zero because both are average female responses. Likewise, if there are no bone effects, then <span class="math inline">\(-1/3\mu_{11}-1/12\mu_{21}+5/12\mu_{31}\)</span> simplifies to a linear combination of <span class="math inline">\(\mu_\cdot 1\)</span>, the average male response; and that linear combination is <span class="math inline">\(-1/3\mu_{\cdot 1}-1/12\mu_{\cdot 1}+5/12\mu_{\cdot 1} = 0\)</span>.</p>
+<p><br><br></p>
+<p>The partial F test for bone effect is significant; there are significant difference in mean growth between treated and untreated periods depending on one’s severity of bone under-development.</p>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb477-1" aria-hidden="true" tabindex="-1"></a>X.nobone <span class="ot">&lt;-</span> X.obs[,<span class="sc">-</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>)]</span>
+<span id="cb477-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb477-2" aria-hidden="true" tabindex="-1"></a>hat.beta.nobone <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X.nobone)<span class="sc">%*%</span>X.nobone)<span class="sc">%*%</span><span class="fu">t</span>(X.nobone)<span class="sc">%*%</span><span class="fu">matrix</span>(response, n,<span class="dv">1</span>)</span>
+<span id="cb477-3"><a href="strategy-for-analysis-in-two-factor-models.html#cb477-3" aria-hidden="true" tabindex="-1"></a>SSE.nobone <span class="ot">&lt;-</span> <span class="fu">sum</span>((<span class="fu">matrix</span>(response, n,<span class="dv">1</span>) <span class="sc">-</span> X.nobone<span class="sc">%*%</span>hat.beta.nobone)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb477-4"><a href="strategy-for-analysis-in-two-factor-models.html#cb477-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb477-5"><a href="strategy-for-analysis-in-two-factor-models.html#cb477-5" aria-hidden="true" tabindex="-1"></a>F <span class="ot">&lt;-</span> ((SSE.nobone <span class="sc">-</span> SSE.obs)<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>(SSE.obs<span class="sc">/</span>(n<span class="sc">-</span>p))</span>
+<span id="cb477-6"><a href="strategy-for-analysis-in-two-factor-models.html#cb477-6" aria-hidden="true" tabindex="-1"></a>F</span></code></pre></div>
+<pre><code>## [1] 10.83429</code></pre>
+<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb479-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pf</span>(F,<span class="dv">1</span>,n<span class="sc">-</span>p)</span></code></pre></div>
+<pre><code>## [1] 0.01099661</code></pre>
+<p>There is not a significant difference in mean bone growth between sexes.</p>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb481-1" aria-hidden="true" tabindex="-1"></a>X.nosex <span class="ot">&lt;-</span> X.obs[,<span class="sc">-</span><span class="dv">4</span>]</span>
+<span id="cb481-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb481-2" aria-hidden="true" tabindex="-1"></a>hat.beta.nosex <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X.nosex)<span class="sc">%*%</span>X.nosex)<span class="sc">%*%</span><span class="fu">t</span>(X.nosex)<span class="sc">%*%</span><span class="fu">matrix</span>(response, n,<span class="dv">1</span>)</span>
+<span id="cb481-3"><a href="strategy-for-analysis-in-two-factor-models.html#cb481-3" aria-hidden="true" tabindex="-1"></a>SSE.nosex <span class="ot">&lt;-</span> <span class="fu">sum</span>((<span class="fu">matrix</span>(response, n,<span class="dv">1</span>) <span class="sc">-</span> X.nosex<span class="sc">%*%</span>hat.beta.nosex)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb481-4"><a href="strategy-for-analysis-in-two-factor-models.html#cb481-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb481-5"><a href="strategy-for-analysis-in-two-factor-models.html#cb481-5" aria-hidden="true" tabindex="-1"></a>F <span class="ot">&lt;-</span> ((SSE.nosex <span class="sc">-</span> SSE.obs)<span class="sc">/</span><span class="dv">1</span>)<span class="sc">/</span>(SSE.obs<span class="sc">/</span>(n<span class="sc">-</span>p))</span>
+<span id="cb481-6"><a href="strategy-for-analysis-in-two-factor-models.html#cb481-6" aria-hidden="true" tabindex="-1"></a>F</span></code></pre></div>
+<pre><code>## [1] 0.1476923</code></pre>
+<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb483-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pf</span>(F,<span class="dv">1</span>,n<span class="sc">-</span>p)</span></code></pre></div>
+<pre><code>## [1] 0.7107643</code></pre>
+<p>Now, which means should we compare? Since only bone is significant we should compare the three bone under-development levels pairwise. However, we should consider whether or not it makes sense to compare the LS mean response for sever bone under-development considering it only contains male responses. In this case, since sex is not significant, I think it is reasonable to make comparisons of severe to moderate and severe to mild. However, if sex was significant, then such comparisons would not make sense as there would be no females to average over within the severe category.’
+<br><br>
+The mild bone underdevelopment group is significantly different from the moderate and severe groups, but the latter two are not distinguishable.</p>
+<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb485-1" aria-hidden="true" tabindex="-1"></a>MSE <span class="ot">&lt;-</span> SSE.obs<span class="sc">/</span>(n<span class="sc">-</span>p)</span>
+<span id="cb485-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb485-2" aria-hidden="true" tabindex="-1"></a>LS.bone <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="fl">0.9</span>)</span>
+<span id="cb485-3"><a href="strategy-for-analysis-in-two-factor-models.html#cb485-3" aria-hidden="true" tabindex="-1"></a>ratio<span class="fl">.12</span> <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb485-4"><a href="strategy-for-analysis-in-two-factor-models.html#cb485-4" aria-hidden="true" tabindex="-1"></a>ratio<span class="fl">.13</span> <span class="ot">&lt;-</span> <span class="fl">1.1</span><span class="sc">/</span><span class="fu">sqrt</span>(MSE<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span><span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)))</span>
+<span id="cb485-5"><a href="strategy-for-analysis-in-two-factor-models.html#cb485-5" aria-hidden="true" tabindex="-1"></a>ratio<span class="fl">.23</span> <span class="ot">&lt;-</span> <span class="fl">1.1</span><span class="sc">/</span><span class="fu">sqrt</span>(MSE<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>))</span>
+<span id="cb485-6"><a href="strategy-for-analysis-in-two-factor-models.html#cb485-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb485-7"><a href="strategy-for-analysis-in-two-factor-models.html#cb485-7" aria-hidden="true" tabindex="-1"></a>p12 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">ptukey</span>(ratio<span class="fl">.12</span>, <span class="dv">3</span>, n<span class="sc">-</span>p)</span>
+<span id="cb485-8"><a href="strategy-for-analysis-in-two-factor-models.html#cb485-8" aria-hidden="true" tabindex="-1"></a>p12</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb487-1" aria-hidden="true" tabindex="-1"></a>p13 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">ptukey</span>(ratio<span class="fl">.13</span>, <span class="dv">3</span>, n<span class="sc">-</span>p)</span>
+<span id="cb487-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb487-2" aria-hidden="true" tabindex="-1"></a>p13</span></code></pre></div>
+<pre><code>## [1] 0.01467942</code></pre>
+<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb489-1" aria-hidden="true" tabindex="-1"></a>p23 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">ptukey</span>(ratio<span class="fl">.23</span>, <span class="dv">3</span>, n<span class="sc">-</span>p)</span>
+<span id="cb489-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb489-2" aria-hidden="true" tabindex="-1"></a>p23</span></code></pre></div>
+<pre><code>## [1] 0.00720332</code></pre>
+</div>
+<div id="partial-table-analysis" class="section level3 hasAnchor" number="12.2.2">
+<h3><span class="header-section-number">12.2.2</span> Partial Table analysis<a href="strategy-for-analysis-in-two-factor-models.html#partial-table-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>An alternative strategy is to consider partial table analyses. On table consists of male and female at levels moderate and mild. The second, overlapping table is all male cells (severe, moderate, mild). In the first, two-by-two table, we may assess interaction. If interaction is present, then we should compare all 5 cell means. If not, we test main effects to determine if male-female comparisons are relevant, and if moderate-mild comparisons are relevant. Using the second, three-by-one table of only male responses, we can compare severe-moderate-mild within males, if desired.</p>
+<p><br><br></p>
+<p>Below, we fit the linear model to the partial table of male-female, moderate-mild responses. The interaction term is given by
+<span class="math display">\[(\mu_{22}-\mu_{21}) - (\mu_{32}-\mu_{31})\]</span>
+which is the mean growth for (female:moderate - male:moderate)-(female:mild - male:mild). If there is no interaction, then the female to male difference is the same at levels moderate and mild, so this contrast of means would be equal to zero. Since the interaction is found to be insignificant, we move on to main effects. <br><br></p>
+<p>As in the full data analysis above, sex is not significant. I think this fact makes it less clear, rather than more clear, how to proceed. Since sex is not significant and bone under-development is significant, it makes sense to compare mean responses between levels of the bone factor, averaged over sex (LS means). However, now we must choose which table to use. We can compare LS means in the <span class="math inline">\(2\times 2\)</span> partial table, or in the <span class="math inline">\(3\times 1\)</span> table of only male responses, or we can go back to the full data and compare LS means for the bone factor using all the data. The third option matches the full data analysis from above, and makes sense given that sex is not significant. One advantage of the partial table analysis is that if sex is significant, it does not make sense to compare LS means of the bone factor because one of those contains no females; therefore, a partial table analysis seems necessary. In the present case, I would advocate for the full data analysis, comparing LS means of bone considering sex is not significant, in which case the rest of the analysis is the same as above. <br><br></p>
+<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb491-1" aria-hidden="true" tabindex="-1"></a>growth2 <span class="ot">&lt;-</span> growth[<span class="dv">4</span><span class="sc">:</span>n,]</span>
+<span id="cb491-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb491-2" aria-hidden="true" tabindex="-1"></a>growth2<span class="sc">$</span>bone <span class="ot">=</span> <span class="fu">factor</span>(growth2<span class="sc">$</span>bone, <span class="at">levels =</span> <span class="fu">unique</span>(growth2<span class="sc">$</span>bone))</span>
+<span id="cb491-3"><a href="strategy-for-analysis-in-two-factor-models.html#cb491-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb491-4"><a href="strategy-for-analysis-in-two-factor-models.html#cb491-4" aria-hidden="true" tabindex="-1"></a>my.lm<span class="ot">&lt;-</span><span class="fu">lm</span>(response<span class="sc">~</span>bone<span class="sc">*</span>sex, <span class="at">data =</span> growth2)</span>
+<span id="cb491-5"><a href="strategy-for-analysis-in-two-factor-models.html#cb491-5" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(my.lm)</span></code></pre></div>
+<pre><code>## Anova Table (Type II tests)
+## 
+## Response: response
+##           Sum Sq Df F value   Pr(&gt;F)   
+## bone       3.136  1 25.4270 0.002351 **
+## sex        0.024  1  0.1946 0.674571   
+## bone:sex   0.024  1  0.1946 0.674571   
+## Residuals  0.740  6                    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb493-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my.lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = response ~ bone * sex, data = growth2)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -0.40  -0.20  -0.05   0.20   0.40 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   1.4500     0.1134  12.793  1.4e-05 ***
+## bone1         0.5500     0.1134   4.852  0.00284 ** 
+## sex1          0.0500     0.1134   0.441  0.67457    
+## bone1:sex1    0.0500     0.1134   0.441  0.67457    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.3512 on 6 degrees of freedom
+## Multiple R-squared:  0.8114, Adjusted R-squared:  0.7171 
+## F-statistic: 8.605 on 3 and 6 DF,  p-value: 0.01359</code></pre>
+<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="strategy-for-analysis-in-two-factor-models.html#cb495-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(response<span class="sc">~</span>bone<span class="sc">*</span>sex, <span class="at">data =</span> growth2)</span>
+<span id="cb495-2"><a href="strategy-for-analysis-in-two-factor-models.html#cb495-2" aria-hidden="true" tabindex="-1"></a><span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X)<span class="sc">%*%</span><span class="fu">t</span>(X)</span></code></pre></div>
+<pre><code>##                  4      5      6      7          8          9         10
+## (Intercept)  0.125  0.125  0.125  0.125 0.08333333 0.08333333 0.08333333
+## bone1        0.125  0.125 -0.125 -0.125 0.08333333 0.08333333 0.08333333
+## sex1        -0.125 -0.125 -0.125 -0.125 0.08333333 0.08333333 0.08333333
+## bone1:sex1  -0.125 -0.125  0.125  0.125 0.08333333 0.08333333 0.08333333
+##                      11          12          13
+## (Intercept)  0.08333333  0.08333333  0.08333333
+## bone1       -0.08333333 -0.08333333 -0.08333333
+## sex1         0.08333333  0.08333333  0.08333333
+## bone1:sex1  -0.08333333 -0.08333333 -0.08333333</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="missing-cells-in-two-way-anova.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="k-factorial-experiments.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/11-StrategyForAnalysis.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
