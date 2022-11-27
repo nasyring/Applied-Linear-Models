@@ -1,0 +1,502 @@
+# Linear Regression
+
+In this chapter we study multiple linear regression under the Gauss-Markov model
+\[Y = X\beta + \epsilon\]
+where $Y$ is an $n\times 1$ vector of responses, $X$ is and $n\times(p+1)$ design matrix containing a leading $n\times 1$ vector of ones (for an intercept term) and n observations on $p$ continuous covariates (also called independent, predictor, or explanatory variables).  Recall the model assumes a linear relationship between the (conditional) mean of the response and the covariates , i.e., $E(Y|X) = X\beta$, and normal random residuals with constant variance, $\epsilon_i \stackrel{iid}{\sim} N(0, \sigma^2)$.<br><br>
+
+Throughout this chapter we will use a large example data set to illustrate several concepts related to multiple linear regression models.  The data set is the *diamonds* dataframe available in the *ggplot2* package in R.  The data set contains prices of over 50000 diamonds, which we will predict using the size (carat) and quality (cut, color, and clarity) of the diamonds.<br><br>
+
+Among the concepts covered in this section are the following:
+ - Inference on the regression coefficients and conditional means (tests and CIs)
+ - Prediction intervals for a new response (the price of a new diamond)
+ - Interpretation of regression coefficients
+ - Choosing a model
+ - Diagnostics and residuals
+ - Dealing with outliers and influential observations
+
+## Diamonds dataset 
+
+The R package ggplot2 includes the dataframe diamonds.  
+
+```{r, echo = T, eval = T}
+library(ggplot2)
+head(diamonds)
+levels(diamonds$cut)
+levels(diamonds$clarity)
+levels(diamonds$color)
+```
+
+Cut, color, and clarity are coded as ordinal categorical variables.  It may be helpful to use numeric versions of these; for example, cut cut.num coded as an integer 1, 2, 3, 4, or 5, rather than an ordinal variable.
+
+```{r, echo = T, eval = T}
+diamonds$color.num <- as.numeric(diamonds$color)
+diamonds$cut.num <- as.numeric(diamonds$cut)
+diamonds$clarity.num <- as.numeric(diamonds$clarity)
+```
+
+The model we build may depend on what purpose it is to be used for.
+  - Inference: models built to be interpretable and offer best explanation of response in terms of explanatory variables
+  - Prediction: models built to predict the response given explanatory variables
+<br><br>
+Models built for inference tend to be simpler/include fewer variables than models built for prediction.  For example, a model built for inference may exclude explanatory variables exhibiting collinearity, because collinearity makes the model more difficult to interpret, but collinearity generally does not make the model worse at prediction.  
+<br><br>
+First we will build a model for inference.  Since we are interested in hypothesis testing as part of inference, we will check all the model assumptions.  These are less important for prediction.
+
+
+
+## Checking Linearity
+
+Our multiple linear regression model assumes the conditional mean of response (price) given explanatory variables(carat, cut, color, clarity) is a linear function of those variables.  For a given model we can check linearity by examining residuals versus predicted values; there should be no pattern in that plot.  We can also do a preliminary check by plotting the response versus each explanatory variable (so long as there are not too many) to see whether any variables exhibit a nonlinear relationship with response.  If price is non-linear in a variable, then we can use a transformation to make the relationship more linear.  <br><br>
+
+The square root transformation on price works best in the plot of carat versus price.
+
+```{r, echo = T, eval = T}
+plot(diamonds$carat, diamonds$price)
+plot(diamonds$carat, log(diamonds$price))
+plot(diamonds$carat, sqrt(diamonds$price))
+boxplot(diamonds$price~diamonds$cut)
+boxplot(diamonds$price~diamonds$clarity)
+boxplot(diamonds$price~diamonds$color)
+```
+
+Note that if we fit a model in R with the ordinal-factor versions of the diamond quality variables R uses as many orthogonal polynomial contrasts as it can for each ordinal factor.
+
+
+```{r, echo = T, eval = T}
+full.lm.sqrt <- lm(sqrt(price)~carat+cut+color+clarity, data = diamonds)
+plot(full.lm.sqrt$fitted.values,full.lm.sqrt$residuals) 
+summary(full.lm.sqrt)
+AIC(full.lm.sqrt)
+BIC(full.lm.sqrt)
+```
+
+A simpler model re-codes the ordinal factors as integers.  This model is equivalent to the above model with only linear contrasts for each factor, hence the large difference in number of parameters. 
+
+```{r, echo = T, eval = T}
+full.lm.sqrt <- lm(sqrt(price)~carat+cut.num+color.num+clarity.num, data = diamonds)
+plot(full.lm.sqrt$fitted.values,full.lm.sqrt$residuals) 
+summary(full.lm.sqrt)
+AIC(full.lm.sqrt)
+BIC(full.lm.sqrt)
+```
+
+Our residuals have a pattern.  We may be able to use "interactions" to obtain a better-fitting model due to *multicollinearity*---another term for correlation between covariates.
+
+## Multicollinearity
+
+We see that diamonds of the worst cuts, colors, and clarities are also the largest diamonds on average.  That makes sense.  These diamonds are not worth much of anything unless they are large; the small diamonds of poor quality didn't even make it to the market for diamonds.  There is weak multicollinearity that probably is not enough to harm the interpretability of the model if all variables are included.
+
+```{r, echo = T, eval = T}
+boxplot(diamonds$carat~diamonds$cut)
+boxplot(diamonds$carat~diamonds$clarity)
+boxplot(diamonds$carat~diamonds$color)
+cor(diamonds$carat,as.numeric(diamonds$cut))
+cor(diamonds$carat,as.numeric(diamonds$clarity))
+cor(diamonds$carat,as.numeric(diamonds$color))
+```
+
+
+## Model with carat interactions
+
+Including the carat interaction with cut, color, and clarity substantially improves the fit of the model as measured by $R^2$ and $R^2_{adj}$, the residual error/variance, and as evidenced by the residual vs predicted plot.
+
+
+```{r, echo = T, eval = T}
+full.lm.sqrt <- lm(sqrt(price)~carat+cut.num+color.num+clarity.num + carat*clarity.num + carat*color.num +carat*cut.num, data = diamonds)
+summary(full.lm.sqrt)
+AIC(full.lm.sqrt)
+BIC(full.lm.sqrt)
+qqnorm(full.lm.sqrt$residuals)
+qqline(full.lm.sqrt$residuals)
+plot(full.lm.sqrt$fitted.values,full.lm.sqrt$residuals) 
+plot(diamonds$carat,full.lm.sqrt$residuals) 
+
+```
+
+
+## Interpreting the model
+
+What about interpretability? We need to be specific about our interpretations, but the (simple) interactions model is certainly interpretable.  For example, the first diamond in the data has carat 0.23, it is cut, color, and clarity levels 5, 2, and 2.  The interpretation of the fitted betas is as follows, if we hold cut, color, and clarity constant, and increase carat by , say, 0.05, then we will increase sqrt(price) by $3.216264 = 0.05*(52.84947 + 5*1.39771  -2*3.39270+2*5.63633)$.  For another example, suppose if that diamond were cut level 4 instead of 5?  Then, it's sqrt(price) would change by $-0.0858033 = 0.23567 - 0.23*1.39771$.     
+
+```{r, echo = T, eval = T}
+as.matrix(head(diamonds))[1,]
+full.lm.sqrt$fitted.values[1]
+X<- model.matrix(sqrt(price)~carat+cut.num+color.num+clarity.num + carat*clarity.num + carat*color.num +carat*cut.num, data = diamonds)
+X[1,]
+```
+
+
+## Checking Constant Variance
+
+As you may have noticed, the observed residuals ``fan out"; they increase in magnitude with the value of the predicted sqrt(price).  What does this mean for our model/inferences?  One consequence is that our tests/CIs for conditional means may not be valid in terms of their nominal $\alpha$ Type 1 error/coverage probability for explanatory variable values with a large estimated mean sqrt(price) value.  The variance of the fitted conditional mean $\hat\mu_{Y|x} = x^{\top}\hat\beta$ is larger than estimated by $MSEx^\top(X^\top X)^{-1}x$ for large values of $x^{\top}\hat\beta$.  The reason is that the variance of $\epsilon_i$ seems to be $\sigma^2 \times\text{carat}$ rather than $\sigma^2$.<br><br>
+
+We will come back to this topic later to study what can be done about non-constant variance.
+
+## Normality
+
+How bad is this?  The residuals are ``normal" for about the middle 90-95 % of their distribution.  There are some very extreme residuals; these are diamonds with prices poorly predicted by the model.  We should be cautious when interpreting the model for these diamonds.  We have likely missed some important information about their prices.
+
+
+```{r, echo = T, eval = T}
+qqnorm(full.lm.sqrt$residuals/sd(full.lm.sqrt$residuals))
+qqline(full.lm.sqrt$residuals/sd(full.lm.sqrt$residuals), probs = c(0.05, 0.95))
+
+sorted <- sort(full.lm.sqrt$residuals)
+points(-1.644854, -1.381829, col = 'red', pch = '*')
+points(-1.96, -2.067442 , col = 'red', pch = '*')
+
+ 
+```
+
+
+
+## Addressing non-constant variance using WLS
+
+Our increasing variance in residuals as a function of predicted price seems to have to do with carat.  We can perform a weighted least squares estimation by weighting the observations by carat.  The idea is that prices of diamonds with larger carat size have more variance, so we should downweight these observations compared to observations of smaller carat diamonds.  
+<br><br>
+In R we can do this by using the lm() function with the wt option equal to 1/carat.
+<br><br>
+Using weights does not "correct" the non-constant variance; rather, we are incorporating the non-constant variance into the model.  
+
+
+
+
+```{r, echo = T, eval = T}
+get.weights <- lm(full.lm.sqrt$residuals^2 ~ full.lm.sqrt$fitted.values)
+
+
+wls <- lm(sqrt(price)~carat+cut.num+color.num+clarity.num + carat*clarity.num + carat*color.num +carat*cut.num, weights  = 1/diamonds$carat, data = diamonds)
+summary(wls)
+AIC(wls)
+BIC(wls)
+qqnorm(wls$residuals)
+qqline(wls$residuals)
+plot(wls$fitted.values,wls$residuals) 
+plot(diamonds$carat,wls$residuals) 
+
+
+```
+
+
+## Inferences using WLS
+
+Let's compare confidence/prediction intervals using the WLS and OLS models.  The WLS inferences are more "honest" than the OLS inferences because the OLS model's assumption of constant variance is clearly violated.  But, let's see what practical difference it makes.
+<br><br>
+1. 95% CI for the carat beta<br>
+2. 95% CI for mean price for carat = 1.5, cut = 3, clarity = 5, color = 2.  This is a fairly large diamond of good quality.<br>
+3. 95% Prediction interval for the same.
+
+```{r, echo = T, eval = T}
+X <- model.matrix(sqrt(price)~carat+cut.num+color.num+clarity.num + carat*clarity.num + carat*color.num +carat*cut.num, data= diamonds)
+Y <- sqrt(diamonds$price)
+n <- nrow(X)
+p <- ncol(X)
+W <- (1/diamonds$carat)
+
+### OLS inferences
+XX.inv <- solve(t(X)%*%X)
+beta.hat.ols <- XX.inv%*%t(X)%*%Y
+beta.hat.ols
+MSE.ols <- (1/(n-p))*sum((Y - X%*%beta.hat.ols)^2)
+MSE.ols
+# CI for carat beta
+c(beta.hat.ols[2] - qt(0.975, n-p)*sqrt(MSE.ols*XX.inv[2,2]), beta.hat.ols[2] + qt(0.975, n-p)*sqrt(MSE.ols*XX.inv[2,2]))
+# CI for mean price of that diamond
+x <- matrix(c(1, 1.5, 3,2,5,1.5*5, 1.5*2, 1.5*3), 8,1)
+c(t(x)%*%beta.hat.ols - qt(0.975, n-p)*sqrt(MSE.ols*t(x)%*%XX.inv%*%x), t(x)%*%beta.hat.ols + qt(0.975, n-p)*sqrt(MSE.ols*t(x)%*%XX.inv%*%x))
+# PI
+c(t(x)%*%beta.hat.ols - qt(0.975, n-p)*sqrt(MSE.ols*(1+t(x)%*%XX.inv%*%x)), t(x)%*%beta.hat.ols + qt(0.975, n-p)*sqrt(MSE.ols*(1+t(x)%*%XX.inv%*%x)))
+
+### WLS inferences
+XW <- matrix(0,p,n)
+tX <- t(X)
+for(j in 1:n){
+  Wj <- matrix(0,n,1)
+  Wj[j] <- W[j]
+for(i in 1:p){
+  XW[i,j] <- tX[i,]%*%Wj
+}
+}  
+
+XWX.inv <- solve(XW%*%X)
+
+
+
+beta.hat.wls <- XWX.inv%*%XW%*%Y
+beta.hat.wls
+MSE.wls <- (1/(n-p))*sum(W*(Y - X%*%beta.hat.wls)^2)
+MSE.wls
+c(beta.hat.wls[2] - qt(0.975, n-p)*sqrt(MSE.wls*XWX.inv[2,2]), beta.hat.wls[2] + qt(0.975, n-p)*sqrt(MSE.wls*XWX.inv[2,2]))
+c(t(x)%*%beta.hat.wls - qt(0.975, n-p)*sqrt(MSE.wls*t(x)%*%XWX.inv%*%x), t(x)%*%beta.hat.wls + qt(0.975, n-p)*sqrt(MSE.wls*t(x)%*%XWX.inv%*%x))
+c(t(x)%*%beta.hat.wls - qt(0.975, n-p)*sqrt(MSE.wls*(1+t(x)%*%XWX.inv%*%x)), t(x)%*%beta.hat.wls + qt(0.975, n-p)*sqrt(MSE.wls*(1+t(x)%*%XWX.inv%*%x)))
+c(t(x)%*%beta.hat.wls - qt(0.975, n-p)*sqrt(MSE.wls*(1.5+t(x)%*%XWX.inv%*%x)), t(x)%*%beta.hat.wls + qt(0.975, n-p)*sqrt(MSE.wls*(1.5+t(x)%*%XWX.inv%*%x)))
+
+
+
+```
+
+
+## Using built-in functions in R for inference
+
+Make sure to use the weights option in predict.lm for predicting a new response based on the WLS regression model.
+
+```{r, echo = T, eval = T}
+confint(full.lm.sqrt)
+confint(wls)
+new.carat = 1.5
+new.cut = 3
+new.clarity = 5
+new.color = 2
+new.data <- data.frame(carat = new.carat, cut.num = new.cut, color.num = new.color, clarity.num = new.clarity)
+predict.lm(wls, newdata = new.data, interval = 'confidence')
+predict.lm(wls, newdata = new.data, interval = 'prediction')
+predict.lm(wls, newdata = new.data, interval = 'prediction', weights = 1/1.5)
+predict.lm(full.lm.sqrt, newdata = new.data, interval = 'confidence')
+predict.lm(full.lm.sqrt, newdata = new.data, interval = 'prediction')
+```
+
+
+## Leverage, outliers, and influence
+
+Outlier are observations with very large residuals---the model is not good at predicting the prices of these diamonds.  Large residuals may happen by chance, because the model is missing important covariate information, or because one or more assumptions are violated.  Often, we consider removing observations with large residuals based on the rationale that if the model is not good at predicting those responses then those observations should not be modeled---a rationale that is, at least partially, flawed.  Outlier observations are only troublesome if they have an outsized effect on the fit of the model, which may be measured by comparing $\hat\beta$ with and without the observation in question, or comparing $\hat Y$ or the $SSE$.  Observations that strongly affect the fit of the model have high *leverage*.  Outliers with high leverage are *influential* points.  It is only these influential points we need to worry about in terms of whether or not to include them in the model at all.  On the other hand, outliers that are not influential are only important when it comes to interpreting the fit of the model at that particular observation, and not for interpreting the model in general.  
+
+### Illustrations
+
+First, some "cartoons" or "toy" examples.  The following plots illustrate outliers, leverage, and influence using a simple linear regression on contrived data.  The first plot shows a fit without any outliers. The second shows a fit with a high leverage point, that is not an outlier. The third show a pair of fitterd lines with and without a non-influential outlier (one without leverage).  And, the fourth shows a plot of a pair of fitted lines with and without an influential point.
+
+```{r, echo = F, eval = T}
+set.seed(12345)
+X <- seq(from = 0, to = 1, length.out = 30)
+Y <- 1+4*X + rnorm(30,0,1)
+plot(X,Y)
+my.lm <- lm(Y~X)
+abline(my.lm$coefficients[1], my.lm$coefficients[2])
+```
+
+```{r, echo = F, eval = T}
+set.seed(12345)
+X <- seq(from = 0, to = 1, length.out = 29)
+X[30]<- 2
+Y <- 1+4*X + rnorm(30,0,1)
+plot(X,Y)
+my.lm <- lm(Y~X)
+points(X[30], Y[30], col = 'blue', pch = 19)
+abline(my.lm$coefficients[1], my.lm$coefficients[2])
+```
+
+
+```{r, echo = F, eval = T}
+set.seed(12345)
+X <- seq(from = 0, to = 1, length.out = 30)
+Y <- 1+4*X + rnorm(30,0,1)
+Y[15] <- 10
+my.lm <- lm(Y~X)
+my.lm1 <-lm(Y[-15]~X[-15])
+plot(X,Y)
+points(X[15], Y[15], col = 'red', pch = 19)
+abline(my.lm$coefficients[1], my.lm$coefficients[2], col = 'blue')
+abline(my.lm1$coefficients[1], my.lm1$coefficients[2], col = 'red')
+```
+
+
+
+```{r, echo = F, eval = T}
+set.seed(12345)
+X <- seq(from = 0, to = 1, length.out = 29)
+Y <- 1+4*X + rnorm(29,0,1)
+X[30] <- 2
+Y[30] <- 3
+my.lm <- lm(Y~X)
+my.lm1 <-lm(Y[-30]~X[-30])
+plot(X,Y)
+points(X[30], Y[30], col = 'red', pch = 19)
+abline(my.lm$coefficients[1], my.lm$coefficients[2], col = 'blue')
+abline(my.lm1$coefficients[1], my.lm1$coefficients[2], col = 'red')
+```
+
+
+## Numerical summaries of outliers, leverage, and influence
+
+The "hat" matrix $H = X(X^\top X)^{-1}X^\top$ determines high leverage points.  To see this, note that the fitted responses are given by $\hat Y = H Y$, which are linear combinations of all the responses.  We can express $\hat Y_i$---the predicted price of the $i^{th}$ diamond---as a linear combination of the price of the $i^{th}$ diamond itself and the other $n-1$ diamonds: $\hat Y_i = h_{ii}Y_i + \sum_{i\ne j} h_{ij}Y_j$ where $h_{ij}$ is the $ij$ entry of $H$.  If we simply define leverage to be the degree to which an observed response determines its own prediction (or fitted value) then $h_{ii}$---the diagonal of $H$---defines leverage.
+
+
+```{r, echo = T, eval = T}
+h.X <- hat(X)
+h.X
+# hat(model.matrix(Y~X))   # same
+which(h.X > (3*2 / 30))   # 3(k+1)/n
+which.max(h.X)
+# "by hand"
+X.d <- cbind(rep(1,30),X)
+hat.X <- X.d%*%solve(t(X.d)%*%X.d)%*%t(X.d)  # n by n matrix
+diag(hat.X)
+```
+
+
+Outliers are defined by large residuals.  In multiple linear regression there is more than one way to define residuals and studentized residuals.  "Studentized" refers to normalizing residuals by the estimated standard deviation.    Internally studentized residuals include each observation in the calculation of the estimated standard deviation whereas externally studentized residuals ignore the corresponding observation when computing the estimated standard deviation for normalization.  
+
+
+```{r, echo = T, eval = T}
+plot(X, my.lm$residuals)
+MSE <- sum(my.lm$residuals^2)/(30-2)
+int.stud.resids <- my.lm$residuals / sqrt(MSE * (1-h.X))
+plot(X, int.stud.resids)
+MSE.i <- rep(NA, 30)
+for(i in 1:30){
+MSE.i[i] <- sum(my.lm$residuals[-i]^2)/(30-2-1)
+}
+ext.stud.resids <- my.lm$residuals / sqrt(MSE.i * (1-h.X))
+plot(X, ext.stud.resids)
+```
+
+An observation's *influence* can be defined by the degree to which is affects the model through $\hat\beta$ or $\hat Y$. Cook's D and DfFits measure the fit of the model, which is related to residuals and fitted/predicted values, whereas DfBetas measures the change in the fitted coefficients with or without the given observation.
+
+```{r, echo = T, eval = T}
+# base r functions
+cd <- cooks.distance(my.lm)
+which(cd > 2*sqrt(2/30))
+dfb <- dfbetas(my.lm)
+which(dfb > 2)
+dff <- dffits(my.lm)
+which(dff > 2*sqrt(2/30))
+
+
+library(olsrr)
+ols_plot_cooksd_bar(my.lm)  # lol
+ols_plot_dfbetas(my.lm)
+ols_plot_dffits(my.lm)
+```
+
+
+## Leverage, Diamonds model
+
+```{r, echo = T, eval = T}
+
+wls <- lm(sqrt(price)~carat+cut.num+color.num+clarity.num + carat*clarity.num + carat*color.num +carat*cut.num, weights  = 1/diamonds$carat, data = diamonds)
+
+MSE.wls <- sum((wls$residuals)^2)/(nrow(diamonds)-8)
+
+leverages.lm <- lm.influence(wls)$hat
+
+# k + 1  = 8 fitted regression coefficients
+# n = 53940
+
+3 * 8/53940
+
+sum(leverages.lm > 0.00045)
+
+sum(leverages.lm > 0.00045) / 53940
+
+
+plot(wls$fitted.values[leverages.lm < 0.00045], wls$residuals[leverages.lm < 0.00045])
+points(wls$fitted.values[leverages.lm > 0.00045], wls$residuals[leverages.lm > 0.00045], col = 'blue')
+
+```
+
+
+### Outliers, diamonds model
+
+
+```{r, echo = T, eval = T}
+int.stud.resids <- wls$residuals / sqrt(MSE.wls * (1-leverages.lm))
+plot(wls$fitted.values, int.stud.resids)
+points(wls$fitted.values[abs(int.stud.resids)>3], int.stud.resids[abs(int.stud.resids)>3], col = 'blue')
+MSE.i <- rep(NA, 53940)
+for(i in 1:53940){
+MSE.i[i] <- sum(wls$residuals[-i]^2)/(53940-8-1)
+}
+ext.stud.resids <- wls$residuals / sqrt(MSE.i * (1-leverages.lm))
+plot(wls$fitted.values, ext.stud.resids)
+points(wls$fitted.values[abs(ext.stud.resids)>3], ext.stud.resids[abs(ext.stud.resids)>3], col = 'blue')
+
+```
+
+### plotting outliers with leverage
+
+```{r, echo = T, eval = T}
+plot(wls$fitted.values, ext.stud.resids)
+points(wls$fitted.values[abs(ext.stud.resids)>3 & leverages.lm > 0.00045], ext.stud.resids[abs(ext.stud.resids)>3 & leverages.lm > 0.00045], col = 'red')
+
+
+length(wls$fitted.values[abs(ext.stud.resids)>3 & leverages.lm > 0.00045])
+
+length(wls$fitted.values[abs(ext.stud.resids)>3 & leverages.lm > 0.00045])/53940
+
+```
+
+### Cook's distance, DF betas, DF fits
+
+
+```{r, echo = T, eval = T}
+
+# base r functions
+cd <- cooks.distance(wls, weights  = 1/diamonds$carat)
+sum(cd > 2*sqrt(2/53940))
+dfb <- dfbetas(wls, weights  = 1/diamonds$carat)
+sum(abs(dfb) > 2*sqrt(2/53940))
+dff <- dffits(wls)
+sum(abs(dff) > 2*sqrt(2/53940))
+my.dff <- ext.stud.resids*sqrt(leverages.lm/(1-leverages.lm))
+sum(my.dff > 2*sqrt(2/53940))
+
+plot(wls$fitted.values, ext.stud.resids)
+points(wls$fitted.values[cd > 2*sqrt(2/53940)], ext.stud.resids[cd > 2*sqrt(2/53940)], col = 'red')
+
+plot(wls$fitted.values, ext.stud.resids)
+points(wls$fitted.values[abs(dfb) > 2*sqrt(2/53940)], ext.stud.resids[abs(dfb) > 2*sqrt(2/53940)], col = 'red')
+
+plot(wls$fitted.values, ext.stud.resids)
+points(wls$fitted.values[abs(dff) > 2*sqrt(2/53940)], ext.stud.resids[abs(dff) > 2*sqrt(2/53940)], col = 'red')
+
+
+plot(wls$fitted.values, ext.stud.resids)
+points(wls$fitted.values[abs(my.dff) > 2*sqrt(2/53940)], ext.stud.resids[abs(my.dff) > 2*sqrt(2/53940)], col = 'red')
+
+```
+
+### Model fit without high leverage outliers
+```{r, echo = T, eval = T}
+summary(wls)
+
+diamonds2 <- diamonds[!(abs(ext.stud.resids)>3 & leverages.lm > 0.00045),]
+wls2 <- lm(sqrt(price)~carat+cut.num+color.num+clarity.num + carat*clarity.num + carat*color.num +carat*cut.num, weights  = 1/diamonds2$carat, data = diamonds2)
+
+summary(wls2)
+
+confint(wls)
+new.carat = 1.5
+new.cut = 3
+new.clarity = 5
+new.color = 2
+new.data <- data.frame(carat = new.carat, cut.num = new.cut, color.num = new.color, clarity.num = new.clarity)
+predict.lm(wls, newdata = new.data, interval = 'confidence')
+predict.lm(wls, newdata = new.data, interval = 'prediction', weights = 1.5)
+
+confint(wls2)
+new.carat = 1.5
+new.cut = 3
+new.clarity = 5
+new.color = 2
+new.data <- data.frame(carat = new.carat, cut.num = new.cut, color.num = new.color, clarity.num = new.clarity)
+predict.lm(wls2, newdata = new.data, interval = 'confidence')
+predict.lm(wls2, newdata = new.data, interval = 'prediction', weights = 1.5)
+
+
+
+```
+
+
+
+
+## Dealing with highly influential data points
+
+1. Do not simply delete and ignore influential data points.<br>
+2. Perform analyses both with and without the subset of points you identify as unusually influential.<br>
+3. Recommend further analysis be done to understand why some points are not well-explained by the model.<br>
+    a. Are there data-entry mistakes?<br>
+    b. Are there important explanatory variables missing from the model?<br>
+    c. Are these all "exceptional" cases?<br>
+    
+Question: Suppose this model is being used as an automatic diamond pricing algorithm by a diamond seller.  A new diamond is "fed" into the model, and out comes a suggested price.  What should be the impact of the above influence analysis on this pricing algorithm?
+
+
