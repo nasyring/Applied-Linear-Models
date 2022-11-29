@@ -279,13 +279,13 @@ R includes the "interaction.plot" function to graphically investigate interactio
 interaction.plot(protein$Copper, protein$Zinc, protein$Protein)
 ```
 
-![](08-TwoWayANOVA_files/figure-epub3/unnamed-chunk-6-1.png)<!-- -->
+<img src="08-TwoWayANOVA_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 ```r
 interaction.plot(protein$Zinc, protein$Copper, protein$Protein)
 ```
 
-![](08-TwoWayANOVA_files/figure-epub3/unnamed-chunk-6-2.png)<!-- -->
+<img src="08-TwoWayANOVA_files/figure-html/unnamed-chunk-6-2.png" width="672" />
 
 
 

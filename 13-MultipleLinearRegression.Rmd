@@ -398,14 +398,14 @@ points(wls$fitted.values[leverages.lm > 0.00045], wls$residuals[leverages.lm > 0
 
 
 ```{r, echo = T, eval = T}
-int.stud.resids <- wls$residuals / sqrt(MSE.wls * (1-leverages.lm))
+int.stud.resids <- wls$residuals / sqrt(MSE.wls * (1-leverages.lm)*(diamonds$carat))
 plot(wls$fitted.values, int.stud.resids)
 points(wls$fitted.values[abs(int.stud.resids)>3], int.stud.resids[abs(int.stud.resids)>3], col = 'blue')
 MSE.i <- rep(NA, 53940)
 for(i in 1:53940){
 MSE.i[i] <- sum(wls$residuals[-i]^2)/(53940-8-1)
 }
-ext.stud.resids <- wls$residuals / sqrt(MSE.i * (1-leverages.lm))
+ext.stud.resids <- wls$residuals / sqrt(MSE.i * (1-leverages.lm)*(diamonds$carat))
 plot(wls$fitted.values, ext.stud.resids)
 points(wls$fitted.values[abs(ext.stud.resids)>3], ext.stud.resids[abs(ext.stud.resids)>3], col = 'blue')
 
@@ -431,26 +431,26 @@ length(wls$fitted.values[abs(ext.stud.resids)>3 & leverages.lm > 0.00045])/53940
 
 # base r functions
 cd <- cooks.distance(wls, weights  = 1/diamonds$carat)
-sum(cd > 2*sqrt(2/53940))
+sum(cd > 3*(2/53940))
 dfb <- dfbetas(wls, weights  = 1/diamonds$carat)
-sum(abs(dfb) > 2*sqrt(2/53940))
+sum(abs(dfb) > 3*sqrt(2/53940))
 dff <- dffits(wls)
-sum(abs(dff) > 2*sqrt(2/53940))
+sum(abs(dff) > 3*sqrt(2/53940))
 my.dff <- ext.stud.resids*sqrt(leverages.lm/(1-leverages.lm))
-sum(my.dff > 2*sqrt(2/53940))
+sum(my.dff > 3*sqrt(2/53940))
 
 plot(wls$fitted.values, ext.stud.resids)
-points(wls$fitted.values[cd > 2*sqrt(2/53940)], ext.stud.resids[cd > 2*sqrt(2/53940)], col = 'red')
+points(wls$fitted.values[cd > 3*(2/53940)], ext.stud.resids[cd > 3*(2/53940)], col = 'red')
 
 plot(wls$fitted.values, ext.stud.resids)
-points(wls$fitted.values[abs(dfb) > 2*sqrt(2/53940)], ext.stud.resids[abs(dfb) > 2*sqrt(2/53940)], col = 'red')
+points(wls$fitted.values[abs(dfb) > 3*sqrt(2/53940)], ext.stud.resids[abs(dfb) > 3*sqrt(2/53940)], col = 'red')
 
 plot(wls$fitted.values, ext.stud.resids)
-points(wls$fitted.values[abs(dff) > 2*sqrt(2/53940)], ext.stud.resids[abs(dff) > 2*sqrt(2/53940)], col = 'red')
+points(wls$fitted.values[abs(dff) > 3*sqrt(2/53940)], ext.stud.resids[abs(dff) > 3*sqrt(2/53940)], col = 'red')
 
 
 plot(wls$fitted.values, ext.stud.resids)
-points(wls$fitted.values[abs(my.dff) > 2*sqrt(2/53940)], ext.stud.resids[abs(my.dff) > 2*sqrt(2/53940)], col = 'red')
+points(wls$fitted.values[abs(my.dff) > 3*sqrt(2/53940)], ext.stud.resids[abs(my.dff) > 3*sqrt(2/53940)], col = 'red')
 
 ```
 

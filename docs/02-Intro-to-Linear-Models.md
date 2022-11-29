@@ -96,7 +96,7 @@ ybar+qt(c(0.025,0.975),n-1)*sqrt(s2/n)
 
 Further, we can interrogate the normality (Gaussianity) assumption using a qq-plot.  The plot reveals no concerns about the normality assumption.  
 
-![](02-Intro-to-Linear-Models_files/figure-epub3/unnamed-chunk-2-1.png)<!-- -->
+<img src="02-Intro-to-Linear-Models_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 In this particular example, we may be concerned that sub-plots next to each other may have (spatially) correlated responses.  One way to evaluate this is to compute the correlation between adjacent pairs.  The observed (sample) correlation is only about $12\%$, not high enough to suspect spatial non-independence.
 
@@ -186,7 +186,7 @@ Example: The following is an analysis of carbon dioxide uptake rates of Echinoch
 boxplot(uptake~Type, data = CO2)
 ```
 
-![](02-Intro-to-Linear-Models_files/figure-epub3/unnamed-chunk-6-1.png)<!-- -->
+<img src="02-Intro-to-Linear-Models_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 ```r
 # means model
@@ -249,7 +249,7 @@ qqplot(x = qt(ppoints(500), df = n-2), studentized.residuals)
 qqline(studentized.residuals, distribution = function(p) qt(p, df = n-2), probs = c(0.2, 0.8), col = 2)
 ```
 
-![](02-Intro-to-Linear-Models_files/figure-epub3/unnamed-chunk-6-2.png)<!-- -->
+<img src="02-Intro-to-Linear-Models_files/figure-html/unnamed-chunk-6-2.png" width="672" />
 
 We conduct a two-sample t-test (assuming equal variances) and conclude there is a substantial difference in CO2 uptake of this grass species between the two locations.  Inspection of the qq-plot reveals no concerns about normality.
 

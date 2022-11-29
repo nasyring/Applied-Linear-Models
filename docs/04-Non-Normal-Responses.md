@@ -14,14 +14,14 @@ hist(Y, main = 'A random sample of 101 Lognormal r.v. s')
 hist(log(Y), main = 'Same data after log-transform')
 ```
 
-![](04-Non-Normal-Responses_files/figure-epub3/unnamed-chunk-1-1.png)<!-- -->
+<img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-1-1.png" width="672" />
 
 ```r
 median(Y)
 ```
 
 ```
-## [1] 0.8758537
+## [1] 1.051843
 ```
 
 ```r
@@ -29,7 +29,7 @@ median(log(Y))
 ```
 
 ```
-## [1] -0.1325562
+## [1] 0.05054375
 ```
 
 ```r
@@ -37,7 +37,7 @@ log(median(Y))
 ```
 
 ```
-## [1] -0.1325562
+## [1] 0.05054375
 ```
 
 Of course, the log-transform can only be applied to positive data values, and is meant specifically for use with positively skewed data.  Since the log transform is monotonic increasing it preserves medians.  That is, the median of the log-transformed values is equal to the log of the median of the original values.  This is helpful for interpreting the results of tests concerning the mean of the log-transformed values.  
@@ -67,7 +67,7 @@ library(HSAUR2)
 boxplot(rainfall ~ seeding, data = clouds, ylab = "Rainfall")
 ```
 
-![](04-Non-Normal-Responses_files/figure-epub3/unnamed-chunk-2-1.png)<!-- -->
+<img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 Using the boxcox function we see that the "best" normalizing transformation has $\gamma \approx 0.42$.  Briefly, the "best" transformation is the one maximizing a normal likelihood.  And, indeed boxplots of rainfall measurements under this transformation appear closer to normal.
 
@@ -77,7 +77,7 @@ library(MASS)
 bc <- boxcox(rainfall~seeding, data = clouds)
 ```
 
-![](04-Non-Normal-Responses_files/figure-epub3/unnamed-chunk-3-1.png)<!-- -->
+<img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 ```r
 bc$x[which.max(bc$y)]
@@ -93,7 +93,7 @@ my.clouds$bc <- (my.clouds$rainfall^0.42 - 1)/ 0.42
 boxplot(bc~seeding, data = my.clouds)
 ```
 
-![](04-Non-Normal-Responses_files/figure-epub3/unnamed-chunk-3-2.png)<!-- -->
+<img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-3-2.png" width="672" />
 
 Let's do a two-sample t-test for difference in mean rainfall under seeding/non-seeding conditions.  Remember to interpret the results carefully due to our transformation.  
 
@@ -126,7 +126,7 @@ qqnorm(residuals)
 qqline(residuals)
 ```
 
-![](04-Non-Normal-Responses_files/figure-epub3/unnamed-chunk-4-1.png)<!-- -->
+<img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 We do not reject the hypothesis of equal mean (transformed) rainfall.  On the original data scale, we say the ratio of population median rainfall amounts is not significantly different than 1.  
 
@@ -161,7 +161,7 @@ qqnorm(residuals)
 qqline(residuals)
 ```
 
-![](04-Non-Normal-Responses_files/figure-epub3/unnamed-chunk-5-1.png)<!-- -->
+<img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 
 At least the tails of the residuals certainly look like less of a match than the Box-Cox transformed responses.  This is consistent with the strong right skew we see in the original rainfall data.  
@@ -188,7 +188,7 @@ The following data represent the ratios of lengths of canine and molar teeth in 
 <a href="data:text/csv;base64,LHJhdGlvLnRlZXRoLGdyb3VwDQoxLDQuMiwwDQoyLDExLjUsMA0KMyw3LjMsMA0KNCw1LjgsMA0KNSw2LjQsMA0KNiwxMCwwDQo3LDExLjIsMA0KOCwxMS4yLDANCjksNS4yLDANCjEwLDcsMA0KMTEsMTUuMiwxDQoxMiwyMS41LDENCjEzLDE3LjYsMQ0KMTQsOS43LDENCjE1LDE0LjUsMQ0KMTYsMTAsMQ0KMTcsOC4yLDENCjE4LDkuNCwxDQoxOSwxNi41LDENCjIwLDkuNywxDQo=" download="teeth.csv">Download teeth.csv</a>
 ```
 
-![](04-Non-Normal-Responses_files/figure-epub3/unnamed-chunk-7-1.png)<!-- -->
+<img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 Next, we'll implement the rank-sum test.  
 
@@ -235,7 +235,7 @@ plot(F0, main = '')
 lines(F1, col = 'blue')
 ```
 
-![](04-Non-Normal-Responses_files/figure-epub3/unnamed-chunk-9-1.png)<!-- -->
+<img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
 Finally, compare the the rank-sum test to Student's t-test.  The t-test shows an even smaller p-value, but note that the qq-plot shows strong non-normality, which calls into question the appropriateness of the t-test.
 
@@ -266,7 +266,7 @@ qqnorm(z)
 qqline(z)
 ```
 
-![](04-Non-Normal-Responses_files/figure-epub3/unnamed-chunk-10-1.png)<!-- -->
+<img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
 
 ## Signed-rank test
@@ -358,7 +358,7 @@ dnorm.tw <- function(x) dnorm(x,mean(twinwide$bmidiff), sd(twinwide$bmidiff))
 curve(dnorm.tw, -20,20, add = TRUE)
 ```
 
-![](04-Non-Normal-Responses_files/figure-epub3/unnamed-chunk-12-1.png)<!-- -->
+<img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
 We can compute the test statistic and p-value by hand as follows: let $T$ be the sum of the ranks of the absolute BMI differences in the group of positive differences.  Then, $z = (T - \tfrac14n(n+1)) / \sqrt{n(n+1)(2n+1)/24}$ is approximately standard normal.
 
@@ -491,7 +491,7 @@ qqnorm(y)
 qqline(y)
 ```
 
-![](04-Non-Normal-Responses_files/figure-epub3/unnamed-chunk-18-1.png)<!-- -->
+<img src="04-Non-Normal-Responses_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 
 ```r
 shapiro.test(x)

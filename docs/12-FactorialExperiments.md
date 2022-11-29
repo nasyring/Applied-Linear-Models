@@ -260,7 +260,7 @@ plot(1:16, csum/csum[16], type = 'o', xlab = 'Coefficients', ylab = 'ratio of SS
 axis(1, at = 1:16)
 ```
 
-![](12-FactorialExperiments_files/figure-epub3/unnamed-chunk-4-1.png)<!-- -->
+<img src="12-FactorialExperiments_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 ```r
 results[,1]

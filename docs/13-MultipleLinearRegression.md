@@ -90,37 +90,37 @@ The square root transformation on price works best in the plot of carat versus p
 plot(diamonds$carat, diamonds$price)
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-3-1.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 ```r
 plot(diamonds$carat, log(diamonds$price))
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-3-2.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-3-2.png" width="672" />
 
 ```r
 plot(diamonds$carat, sqrt(diamonds$price))
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-3-3.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-3-3.png" width="672" />
 
 ```r
 boxplot(diamonds$price~diamonds$cut)
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-3-4.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-3-4.png" width="672" />
 
 ```r
 boxplot(diamonds$price~diamonds$clarity)
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-3-5.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-3-5.png" width="672" />
 
 ```r
 boxplot(diamonds$price~diamonds$color)
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-3-6.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-3-6.png" width="672" />
 
 Note that if we fit a model in R with the ordinal-factor versions of the diamond quality variables R uses as many orthogonal polynomial contrasts as it can for each ordinal factor.
 
@@ -131,7 +131,7 @@ full.lm.sqrt <- lm(sqrt(price)~carat+cut+color+clarity, data = diamonds)
 plot(full.lm.sqrt$fitted.values,full.lm.sqrt$residuals) 
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-4-1.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 ```r
 summary(full.lm.sqrt)
@@ -199,7 +199,7 @@ full.lm.sqrt <- lm(sqrt(price)~carat+cut.num+color.num+clarity.num, data = diamo
 plot(full.lm.sqrt$fitted.values,full.lm.sqrt$residuals) 
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-5-1.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 ```r
 summary(full.lm.sqrt)
@@ -257,19 +257,19 @@ We see that diamonds of the worst cuts, colors, and clarities are also the large
 boxplot(diamonds$carat~diamonds$cut)
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-6-1.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 ```r
 boxplot(diamonds$carat~diamonds$clarity)
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-6-2.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-6-2.png" width="672" />
 
 ```r
 boxplot(diamonds$carat~diamonds$color)
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-6-3.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-6-3.png" width="672" />
 
 ```r
 cor(diamonds$carat,as.numeric(diamonds$cut))
@@ -357,19 +357,19 @@ qqnorm(full.lm.sqrt$residuals)
 qqline(full.lm.sqrt$residuals)
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-7-1.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 ```r
 plot(full.lm.sqrt$fitted.values,full.lm.sqrt$residuals) 
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-7-2.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-7-2.png" width="672" />
 
 ```r
 plot(diamonds$carat,full.lm.sqrt$residuals) 
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-7-3.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-7-3.png" width="672" />
 
 
 ## Interpreting the model
@@ -433,7 +433,7 @@ points(-1.644854, -1.381829, col = 'red', pch = '*')
 points(-1.96, -2.067442 , col = 'red', pch = '*')
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-9-1.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
 
 
@@ -507,19 +507,19 @@ qqnorm(wls$residuals)
 qqline(wls$residuals)
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-10-1.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
 ```r
 plot(wls$fitted.values,wls$residuals) 
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-10-2.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-10-2.png" width="672" />
 
 ```r
 plot(diamonds$carat,wls$residuals) 
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-10-3.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-10-3.png" width="672" />
 
 
 ## Inferences using WLS
@@ -768,16 +768,16 @@ Outlier are observations with very large residuals---the model is not good at pr
 
 First, some "cartoons" or "toy" examples.  The following plots illustrate outliers, leverage, and influence using a simple linear regression on contrived data.  The first plot shows a fit without any outliers. The second shows a fit with a high leverage point, that is not an outlier. The third show a pair of fitterd lines with and without a non-influential outlier (one without leverage).  And, the fourth shows a plot of a pair of fitted lines with and without an influential point.
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-13-1.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-13-1.png" width="672" />
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-14-1.png)<!-- -->
-
-
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-15-1.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
 
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-15-1.png" width="672" />
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-16-1.png)<!-- -->
+
+
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-16-1.png" width="672" />
 
 
 ## Numerical summaries of outliers, leverage, and influence
@@ -840,7 +840,7 @@ Outliers are defined by large residuals.  In multiple linear regression there is
 plot(X, my.lm$residuals)
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-18-1.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 
 ```r
 MSE <- sum(my.lm$residuals^2)/(30-2)
@@ -848,7 +848,7 @@ int.stud.resids <- my.lm$residuals / sqrt(MSE * (1-h.X))
 plot(X, int.stud.resids)
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-18-2.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-18-2.png" width="672" />
 
 ```r
 MSE.i <- rep(NA, 30)
@@ -859,7 +859,7 @@ ext.stud.resids <- my.lm$residuals / sqrt(MSE.i * (1-h.X))
 plot(X, ext.stud.resids)
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-18-3.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-18-3.png" width="672" />
 
 An observation's *influence* can be defined by the degree to which is affects the model through $\hat\beta$ or $\hat Y$. Cook's D and DfFits measure the fit of the model, which is related to residuals and fitted/predicted values, whereas DfBetas measures the change in the fitted coefficients with or without the given observation.
 
@@ -917,19 +917,19 @@ library(olsrr)
 ols_plot_cooksd_bar(my.lm)  # lol
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-19-1.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-19-1.png" width="672" />
 
 ```r
 ols_plot_dfbetas(my.lm)
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-19-2.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-19-2.png" width="672" />
 
 ```r
 ols_plot_dffits(my.lm)
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-19-3.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-19-3.png" width="672" />
 
 
 ## Leverage, Diamonds model
@@ -973,7 +973,7 @@ plot(wls$fitted.values[leverages.lm < 0.00045], wls$residuals[leverages.lm < 0.0
 points(wls$fitted.values[leverages.lm > 0.00045], wls$residuals[leverages.lm > 0.00045], col = 'blue')
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-20-1.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
 
 ### Outliers, diamonds model
@@ -981,24 +981,24 @@ points(wls$fitted.values[leverages.lm > 0.00045], wls$residuals[leverages.lm > 0
 
 
 ```r
-int.stud.resids <- wls$residuals / sqrt(MSE.wls * (1-leverages.lm))
+int.stud.resids <- wls$residuals / sqrt(MSE.wls * (1-leverages.lm)*(diamonds$carat))
 plot(wls$fitted.values, int.stud.resids)
 points(wls$fitted.values[abs(int.stud.resids)>3], int.stud.resids[abs(int.stud.resids)>3], col = 'blue')
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-21-1.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
 ```r
 MSE.i <- rep(NA, 53940)
 for(i in 1:53940){
 MSE.i[i] <- sum(wls$residuals[-i]^2)/(53940-8-1)
 }
-ext.stud.resids <- wls$residuals / sqrt(MSE.i * (1-leverages.lm))
+ext.stud.resids <- wls$residuals / sqrt(MSE.i * (1-leverages.lm)*(diamonds$carat))
 plot(wls$fitted.values, ext.stud.resids)
 points(wls$fitted.values[abs(ext.stud.resids)>3], ext.stud.resids[abs(ext.stud.resids)>3], col = 'blue')
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-21-2.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-21-2.png" width="672" />
 
 ### plotting outliers with leverage
 
@@ -1008,14 +1008,14 @@ plot(wls$fitted.values, ext.stud.resids)
 points(wls$fitted.values[abs(ext.stud.resids)>3 & leverages.lm > 0.00045], ext.stud.resids[abs(ext.stud.resids)>3 & leverages.lm > 0.00045], col = 'red')
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-22-1.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-22-1.png" width="672" />
 
 ```r
 length(wls$fitted.values[abs(ext.stud.resids)>3 & leverages.lm > 0.00045])
 ```
 
 ```
-## [1] 308
+## [1] 179
 ```
 
 ```r
@@ -1023,7 +1023,7 @@ length(wls$fitted.values[abs(ext.stud.resids)>3 & leverages.lm > 0.00045])/53940
 ```
 
 ```
-## [1] 0.005710048
+## [1] 0.003318502
 ```
 
 ### Cook's distance, DF betas, DF fits
@@ -1033,67 +1033,67 @@ length(wls$fitted.values[abs(ext.stud.resids)>3 & leverages.lm > 0.00045])/53940
 ```r
 # base r functions
 cd <- cooks.distance(wls, weights  = 1/diamonds$carat)
-sum(cd > 2*sqrt(2/53940))
+sum(cd > 3*(2/53940))
 ```
 
 ```
-## [1] 5
+## [1] 1992
 ```
 
 ```r
 dfb <- dfbetas(wls, weights  = 1/diamonds$carat)
-sum(abs(dfb) > 2*sqrt(2/53940))
+sum(abs(dfb) > 3*sqrt(2/53940))
 ```
 
 ```
-## [1] 13647
+## [1] 6189
 ```
 
 ```r
 dff <- dffits(wls)
-sum(abs(dff) > 2*sqrt(2/53940))
+sum(abs(dff) > 3*sqrt(2/53940))
 ```
 
 ```
-## [1] 12754
+## [1] 6141
 ```
 
 ```r
 my.dff <- ext.stud.resids*sqrt(leverages.lm/(1-leverages.lm))
-sum(my.dff > 2*sqrt(2/53940))
+sum(my.dff > 3*sqrt(2/53940))
 ```
 
 ```
-## [1] 4849
+## [1] 2550
 ```
 
 ```r
 plot(wls$fitted.values, ext.stud.resids)
-points(wls$fitted.values[cd > 2*sqrt(2/53940)], ext.stud.resids[cd > 2*sqrt(2/53940)], col = 'red')
+points(wls$fitted.values[cd > 3*(2/53940)], ext.stud.resids[cd > 3*(2/53940)], col = 'red')
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-23-1.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
 ```r
 plot(wls$fitted.values, ext.stud.resids)
-points(wls$fitted.values[abs(dfb) > 2*sqrt(2/53940)], ext.stud.resids[abs(dfb) > 2*sqrt(2/53940)], col = 'red')
+points(wls$fitted.values[abs(dfb) > 3*sqrt(2/53940)], ext.stud.resids[abs(dfb) > 3*sqrt(2/53940)], col = 'red')
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-23-2.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-23-2.png" width="672" />
 
 ```r
 plot(wls$fitted.values, ext.stud.resids)
-points(wls$fitted.values[abs(dff) > 2*sqrt(2/53940)], ext.stud.resids[abs(dff) > 2*sqrt(2/53940)], col = 'red')
+points(wls$fitted.values[abs(dff) > 3*sqrt(2/53940)], ext.stud.resids[abs(dff) > 3*sqrt(2/53940)], col = 'red')
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-23-3.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-23-3.png" width="672" />
 
 ```r
 plot(wls$fitted.values, ext.stud.resids)
-points(wls$fitted.values[abs(my.dff) > 2*sqrt(2/53940)], ext.stud.resids[abs(my.dff) > 2*sqrt(2/53940)], col = 'red')
+points(wls$fitted.values[abs(my.dff) > 3*sqrt(2/53940)], ext.stud.resids[abs(my.dff) > 3*sqrt(2/53940)], col = 'red')
 ```
 
-![](13-MultipleLinearRegression_files/figure-epub3/unnamed-chunk-23-4.png)<!-- -->
+<img src="13-MultipleLinearRegression_files/figure-html/unnamed-chunk-23-4.png" width="672" />
 
 ### Model fit without high leverage outliers
 
@@ -1146,24 +1146,24 @@ summary(wls2)
 ## 
 ## Weighted Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -33.925  -2.683  -0.059   2.760  38.284 
+## -33.735  -2.691  -0.061   2.795  38.298 
 ## 
 ## Coefficients:
-##                   Estimate Std. Error  t value Pr(>|t|)    
-## (Intercept)        2.96547    0.13626   21.764  < 2e-16 ***
-## carat             55.93431    0.19645  284.727  < 2e-16 ***
-## cut.num            0.03250    0.02617    1.242    0.214    
-## color.num          0.09730    0.01644    5.920 3.25e-09 ***
-## clarity.num       -0.24500    0.01671  -14.666  < 2e-16 ***
-## carat:clarity.num  5.09844    0.02727  186.976  < 2e-16 ***
-## carat:color.num   -3.02464    0.02343 -129.071  < 2e-16 ***
-## carat:cut.num      1.03596    0.03754   27.596  < 2e-16 ***
+##                    Estimate Std. Error  t value Pr(>|t|)    
+## (Intercept)        3.066818   0.136417   22.481  < 2e-16 ***
+## carat             55.782304   0.195343  285.561  < 2e-16 ***
+## cut.num            0.009513   0.026228    0.363    0.717    
+## color.num          0.122563   0.016485    7.435 1.06e-13 ***
+## clarity.num       -0.253231   0.016751  -15.118  < 2e-16 ***
+## carat:clarity.num  5.099607   0.027196  187.511  < 2e-16 ***
+## carat:color.num   -3.067312   0.023386 -131.159  < 2e-16 ***
+## carat:cut.num      1.080849   0.037405   28.896  < 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 4.365 on 53624 degrees of freedom
-## Multiple R-squared:  0.9784,	Adjusted R-squared:  0.9784 
-## F-statistic: 3.475e+05 on 7 and 53624 DF,  p-value: < 2.2e-16
+## Residual standard error: 4.403 on 53753 degrees of freedom
+## Multiple R-squared:  0.9781,	Adjusted R-squared:  0.9781 
+## F-statistic: 3.437e+05 on 7 and 53753 DF,  p-value: < 2.2e-16
 ```
 
 ```r
@@ -1211,14 +1211,14 @@ confint(wls2)
 
 ```
 ##                         2.5 %      97.5 %
-## (Intercept)        2.69840297  3.23252928
-## carat             55.54926937 56.31935301
-## cut.num           -0.01880028  0.08380572
-## color.num          0.06508121  0.12951112
-## clarity.num       -0.27774342 -0.21225746
-## carat:clarity.num  5.04499842  5.15188930
-## carat:color.num   -3.07056660 -2.97870518
-## carat:cut.num      0.96238548  1.10954286
+## (Intercept)        2.79943898  3.33419658
+## carat             55.39943076 56.16517756
+## cut.num           -0.04189338  0.06092028
+## color.num          0.09025309  0.15487319
+## clarity.num       -0.28606191 -0.22039954
+## carat:clarity.num  5.04630203  5.15291189
+## carat:color.num   -3.11314867 -3.02147445
+## carat:cut.num      1.00753474  1.15416254
 ```
 
 ```r
@@ -1232,7 +1232,7 @@ predict.lm(wls2, newdata = new.data, interval = 'confidence')
 
 ```
 ##        fit      lwr      upr
-## 1 119.7603 119.5934 119.9272
+## 1 119.6567 119.4893 119.8242
 ```
 
 ```r
@@ -1241,7 +1241,7 @@ predict.lm(wls2, newdata = new.data, interval = 'prediction', weights = 1.5)
 
 ```
 ##        fit      lwr      upr
-## 1 119.7603 112.7735 126.7471
+## 1 119.6567 112.6083 126.7051
 ```
 
 

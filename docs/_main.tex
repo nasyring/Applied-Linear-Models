@@ -117,7 +117,7 @@
 
 \title{Applied Linear Models}
 \author{Nick Syring}
-\date{2022-11-27}
+\date{2022-11-29}
 
 \begin{document}
 \maketitle
@@ -1190,106 +1190,106 @@ The \(t_0\) value of \(-5.83\) is off the chart (literally). How do we interpret
 
 \begin{verbatim}
 ##        grid.delta p.value
-##   [1,]   400.0000  0.0038
-##   [2,]   410.1010  0.0040
-##   [3,]   420.2020  0.0068
-##   [4,]   430.3030  0.0078
-##   [5,]   440.4040  0.0079
-##   [6,]   450.5051  0.0106
-##   [7,]   460.6061  0.0123
-##   [8,]   470.7071  0.0142
-##   [9,]   480.8081  0.0170
-##  [10,]   490.9091  0.0188
-##  [11,]   501.0101  0.0276
-##  [12,]   511.1111  0.0317
-##  [13,]   521.2121  0.0374
-##  [14,]   531.3131  0.0415
-##  [15,]   541.4141  0.0496
-##  [16,]   551.5152  0.0598
-##  [17,]   561.6162  0.0727
-##  [18,]   571.7172  0.0823
-##  [19,]   581.8182  0.0952
-##  [20,]   591.9192  0.1132
-##  [21,]   602.0202  0.1295
-##  [22,]   612.1212  0.1484
-##  [23,]   622.2222  0.1698
-##  [24,]   632.3232  0.1932
-##  [25,]   642.4242  0.2116
-##  [26,]   652.5253  0.2535
-##  [27,]   662.6263  0.2700
-##  [28,]   672.7273  0.3006
-##  [29,]   682.8283  0.3385
-##  [30,]   692.9293  0.3814
-##  [31,]   703.0303  0.4210
-##  [32,]   713.1313  0.4567
-##  [33,]   723.2323  0.5046
-##  [34,]   733.3333  0.5444
-##  [35,]   743.4343  0.6021
-##  [36,]   753.5354  0.6418
-##  [37,]   763.6364  0.7020
-##  [38,]   773.7374  0.7513
-##  [39,]   783.8384  0.8085
-##  [40,]   793.9394  0.8648
-##  [41,]   804.0404  0.9259
+##   [1,]   400.0000  0.0041
+##   [2,]   410.1010  0.0047
+##   [3,]   420.2020  0.0053
+##   [4,]   430.3030  0.0065
+##   [5,]   440.4040  0.0092
+##   [6,]   450.5051  0.0119
+##   [7,]   460.6061  0.0121
+##   [8,]   470.7071  0.0153
+##   [9,]   480.8081  0.0197
+##  [10,]   490.9091  0.0226
+##  [11,]   501.0101  0.0246
+##  [12,]   511.1111  0.0325
+##  [13,]   521.2121  0.0368
+##  [14,]   531.3131  0.0452
+##  [15,]   541.4141  0.0541
+##  [16,]   551.5152  0.0612
+##  [17,]   561.6162  0.0758
+##  [18,]   571.7172  0.0812
+##  [19,]   581.8182  0.0936
+##  [20,]   591.9192  0.1090
+##  [21,]   602.0202  0.1322
+##  [22,]   612.1212  0.1445
+##  [23,]   622.2222  0.1684
+##  [24,]   632.3232  0.1912
+##  [25,]   642.4242  0.2146
+##  [26,]   652.5253  0.2498
+##  [27,]   662.6263  0.2727
+##  [28,]   672.7273  0.3042
+##  [29,]   682.8283  0.3312
+##  [30,]   692.9293  0.3819
+##  [31,]   703.0303  0.4140
+##  [32,]   713.1313  0.4633
+##  [33,]   723.2323  0.5034
+##  [34,]   733.3333  0.5467
+##  [35,]   743.4343  0.5953
+##  [36,]   753.5354  0.6528
+##  [37,]   763.6364  0.7077
+##  [38,]   773.7374  0.7503
+##  [39,]   783.8384  0.8054
+##  [40,]   793.9394  0.8608
+##  [41,]   804.0404  0.9193
 ##  [42,]   814.1414  0.9766
-##  [43,]   824.2424  0.9690
-##  [44,]   834.3434  0.9066
-##  [45,]   844.4444  0.8595
-##  [46,]   854.5455  0.7955
-##  [47,]   864.6465  0.7354
-##  [48,]   874.7475  0.6922
-##  [49,]   884.8485  0.6391
-##  [50,]   894.9495  0.5835
-##  [51,]   905.0505  0.5432
-##  [52,]   915.1515  0.4895
+##  [43,]   824.2424  0.9662
+##  [44,]   834.3434  0.9065
+##  [45,]   844.4444  0.8574
+##  [46,]   854.5455  0.7903
+##  [47,]   864.6465  0.7363
+##  [48,]   874.7475  0.6872
+##  [49,]   884.8485  0.6417
+##  [50,]   894.9495  0.5822
+##  [51,]   905.0505  0.5370
+##  [52,]   915.1515  0.4897
 ##  [53,]   925.2525  0.4505
-##  [54,]   935.3535  0.4126
-##  [55,]   945.4545  0.3676
-##  [56,]   955.5556  0.3285
-##  [57,]   965.6566  0.2918
-##  [58,]   975.7576  0.2609
-##  [59,]   985.8586  0.2415
-##  [60,]   995.9596  0.2065
-##  [61,]  1006.0606  0.1829
-##  [62,]  1016.1616  0.1658
+##  [54,]   935.3535  0.4047
+##  [55,]   945.4545  0.3705
+##  [56,]   955.5556  0.3296
+##  [57,]   965.6566  0.2986
+##  [58,]   975.7576  0.2706
+##  [59,]   985.8586  0.2339
+##  [60,]   995.9596  0.2100
+##  [61,]  1006.0606  0.1854
+##  [62,]  1016.1616  0.1633
 ##  [63,]  1026.2626  0.1415
-##  [64,]  1036.3636  0.1237
-##  [65,]  1046.4646  0.1110
-##  [66,]  1056.5657  0.0925
-##  [67,]  1066.6667  0.0838
-##  [68,]  1076.7677  0.0673
-##  [69,]  1086.8687  0.0598
-##  [70,]  1096.9697  0.0507
-##  [71,]  1107.0707  0.0433
-##  [72,]  1117.1717  0.0384
-##  [73,]  1127.2727  0.0308
-##  [74,]  1137.3737  0.0267
-##  [75,]  1147.4747  0.0229
-##  [76,]  1157.5758  0.0191
-##  [77,]  1167.6768  0.0167
-##  [78,]  1177.7778  0.0117
-##  [79,]  1187.8788  0.0097
-##  [80,]  1197.9798  0.0082
-##  [81,]  1208.0808  0.0073
-##  [82,]  1218.1818  0.0070
-##  [83,]  1228.2828  0.0047
-##  [84,]  1238.3838  0.0036
-##  [85,]  1248.4848  0.0038
-##  [86,]  1258.5859  0.0026
-##  [87,]  1268.6869  0.0017
-##  [88,]  1278.7879  0.0016
-##  [89,]  1288.8889  0.0010
-##  [90,]  1298.9899  0.0011
-##  [91,]  1309.0909  0.0013
-##  [92,]  1319.1919  0.0004
-##  [93,]  1329.2929  0.0004
-##  [94,]  1339.3939  0.0005
-##  [95,]  1349.4949  0.0005
-##  [96,]  1359.5960  0.0003
-##  [97,]  1369.6970  0.0001
+##  [64,]  1036.3636  0.1238
+##  [65,]  1046.4646  0.1084
+##  [66,]  1056.5657  0.1006
+##  [67,]  1066.6667  0.0809
+##  [68,]  1076.7677  0.0689
+##  [69,]  1086.8687  0.0601
+##  [70,]  1096.9697  0.0457
+##  [71,]  1107.0707  0.0406
+##  [72,]  1117.1717  0.0363
+##  [73,]  1127.2727  0.0310
+##  [74,]  1137.3737  0.0265
+##  [75,]  1147.4747  0.0238
+##  [76,]  1157.5758  0.0175
+##  [77,]  1167.6768  0.0164
+##  [78,]  1177.7778  0.0139
+##  [79,]  1187.8788  0.0102
+##  [80,]  1197.9798  0.0092
+##  [81,]  1208.0808  0.0069
+##  [82,]  1218.1818  0.0056
+##  [83,]  1228.2828  0.0049
+##  [84,]  1238.3838  0.0038
+##  [85,]  1248.4848  0.0028
+##  [86,]  1258.5859  0.0022
+##  [87,]  1268.6869  0.0020
+##  [88,]  1278.7879  0.0015
+##  [89,]  1288.8889  0.0016
+##  [90,]  1298.9899  0.0006
+##  [91,]  1309.0909  0.0012
+##  [92,]  1319.1919  0.0009
+##  [93,]  1329.2929  0.0006
+##  [94,]  1339.3939  0.0001
+##  [95,]  1349.4949  0.0004
+##  [96,]  1359.5960  0.0002
+##  [97,]  1369.6970  0.0002
 ##  [98,]  1379.7980  0.0002
-##  [99,]  1389.8990  0.0001
-## [100,]  1400.0000  0.0001
+##  [99,]  1389.8990  0.0000
+## [100,]  1400.0000  0.0000
 \end{verbatim}
 
 \begin{Shaded}
@@ -1333,7 +1333,7 @@ Sometimes, when residuals/responses appear non-normal, a particular transformati
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 1.037574
+## [1] 1.419742
 \end{verbatim}
 
 \begin{Shaded}
@@ -1343,7 +1343,7 @@ Sometimes, when residuals/responses appear non-normal, a particular transformati
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.03688552
+## [1] 0.3504753
 \end{verbatim}
 
 \begin{Shaded}
@@ -1353,7 +1353,7 @@ Sometimes, when residuals/responses appear non-normal, a particular transformati
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.03688552
+## [1] 0.3504753
 \end{verbatim}
 
 Of course, the log-transform can only be applied to positive data values, and is meant specifically for use with positively skewed data. Since the log transform is monotonic increasing it preserves medians. That is, the median of the log-transformed values is equal to the log of the median of the original values. This is helpful for interpreting the results of tests concerning the mean of the log-transformed values.
@@ -7154,7 +7154,7 @@ An observation's \emph{influence} can be defined by the degree to which is affec
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{int.stud.resids }\OtherTok{\textless{}{-}}\NormalTok{ wls}\SpecialCharTok{$}\NormalTok{residuals }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(MSE.wls }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{leverages.lm))}
+\NormalTok{int.stud.resids }\OtherTok{\textless{}{-}}\NormalTok{ wls}\SpecialCharTok{$}\NormalTok{residuals }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(MSE.wls }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{leverages.lm)}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{diamonds}\SpecialCharTok{$}\NormalTok{carat))}
 \FunctionTok{plot}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{fitted.values, int.stud.resids)}
 \FunctionTok{points}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{fitted.values[}\FunctionTok{abs}\NormalTok{(int.stud.resids)}\SpecialCharTok{\textgreater{}}\DecValTok{3}\NormalTok{], int.stud.resids[}\FunctionTok{abs}\NormalTok{(int.stud.resids)}\SpecialCharTok{\textgreater{}}\DecValTok{3}\NormalTok{], }\AttributeTok{col =} \StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
@@ -7168,7 +7168,7 @@ An observation's \emph{influence} can be defined by the degree to which is affec
 \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{53940}\NormalTok{)\{}
 \NormalTok{MSE.i[i] }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{residuals[}\SpecialCharTok{{-}}\NormalTok{i]}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{53940{-}8{-}1}\NormalTok{)}
 \NormalTok{\}}
-\NormalTok{ext.stud.resids }\OtherTok{\textless{}{-}}\NormalTok{ wls}\SpecialCharTok{$}\NormalTok{residuals }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(MSE.i }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{leverages.lm))}
+\NormalTok{ext.stud.resids }\OtherTok{\textless{}{-}}\NormalTok{ wls}\SpecialCharTok{$}\NormalTok{residuals }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(MSE.i }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{leverages.lm)}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{diamonds}\SpecialCharTok{$}\NormalTok{carat))}
 \FunctionTok{plot}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{fitted.values, ext.stud.resids)}
 \FunctionTok{points}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{fitted.values[}\FunctionTok{abs}\NormalTok{(ext.stud.resids)}\SpecialCharTok{\textgreater{}}\DecValTok{3}\NormalTok{], ext.stud.resids[}\FunctionTok{abs}\NormalTok{(ext.stud.resids)}\SpecialCharTok{\textgreater{}}\DecValTok{3}\NormalTok{], }\AttributeTok{col =} \StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
@@ -7195,7 +7195,7 @@ An observation's \emph{influence} can be defined by the degree to which is affec
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 308
+## [1] 419
 \end{verbatim}
 
 \begin{Shaded}
@@ -7205,7 +7205,7 @@ An observation's \emph{influence} can be defined by the degree to which is affec
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.005710048
+## [1] 0.00776789
 \end{verbatim}
 
 \hypertarget{cooks-distance-df-betas-df-fits}{%
@@ -7215,51 +7215,51 @@ An observation's \emph{influence} can be defined by the degree to which is affec
 \begin{Highlighting}[]
 \CommentTok{\# base r functions}
 \NormalTok{cd }\OtherTok{\textless{}{-}} \FunctionTok{cooks.distance}\NormalTok{(wls, }\AttributeTok{weights  =} \DecValTok{1}\SpecialCharTok{/}\NormalTok{diamonds}\SpecialCharTok{$}\NormalTok{carat)}
-\FunctionTok{sum}\NormalTok{(cd }\SpecialCharTok{\textgreater{}} \DecValTok{2}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{))}
+\FunctionTok{sum}\NormalTok{(cd }\SpecialCharTok{\textgreater{}} \DecValTok{3}\SpecialCharTok{*}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5
+## [1] 1992
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{dfb }\OtherTok{\textless{}{-}} \FunctionTok{dfbetas}\NormalTok{(wls, }\AttributeTok{weights  =} \DecValTok{1}\SpecialCharTok{/}\NormalTok{diamonds}\SpecialCharTok{$}\NormalTok{carat)}
-\FunctionTok{sum}\NormalTok{(}\FunctionTok{abs}\NormalTok{(dfb) }\SpecialCharTok{\textgreater{}} \DecValTok{2}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{))}
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{abs}\NormalTok{(dfb) }\SpecialCharTok{\textgreater{}} \DecValTok{3}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 13647
+## [1] 6189
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{dff }\OtherTok{\textless{}{-}} \FunctionTok{dffits}\NormalTok{(wls)}
-\FunctionTok{sum}\NormalTok{(}\FunctionTok{abs}\NormalTok{(dff) }\SpecialCharTok{\textgreater{}} \DecValTok{2}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{))}
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{abs}\NormalTok{(dff) }\SpecialCharTok{\textgreater{}} \DecValTok{3}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 12754
+## [1] 6141
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{my.dff }\OtherTok{\textless{}{-}}\NormalTok{ ext.stud.resids}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(leverages.lm}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{leverages.lm))}
-\FunctionTok{sum}\NormalTok{(my.dff }\SpecialCharTok{\textgreater{}} \DecValTok{2}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{))}
+\FunctionTok{sum}\NormalTok{(my.dff }\SpecialCharTok{\textgreater{}} \DecValTok{3}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4849
+## [1] 2778
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{plot}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{fitted.values, ext.stud.resids)}
-\FunctionTok{points}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{fitted.values[cd }\SpecialCharTok{\textgreater{}} \DecValTok{2}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{)], ext.stud.resids[cd }\SpecialCharTok{\textgreater{}} \DecValTok{2}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{)], }\AttributeTok{col =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{fitted.values[cd }\SpecialCharTok{\textgreater{}} \DecValTok{3}\SpecialCharTok{*}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{)], ext.stud.resids[cd }\SpecialCharTok{\textgreater{}} \DecValTok{3}\SpecialCharTok{*}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{)], }\AttributeTok{col =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7268,7 +7268,7 @@ An observation's \emph{influence} can be defined by the degree to which is affec
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{plot}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{fitted.values, ext.stud.resids)}
-\FunctionTok{points}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{fitted.values[}\FunctionTok{abs}\NormalTok{(dfb) }\SpecialCharTok{\textgreater{}} \DecValTok{2}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{)], ext.stud.resids[}\FunctionTok{abs}\NormalTok{(dfb) }\SpecialCharTok{\textgreater{}} \DecValTok{2}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{)], }\AttributeTok{col =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{fitted.values[}\FunctionTok{abs}\NormalTok{(dfb) }\SpecialCharTok{\textgreater{}} \DecValTok{3}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{)], ext.stud.resids[}\FunctionTok{abs}\NormalTok{(dfb) }\SpecialCharTok{\textgreater{}} \DecValTok{3}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{)], }\AttributeTok{col =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7277,7 +7277,7 @@ An observation's \emph{influence} can be defined by the degree to which is affec
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{plot}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{fitted.values, ext.stud.resids)}
-\FunctionTok{points}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{fitted.values[}\FunctionTok{abs}\NormalTok{(dff) }\SpecialCharTok{\textgreater{}} \DecValTok{2}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{)], ext.stud.resids[}\FunctionTok{abs}\NormalTok{(dff) }\SpecialCharTok{\textgreater{}} \DecValTok{2}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{)], }\AttributeTok{col =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{fitted.values[}\FunctionTok{abs}\NormalTok{(dff) }\SpecialCharTok{\textgreater{}} \DecValTok{3}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{)], ext.stud.resids[}\FunctionTok{abs}\NormalTok{(dff) }\SpecialCharTok{\textgreater{}} \DecValTok{3}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{)], }\AttributeTok{col =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7286,7 +7286,7 @@ An observation's \emph{influence} can be defined by the degree to which is affec
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{plot}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{fitted.values, ext.stud.resids)}
-\FunctionTok{points}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{fitted.values[}\FunctionTok{abs}\NormalTok{(my.dff) }\SpecialCharTok{\textgreater{}} \DecValTok{2}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{)], ext.stud.resids[}\FunctionTok{abs}\NormalTok{(my.dff) }\SpecialCharTok{\textgreater{}} \DecValTok{2}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{)], }\AttributeTok{col =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(wls}\SpecialCharTok{$}\NormalTok{fitted.values[}\FunctionTok{abs}\NormalTok{(my.dff) }\SpecialCharTok{\textgreater{}} \DecValTok{3}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{)], ext.stud.resids[}\FunctionTok{abs}\NormalTok{(my.dff) }\SpecialCharTok{\textgreater{}} \DecValTok{3}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\DecValTok{53940}\NormalTok{)], }\AttributeTok{col =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7348,24 +7348,24 @@ An observation's \emph{influence} can be defined by the degree to which is affec
 ## 
 ## Weighted Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -33.925  -2.683  -0.059   2.760  38.284 
+## -33.968  -2.684  -0.055   2.741  39.521 
 ## 
 ## Coefficients:
 ##                   Estimate Std. Error  t value Pr(>|t|)    
-## (Intercept)        2.96547    0.13626   21.764  < 2e-16 ***
-## carat             55.93431    0.19645  284.727  < 2e-16 ***
-## cut.num            0.03250    0.02617    1.242    0.214    
-## color.num          0.09730    0.01644    5.920 3.25e-09 ***
-## clarity.num       -0.24500    0.01671  -14.666  < 2e-16 ***
-## carat:clarity.num  5.09844    0.02727  186.976  < 2e-16 ***
-## carat:color.num   -3.02464    0.02343 -129.071  < 2e-16 ***
-## carat:cut.num      1.03596    0.03754   27.596  < 2e-16 ***
+## (Intercept)        2.93501    0.13678   21.458  < 2e-16 ***
+## carat             56.00596    0.19825  282.502  < 2e-16 ***
+## cut.num            0.04795    0.02631    1.822   0.0684 .  
+## color.num          0.08394    0.01647    5.096 3.47e-07 ***
+## clarity.num       -0.24661    0.01674  -14.735  < 2e-16 ***
+## carat:clarity.num  5.10892    0.02743  186.253  < 2e-16 ***
+## carat:color.num   -3.00092    0.02357 -127.320  < 2e-16 ***
+## carat:cut.num      0.99740    0.03799   26.253  < 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 4.365 on 53624 degrees of freedom
+## Residual standard error: 4.353 on 53513 degrees of freedom
 ## Multiple R-squared:  0.9784, Adjusted R-squared:  0.9784 
-## F-statistic: 3.475e+05 on 7 and 53624 DF,  p-value: < 2.2e-16
+## F-statistic: 3.471e+05 on 7 and 53513 DF,  p-value: < 2.2e-16
 \end{verbatim}
 
 \begin{Shaded}
@@ -7420,15 +7420,15 @@ An observation's \emph{influence} can be defined by the degree to which is affec
 \end{Shaded}
 
 \begin{verbatim}
-##                         2.5 %      97.5 %
-## (Intercept)        2.69840297  3.23252928
-## carat             55.54926937 56.31935301
-## cut.num           -0.01880028  0.08380572
-## color.num          0.06508121  0.12951112
-## clarity.num       -0.27774342 -0.21225746
-## carat:clarity.num  5.04499842  5.15188930
-## carat:color.num   -3.07056660 -2.97870518
-## carat:cut.num      0.96238548  1.10954286
+##                          2.5 %      97.5 %
+## (Intercept)        2.666928919  3.20310091
+## carat             55.617387354 56.39452840
+## cut.num           -0.003621594  0.09952103
+## color.num          0.051658409  0.11622378
+## clarity.num       -0.279417624 -0.21381006
+## carat:clarity.num  5.055161584  5.16268789
+## carat:color.num   -3.047116794 -2.95472264
+## carat:cut.num      0.922939103  1.07186786
 \end{verbatim}
 
 \begin{Shaded}
@@ -7444,7 +7444,7 @@ An observation's \emph{influence} can be defined by the degree to which is affec
 
 \begin{verbatim}
 ##        fit      lwr      upr
-## 1 119.7603 119.5934 119.9272
+## 1 119.8251 119.6576 119.9926
 \end{verbatim}
 
 \begin{Shaded}
@@ -7455,7 +7455,7 @@ An observation's \emph{influence} can be defined by the degree to which is affec
 
 \begin{verbatim}
 ##        fit      lwr      upr
-## 1 119.7603 112.7735 126.7471
+## 1 119.8251 112.8568 126.7934
 \end{verbatim}
 
 \hypertarget{dealing-with-highly-influential-data-points}{%
