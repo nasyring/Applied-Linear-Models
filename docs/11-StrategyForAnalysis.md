@@ -161,7 +161,7 @@ lines(means[sub2,2], means[sub2,3], col = 'red')
 lines(means[sub3,2], means[sub3,3], col = 'green')
 ```
 
-<img src="11-StrategyForAnalysis_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+![](11-StrategyForAnalysis_files/figure-epub3/unnamed-chunk-6-1.png)<!-- -->
 
 
 Given we can assume interactions are not present, let's test for main effects... Ope, we already have these from the Type III SS ANOVA results above! Based on the p-values ($\approx 0.014$ and $0.000004$), both main effects are significant.  So, it makes sense to conduct follow-up tests based on factor-level means. I don't have any specific contrasts in mind to test, so I'll simply conduct pairwise comparisons.<br><br>

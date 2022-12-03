@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2022.2.8)  29 NOV 2022 08:58
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2022.2.8)  3 DEC 2022 15:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2465,4 +2465,193 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [181]
 
 LaTeX Font Warning: Font shape `TU/lmtt/bx/it' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/sl' tried instead on input 
+(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 6654.
+
+[182] [183] [184]
+Overfull \hbox (426.75pt too wide) in paragraph at lines 6869--6869
+[]\TU/lmtt/m/n/10 ## Warning in predict.lm(wls, newdata = new.data, interval = "prediction"): Assuming constant prediction variance even though model fit is weighted[] 
+ []
+
+[185]
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-13-1.pdf>
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-14-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[186]
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-15-1.pdf>
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-16-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[187]
+Overfull \hbox (38.25pt too wide) in paragraph at lines 6945--6945
+[]\TU/lmtt/m/n/10 ##  [1] 0.09682659 0.08884843 0.08140573 0.07449847 0.06812665 0.06229028[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 6945--6945
+[]\TU/lmtt/m/n/10 ##  [7] 0.05698936 0.05222389 0.04799386 0.04429928 0.04114014 0.03851646[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 6945--6945
+[]\TU/lmtt/m/n/10 ## [13] 0.03642821 0.03487542 0.03385807 0.03337617 0.03342971 0.03401870[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 6945--6945
+[]\TU/lmtt/m/n/10 ## [19] 0.03514314 0.03680303 0.03899836 0.04172914 0.04499536 0.04879703[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 6945--6945
+[]\TU/lmtt/m/n/10 ## [25] 0.05313415 0.05800671 0.06341472 0.06935818 0.07583708 0.47463768[] 
+ []
+
+[188]
+Overfull \hbox (38.25pt too wide) in paragraph at lines 6983--6983
+[]\TU/lmtt/m/n/10 ##  [1] 0.09682659 0.08884843 0.08140573 0.07449847 0.06812665 0.06229028[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 6983--6983
+[]\TU/lmtt/m/n/10 ##  [7] 0.05698936 0.05222389 0.04799386 0.04429928 0.04114014 0.03851646[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 6983--6983
+[]\TU/lmtt/m/n/10 ## [13] 0.03642821 0.03487542 0.03385807 0.03337617 0.03342971 0.03401870[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 6983--6983
+[]\TU/lmtt/m/n/10 ## [19] 0.03514314 0.03680303 0.03899836 0.04172914 0.04499536 0.04879703[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 6983--6983
+[]\TU/lmtt/m/n/10 ## [25] 0.05313415 0.05800671 0.06341472 0.06935818 0.07583708 0.47463768[] 
+ []
+
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-18-1.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-18-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \hbox (51.26561pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 14.12.  NUMERICAL SUMMARIES OF OUTLIERS, LEVERAGE, AND INFLUENCE \TU/lmr/m/n/10 189
+ []
+
+[189]
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-18-2.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-18-2.pdf>
+[190]
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-18-3.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-18-3.pdf>
+
+Overfull \hbox (51.26561pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 14.12.  NUMERICAL SUMMARIES OF OUTLIERS, LEVERAGE, AND INFLUENCE \TU/lmr/m/n/10 191
+ []
+
+[191]
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-19-1.pdf>
+
+Underfull \vbox (badness 3118) has occurred while \output is active []
+
+[192]
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-19-2.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-19-2.pdf>
+
+Overfull \hbox (51.26561pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 14.12.  NUMERICAL SUMMARIES OF OUTLIERS, LEVERAGE, AND INFLUENCE \TU/lmr/m/n/10 193
+ []
+
+[193]
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-19-3.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-19-3.pdf>
+[194]
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-20-1.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-20-1.pdf>
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-21-1.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-21-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[195]
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-21-2.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-21-2.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[196]
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-22-1.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-22-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[197] [198]
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-23-1.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-23-1.pdf>
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-23-2.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-23-2.pdf>
+[199]
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-23-3.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-23-3.pdf>
+
+Underfull \vbox (badness 1946) has occurred while \output is active []
+
+[200]
+File: 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-23-4.pdf Graphic file (type pdf)
+<use 13-MultipleLinearRegression_files/figure-latex/unnamed-chunk-23-4.pdf>
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 7334--7334
+[]\TU/lmtt/m/n/10 ## lm(formula = sqrt(price) ~ carat + cut.num + color.num + clarity.num +[] 
+ []
+
+[201]
+Overfull \hbox (38.25pt too wide) in paragraph at lines 7372--7372
+[]\TU/lmtt/m/n/10 ## lm(formula = sqrt(price) ~ carat + cut.num + color.num + clarity.num +[] 
+ []
+
+[202] [203] [204]
+Chapter 15.
+[205
+
+] [206]
+File: 14-ANCOVA_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
+<use 14-ANCOVA_files/figure-latex/unnamed-chunk-2-1.pdf>
+[207]
+File: 14-ANCOVA_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
+<use 14-ANCOVA_files/figure-latex/unnamed-chunk-4-1.pdf>
+[208] [209] [210
+
+]
+Chapter 16.
+[211]
+Underfull \hbox (badness 2277) in paragraph at lines 7664--7664
+[]\TU/lmr/bx/n/12 Characterizing estimable functions in one-way
+ []
+
+[212] [213] [214] [215] [216]
+No file _main.bbl.
+[217] (./_main.aux)
+Package rerunfilecheck Info: File `_main.out' has not changed.
+(rerunfilecheck)             Checksum: 2A23E3C48B812FAB3AC549089DB90AE0;15462.
+ ) 
+Here is how much of TeX's memory you used:
+ 18103 strings out of 478181
+ 360123 string characters out of 5852709
+ 819167 words of memory out of 5000000
+ 38400 multiletter control sequences out of 15000+600000
+ 478721 words of font info for 115 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 86i,10n,121p,2580b,477s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+Output written on _main.pdf (217 pages).

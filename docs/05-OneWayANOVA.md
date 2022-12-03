@@ -443,7 +443,7 @@ qqnorm(my.aov$residuals)
 qqline(my.aov$residuals)
 ```
 
-<img src="05-OneWayANOVA_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+![](05-OneWayANOVA_files/figure-epub3/unnamed-chunk-11-1.png)<!-- -->
 
 ```r
 rij <- rank(donuts$y)

@@ -1,0 +1,136 @@
+# Gauss-Markov Theory
+
+Recall the Gauss-Markov model defines a linear, stochastic relationship between an $n\times 1$ vector response $Y$ and an $n\times p$ matrix of covariates $X$ by
+\[Y = X\beta + \epsilon\]
+where $\epsilon_i \stackrel{iid}{\sim} N(0,\sigma^2)$.<br><br>
+
+Gauss-Markov theory is concerned with the following questions:<br>
+ - Which linear functions $c^\top \beta$ are meaningful and may be estimated by the observed $(Y,X)$?
+ - How should such functions be estimated?
+ - Are hypotheses about such functions testable using the observed(Y,X)?
+ - How may such testable hypotheses be tested? (What are the test statistics and their corresponding sampling distributions?)
+ 
+## Estimability
+
+In general, beyond Gauss-Markov models, whenever we use a probability distribution to model a population there is a notion of *identifiability* with respect to the parameter of that model distribution.  Say $F_\theta$ is a distribution function used to model a population where $\theta$ is the parameter indexing the family of distributions.  Then, we say $\theta$ is identifiable if and only if $\theta\mapsto F_\theta$ one-to-one.  In other words, two different parameters $\theta$ and $\theta'$ do not correspond to the same distribution function.  <br><br>
+
+In the context of Gauss-Markov models the notion of identifiability boils down to:
+\[\beta\text{ is identifiable if }X\beta_1\ne X\beta_2\iff \beta_1\ne \beta_2.\]
+And, from the point of view of linear algebra this means that $\beta$ is estimable if and only if $X$ has full column rank---$Xa = 0 \iff a \equiv 0$.<br><br>
+
+A linear function $c^\top \beta$ is *estimable* if it can be written
+\[c^\top \beta = AX\beta = AE(Y)\]
+for some matrix $A$.  Statistically, we understand estimability to mean that the function in question can be represented as one or more linear combinations of mean responses.  From a linear algebra point of view, a linear function $c^\top \beta$ is estimable if $c^\top = AX$ for some $A$, which means $c$ is in the column space of $X^\top$ (row space of X).  
+
+### Characterizing estimable functions in one-way ANOVA
+
+Consider a one-way ANOVA where $n=12$ with 3 groups of 4 replicates:
+\[Y_{ij} = \mu + \alpha_i + \epsilon_{ij}.\]
+The design matrix of the equivalent Gauss-Markov model $Y = X\beta+\epsilon$ is
+\[X = \begin{bmatrix}
+1 & 1 & 0 & 0 \\
+1 & 1 & 0 & 0 \\
+1 & 1 & 0 & 0 \\
+1 & 1 & 0 & 0 \\
+1 & 0 & 1 & 0 \\
+1 & 0 & 1 & 0 \\
+1 & 0 & 1 & 0 \\
+1 & 0 & 1 & 0 \\
+1 & 0 & 0 & 1 \\
+1 & 0 & 0 & 1 \\
+1 & 0 & 0 & 1 \\
+1 & 0 & 0 & 1 
+\end{bmatrix},\]
+and the coefficient vector is $\beta = (\mu,\alpha_1, \alpha_2, \alpha_3)^\top$.  <br><br>
+The coefficient vector $\beta$ is **NOT** identifiable or estimable.  To see this, first define $\mu_i$ $i=1,2,3$ to be the population means of the three groups.  Then, let $\beta_1 = (0,\mu_1, \mu_2, \mu_3)^\top$ and $\beta_2 = (\mu_3, \mu_1 - \mu_3, \mu_2 = \mu_3, 0)^\top$.  Then, $\beta_1 \ne \beta_2$, generally; in fact, $\beta_1 - \beta_2 = (-\mu_3, \mu_3, \mu_3, \mu_3)$. But, it is easy to check that $X\beta_1 = X\beta_2 = 4\mu_1+4\mu_2+4\mu_3$. 
+
+<br><br>
+
+The parameter $\mu + \alpha_1$, however, IS estimable. To see this, first write
+\[\mu+\alpha_1 = c^\top \beta = (1,1,0,0)\cdot (\mu, \alpha_1, \alpha_2, \alpha_3)^\top.\]
+Let $A = (\tfrac14, \tfrac14, \tfrac14, \tfrac14, 0,0,0,0,0,0,0,0)$ and note that
+\[E(Y) = X\beta = (\mu+\alpha_1, \mu+\alpha_1, \mu+\alpha_1, \mu+\alpha_1, \mu+\alpha_2,\cdots, \mu+\alpha_4).\]
+Therefore, $AE(Y) = \tfrac14\sum_{j=1}^4 E(Y_{1j}) = \mu+\alpha_1$.  Since we were able to find a linear combination of mean responses equal to the parameter that means the function $c^\top \beta$ is estimable.
+<br><br>
+
+Last, let's think carefully about how to characterize estimable and non-estimable functions more generally, rather than using ad-hoc methods in consideration of individual functions like those above.  Recall that the definition of estimability says that $c$ is in the row space of $X$, i.e., it is equivalent to a linear combination of rows of $X$.  That means $X^\top y = c$ for some $y$.  If there is a solution $y$ to this inhomogeneous system then $c^\top \beta$ is estimable.  One way to check this condition is to investigate the null space of $X$, which is the set of vectors $u$ such that $Xu = 0$.  If $c$ is orthogonal to any set of basis vectors spanning the null space of $X$---denoted $N(X)$---then $c$ is in the row space of $X$, hence $c^\top \beta$ is estimable.<br><br>
+
+Let's apply this strategy to the one-way ANOVA example above.  By inspection, we can tell that only three of the four columns in $X$ are linearly independent, for example, because the first column equals the sum of the other three.  Another way to confirm this is to produce the reduced row echelon form (RREF) of $X$ via Gaussian elimination; there are only three non-zero rows in the RREF of $X$, hence the rank of $X$ is 3. (See the R code below).  Because the dimension of the row space and null space of $X$ must add to the number of columns of $X$ (the Rank + Nullity Theorem) it follows that the null space of $X$ is one-dimensional.  In other words, the null space is spanned by a single vector.  Using the RREF we can see that a solution to $Xu = 0$ is $u = (1,-1,-1,-1)^\top$. Every function $c^\top \beta$ such that the rows of $c^\top$ are orthogonal to $u$ is estimable.  For example, $(1,1,0,0)\cdot u = 0$; hence, $\mu+\alpha_1$ is estimable. 
+
+```{r}
+library(matlib)
+X <- cbind(rep(1,12), c(1,1,1,1,0,0,0,0,0,0,0,0), c(0,0,0,0,1,1,1,1,0,0,0,0), c(0,0,0,0,0,0,0,0,1,1,1,1))
+echelon(X)
+Solve(X, matrix(0,12,1))
+```
+
+
+### Characterizing estimable functions in RCBD using the null space of $X$
+
+A linear model for an RCBD is 
+\[Y_{ij} = \mu + \alpha_i + \beta_j + \epsilon_{ij}.\]
+Suppose, for example, that there are 12 observations, 4 in each of 3 blocks, each with a different treatment.  Then, the design matrix may be written
+\[X = \begin{bmatrix}
+1 & 1 & 0 & 0 & 0 & 1 & 0\\
+1 & 1 & 0 & 0 & 0 & 0 & 1\\
+1 & 0 & 1 & 0 & 0 & 1 & 0\\
+1 & 0 & 1 & 0 & 0 & 0 & 1\\
+1 & 0 & 0 & 1 & 0 & 1 & 0\\
+1 & 0 & 0 & 1 & 0 & 0 & 1\\
+1 & 0 & 0 & 0 & 1 & 1 & 0\\
+1 & 0 & 0 & 0 & 1 & 0 & 1
+\end{bmatrix}.\]
+The rank of $X$ is 5, which can be determined by solving the system $Xu = 0$ by Gaussian elimination and observing that the RREF of $X$ contains 5 non-zero rows.  The rank plus nullity theorem implies the null space is two-dimensional.  Two linearly independent solutions to the homogeneous system are
+\[u = (-2,1,1,1,1,1,1)^\top \text{ and } v = (-1,1,1,1,1,0,0)^\top\]
+which together form a basis for $N(X)$, the null space of $X$.  All estimable linear functions $c^\top \beta$ are such that the rows of $c^\top$ are orthogonal to both $u$ and $v$, and hence orthogonal to the null space, or, in other words, members of the row space of $X$, denoted $R(X)$.  <br><br>
+
+For examples, $\alpha_1$ is not estimable, nor is $\mu + \alpha_1 - \alpha_2$.  But, $\mu + \alpha_1 + \tfrac12(\beta_1 + \beta_2)$ is estimable.  You can check that the corresponding $c$ vectors for these functions are $(0,1,0,0,0,0,0)$, $(1,1,-1,0,0,0,0)$ and $(1,1,0,0,0,\tfrac12,\tfrac12)$, of which only the last is orthogonal to the null space basis found above.
+<br><br>
+
+The codes below illustrate how to determine the RREF and rank of the design matrix $X$ using the package matlib in R.  
+
+```{r, echo = T, eval = T}
+library(matlib)
+X <- matrix(c(1,1,1,1,1,1,1,1,
+		  1,1,0,0,0,0,0,0,
+		  0,0,1,1,0,0,0,0,
+		  0,0,0,0,1,1,0,0,
+		  0,0,0,0,0,0,1,1,
+		  1,0,1,0,1,0,1,0,
+		  0,1,0,1,0,1,0,1),8,7)
+X
+```
+
+The basis vectors $u$ and $v$ are determined by putting x6=x7=1 and x6=x7=0 in the general solution of the homogeneous system produced by the Solve function. 
+
+```{r, echo = T, eval = T}
+echelon(X)
+Solve(X,matrix(0,8,1))
+```
+
+By solving $Ax = 0$ where A is the null space basis of $X$ we find that an estimable linear functions $c^\top \beta$ is such that each row of $c^\top$ satisfies $c_1 = c_6+c_7$  and $c_2+c_3+c_4+c_5 = c_6+c_7$. 
+
+```{r, echo = T, eval = T}
+null.basis <- t(matrix(c(-2,1,1,1,1,1,1,-1,1,1,1,1,0,0),7,2))
+null.basis
+Solve(null.basis, matrix(0,2,1))
+```
+
+
+
+### Characterizing estimable functions in RCBD by solving an inhomogeneous equation
+
+Recall once more that the definition of estimability says the linear function $c^\top \beta$ is estimable if and only if $c^\top \beta = AX\beta$ which means that $c^\top  = AX$ or, rather that $X^\top A^\top = c$.  Now, $X^\top$ is a $p\times n$ matrix and $c$ is a $p \times k$ matrix so that $A^\top$ is a $n\times k$ matrix.  From a linear algebraic point of view, estimability means that there exists a solution $a_\ell$ to $X^\top a_\ell = c_\ell$ for all $\ell = 1, \ldots, k$ where $a_\ell$ and $c_\ell$ denote the columns of $A^\top$ and $c$, respectively. Inhomogeneous systems may be solved by Gauss-Jordan elimination on the augmented matrix $[X^\top ,\,c]$; and see the R codes below.<br><br>
+The first inhomogeneous system below is used to evaluate whether $\mu + \alpha_1 - \alpha_2$ is estimable, corresponding to $c = (1,1,-1,0,0,0,0)$.  It is not estimable, and this is reflected in the inconsistencies "0=1" in the RREF of the augmented matrix $[X, \, c]$.  On the other hand, $\mu + \alpha_1 + \tfrac12(\beta_1 + \beta_2)$ is estimable, as evidenced by the solutions given to its corresponding inhomogeneous system below.  For example, $A = (0.5,0.5,0,0,0,0,0,0)$ is one solution (obtained by putting x8=x7=x6=x5=x4=x3=0), but there are infinite others.  
+
+```{r, echo = T, eval = T}
+Solve(t(X),matrix(c(1,1,-1,0,0,0,0),7,1))
+Solve(t(X),matrix(c(1,1,0,0,0,.5,.5),7,1))
+```
+
+
+
+
+
+
+

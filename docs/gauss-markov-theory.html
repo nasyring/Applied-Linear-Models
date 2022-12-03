@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 16 Gauss-Markov Theory | Applied Linear Models</title>
+  <meta name="description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 16 Gauss-Markov Theory | Applied Linear Models" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 16 Gauss-Markov Theory | Applied Linear Models" />
+  
+  <meta name="twitter:description" content="These are a collection of notes related to STAT 500 at Iowa State University. This is a work in progress." />
+  
+
+<meta name="author" content="Nick Syring" />
+
+
+<meta name="date" content="2022-12-03" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="analysis-of-covariance.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied Linear Models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html"><i class="fa fa-check"></i><b>2</b> Data Analysis and Statistical Inference</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#data-experiments-and-studies"><i class="fa fa-check"></i><b>2.1</b> Data, Experiments, and Studies</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#james-linds-scurvy-trial"><i class="fa fa-check"></i><b>2.1.1</b> James Lind’s Scurvy Trial</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#framingham-heart-study"><i class="fa fa-check"></i><b>2.1.2</b> Framingham Heart Study</a></li>
+<li class="chapter" data-level="2.1.3" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#harris-bank-sex-pay-study"><i class="fa fa-check"></i><b>2.1.3</b> Harris Bank Sex Pay Study</a></li>
+<li class="chapter" data-level="2.1.4" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#large-aggregated-data-sets"><i class="fa fa-check"></i><b>2.1.4</b> Large, Aggregated Data Sets</a></li>
+<li class="chapter" data-level="2.1.5" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#study-concepts"><i class="fa fa-check"></i><b>2.1.5</b> Study Concepts</a></li>
+<li class="chapter" data-level="2.1.6" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#randomization-control-and-causation"><i class="fa fa-check"></i><b>2.1.6</b> Randomization, control, and causation</a></li>
+<li class="chapter" data-level="2.1.7" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#populations-and-scope-of-inference"><i class="fa fa-check"></i><b>2.1.7</b> Populations and scope of inference</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#data-summaries"><i class="fa fa-check"></i><b>2.2</b> Data Summaries</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#numerical-summaries"><i class="fa fa-check"></i><b>2.2.1</b> Numerical Summaries</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#visual-summaries"><i class="fa fa-check"></i><b>2.2.2</b> Visual Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-analysis-and-statistical-inference.html"><a href="data-analysis-and-statistical-inference.html#statistical-inference"><i class="fa fa-check"></i><b>2.3</b> Statistical Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html"><i class="fa fa-check"></i><b>3</b> Introduction to Linear Models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#defining-the-linear-model"><i class="fa fa-check"></i><b>3.1</b> Defining the linear model</a></li>
+<li class="chapter" data-level="3.2" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#gauss-markov-model-for-one-sample"><i class="fa fa-check"></i><b>3.2</b> Gauss-Markov model for one sample</a></li>
+<li class="chapter" data-level="3.3" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#gauss-markov-model-for-comparing-two-samples"><i class="fa fa-check"></i><b>3.3</b> Gauss-Markov model for comparing two samples</a></li>
+<li class="chapter" data-level="3.4" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#pairwise-testing-and-bonferroni-correction"><i class="fa fa-check"></i><b>3.4</b> Pairwise testing and Bonferroni correction</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#example-co2-uptake-in-echinochloa-crus-galli"><i class="fa fa-check"></i><b>3.4.1</b> Example: Co2 uptake in Echinochloa crus-galli</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="introduction-to-linear-models.html"><a href="introduction-to-linear-models.html#linear-models-for-more-than-two-treatments-populations"><i class="fa fa-check"></i><b>3.5</b> Linear Models for more than two treatments (populations)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html"><i class="fa fa-check"></i><b>4</b> Randomization and Permutation Testing</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#setup"><i class="fa fa-check"></i><b>4.1</b> Setup</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#example-1-the-harris-bank-sex-pay-study"><i class="fa fa-check"></i><b>4.1.1</b> Example 1: The Harris Bank Sex Pay Study</a></li>
+<li class="chapter" data-level="4.1.2" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#difference-in-mean-salaries-between-genders"><i class="fa fa-check"></i><b>4.1.2</b> Difference in mean salaries between genders</a></li>
+<li class="chapter" data-level="4.1.3" data-path="randomization-and-permutation-testing.html"><a href="randomization-and-permutation-testing.html#randomization-test-for-treatment-significance"><i class="fa fa-check"></i><b>4.1.3</b> Randomization test for treatment significance</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html"><i class="fa fa-check"></i><b>5</b> Alternatives for Non-Normal Responses</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#transformations"><i class="fa fa-check"></i><b>5.1</b> Transformations</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#example-cloud-seeding-for-rainfall"><i class="fa fa-check"></i><b>5.1.1</b> Example: Cloud Seeding for Rainfall</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#rank-sum-test"><i class="fa fa-check"></i><b>5.2</b> Rank-Sum Test</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#example-ratio-measurements"><i class="fa fa-check"></i><b>5.2.1</b> Example: ratio measurements</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#signed-rank-test"><i class="fa fa-check"></i><b>5.3</b> Signed-rank test</a></li>
+<li class="chapter" data-level="5.4" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrap"><i class="fa fa-check"></i><b>5.4</b> Bootstrap</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#intro-to-the-bootstrap"><i class="fa fa-check"></i><b>5.4.1</b> Intro to the bootstrap</a></li>
+<li class="chapter" data-level="5.4.2" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>5.4.2</b> Bootstrap Confidence Intervals</a></li>
+<li class="chapter" data-level="5.4.3" data-path="alternatives-for-non-normal-responses.html"><a href="alternatives-for-non-normal-responses.html#bootstrapping-linear-models"><i class="fa fa-check"></i><b>5.4.3</b> Bootstrapping linear models</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="one-way-anova.html"><a href="one-way-anova.html"><i class="fa fa-check"></i><b>6</b> One Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="one-way-anova.html"><a href="one-way-anova.html#the-gauss-markov-model-for-comparing-i-populations"><i class="fa fa-check"></i><b>6.1</b> The Gauss-Markov Model for comparing I populations</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="one-way-anova.html"><a href="one-way-anova.html#example-donuts-effects-model"><i class="fa fa-check"></i><b>6.1.1</b> Example: Donuts effects model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="one-way-anova.html"><a href="one-way-anova.html#testing-equality-of-means"><i class="fa fa-check"></i><b>6.2</b> Testing equality of means</a></li>
+<li class="chapter" data-level="6.3" data-path="one-way-anova.html"><a href="one-way-anova.html#follow-up-testing"><i class="fa fa-check"></i><b>6.3</b> Follow-up testing</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="one-way-anova.html"><a href="one-way-anova.html#donuts-example"><i class="fa fa-check"></i><b>6.3.1</b> Donuts example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="one-way-anova.html"><a href="one-way-anova.html#inference-for-particular-contrasts"><i class="fa fa-check"></i><b>6.4</b> Inference for particular contrasts</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="one-way-anova.html"><a href="one-way-anova.html#donuts-example-1"><i class="fa fa-check"></i><b>6.4.1</b> Donuts Example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="one-way-anova.html"><a href="one-way-anova.html#checking-assumptions-in-one-way-anova"><i class="fa fa-check"></i><b>6.5</b> Checking Assumptions in one-way ANOVA</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="one-way-anova.html"><a href="one-way-anova.html#example-cehcking-assumptions-for-donuts-experiment"><i class="fa fa-check"></i><b>6.5.1</b> Example: Cehcking assumptions for donuts experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html"><i class="fa fa-check"></i><b>7</b> Randomized Complete Block Design</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#paired-experiments-as-blocking"><i class="fa fa-check"></i><b>7.1</b> Paired experiments as blocking</a></li>
+<li class="chapter" data-level="7.2" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#randomized-complete-block-designs"><i class="fa fa-check"></i><b>7.2</b> Randomized Complete Block Designs</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#notation"><i class="fa fa-check"></i><b>7.2.1</b> Notation</a></li>
+<li class="chapter" data-level="7.2.2" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-penicillin-manufacturing"><i class="fa fa-check"></i><b>7.2.2</b> Example: Penicillin Manufacturing</a></li>
+<li class="chapter" data-level="7.2.3" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#sums-of-squares-and-f-tests-in-rcbd"><i class="fa fa-check"></i><b>7.2.3</b> Sums of squares and F tests in RCBD</a></li>
+<li class="chapter" data-level="7.2.4" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-significance-of-process-in-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.4</b> Example: Significance of Process in Penicillin experiment</a></li>
+<li class="chapter" data-level="7.2.5" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#follow-up-comparisons-and-contrasts"><i class="fa fa-check"></i><b>7.2.5</b> Follow-up comparisons and contrasts</a></li>
+<li class="chapter" data-level="7.2.6" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-tukey-contrasts-and-scheffe-for-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.6</b> Example: Tukey, contrasts, and Scheffe for penicillin experiment</a></li>
+<li class="chapter" data-level="7.2.7" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#relative-efficiency-of-blocking-vs.-crd"><i class="fa fa-check"></i><b>7.2.7</b> Relative efficiency of Blocking (vs. CRD)</a></li>
+<li class="chapter" data-level="7.2.8" data-path="randomized-complete-block-design.html"><a href="randomized-complete-block-design.html#example-re-of-blocking-in-penicillin-experiment"><i class="fa fa-check"></i><b>7.2.8</b> Example: RE of blocking in penicillin experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html"><i class="fa fa-check"></i><b>8</b> Latin Squares for two blocking variables</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#designs-for-multiple-blocks"><i class="fa fa-check"></i><b>8.1</b> Designs for multiple blocks</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-mpg-experiment"><i class="fa fa-check"></i><b>8.1.1</b> Example: MPG experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#model-notation"><i class="fa fa-check"></i><b>8.2</b> Model notation</a></li>
+<li class="chapter" data-level="8.3" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#sums-of-squares-and-test-for-treatment-effects"><i class="fa fa-check"></i><b>8.3</b> Sums of squares and test for treatment effects</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-mpg-experiment-1"><i class="fa fa-check"></i><b>8.3.1</b> Example: MPG experiment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#relative-efficiency-of-blocking"><i class="fa fa-check"></i><b>8.4</b> Relative efficiency of blocking</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="latin-squares-for-two-blocking-variables.html"><a href="latin-squares-for-two-blocking-variables.html#example-re-ignoring-driver-blocks"><i class="fa fa-check"></i><b>8.4.1</b> Example: RE ignoring driver blocks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="two-way-anova.html"><a href="two-way-anova.html"><i class="fa fa-check"></i><b>9</b> Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="two-way-anova.html"><a href="two-way-anova.html#the-model"><i class="fa fa-check"></i><b>9.1</b> The Model</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="two-way-anova.html"><a href="two-way-anova.html#example-protein-chemistry"><i class="fa fa-check"></i><b>9.1.1</b> Example: protein chemistry</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="two-way-anova.html"><a href="two-way-anova.html#tests-for-interaction-and-main-effects"><i class="fa fa-check"></i><b>9.2</b> Tests for interaction and main effects</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="two-way-anova.html"><a href="two-way-anova.html#example-protein-and-dietary-metals"><i class="fa fa-check"></i><b>9.2.1</b> Example: Protein and dietary metals</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html"><i class="fa fa-check"></i><b>10</b> Unbalanced data in Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#raw-and-least-squares-means"><i class="fa fa-check"></i><b>10.1</b> Raw and Least-Squares Means</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data"><i class="fa fa-check"></i><b>10.1.1</b> Example: Turbine data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#partial-f-tests-and-type-iii-ss"><i class="fa fa-check"></i><b>10.2</b> Partial F tests and Type III SS</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data-tests"><i class="fa fa-check"></i><b>10.2.1</b> Example: Turbine Data tests</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#follow-up-tests"><i class="fa fa-check"></i><b>10.3</b> Follow-up tests</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#example-turbine-data-tukey-corrected-pairwise-comparisons"><i class="fa fa-check"></i><b>10.3.1</b> Example: Turbine data Tukey-corrected pairwise comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="unbalanced-data-in-two-way-anova.html"><a href="unbalanced-data-in-two-way-anova.html#unbalanced-data-and-simpsons-paradox"><i class="fa fa-check"></i><b>10.4</b> Unbalanced data and Simpson’s Paradox</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html"><i class="fa fa-check"></i><b>11</b> Missing Cells in Two-Way ANOVA</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#anova-with-missing-at-random-cell"><i class="fa fa-check"></i><b>11.1</b> ANOVA with missing “at random” cell</a></li>
+<li class="chapter" data-level="11.2" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#do-any-of-the-treatments-matter"><i class="fa fa-check"></i><b>11.2</b> Do any of the treatments matter?</a></li>
+<li class="chapter" data-level="11.3" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#fit-a-linear-model-with-additional-constraints"><i class="fa fa-check"></i><b>11.3</b> Fit a linear model with additional constraints</a></li>
+<li class="chapter" data-level="11.4" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#general-linear-test-for-interaction"><i class="fa fa-check"></i><b>11.4</b> General Linear Test for interaction</a></li>
+<li class="chapter" data-level="11.5" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#partial-analysis-for-interaction"><i class="fa fa-check"></i><b>11.5</b> Partial analysis for interaction</a></li>
+<li class="chapter" data-level="11.6" data-path="missing-cells-in-two-way-anova.html"><a href="missing-cells-in-two-way-anova.html#tests-for-main-effects-in-the-partial-table"><i class="fa fa-check"></i><b>11.6</b> Tests for main effects in the partial table</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html"><i class="fa fa-check"></i><b>12</b> Strategy for Analysis in Two-Factor models</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#unbalanced-two-factor-experiment-chick-weight"><i class="fa fa-check"></i><b>12.1</b> Unbalanced Two-Factor Experiment: Chick Weight</a></li>
+<li class="chapter" data-level="12.2" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#example-observational-study-on-growth-hormone-deficient-children-with-empty-cell"><i class="fa fa-check"></i><b>12.2</b> Example: observational study on growth-hormone deficient children with empty cell</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#linear-model-analysis-with-extra-constraint"><i class="fa fa-check"></i><b>12.2.1</b> Linear Model analysis with extra constraint</a></li>
+<li class="chapter" data-level="12.2.2" data-path="strategy-for-analysis-in-two-factor-models.html"><a href="strategy-for-analysis-in-two-factor-models.html#partial-table-analysis"><i class="fa fa-check"></i><b>12.2.2</b> Partial Table analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html"><i class="fa fa-check"></i><b>13</b> <span class="math inline">\(2^k\)</span> Factorial Experiments</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#the-model-1"><i class="fa fa-check"></i><b>13.1</b> The Model</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#example-stress-test-study"><i class="fa fa-check"></i><b>13.1.1</b> Example: Stress Test Study</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#unreplicated-factorial-experiments"><i class="fa fa-check"></i><b>13.2</b> Unreplicated Factorial Experiments</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="k-factorial-experiments.html"><a href="k-factorial-experiments.html#example-granola-bar-experiment"><i class="fa fa-check"></i><b>13.2.1</b> Example: Granola bar experiment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="linear-regression.html"><a href="linear-regression.html"><i class="fa fa-check"></i><b>14</b> Linear Regression</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="linear-regression.html"><a href="linear-regression.html#diamonds-dataset"><i class="fa fa-check"></i><b>14.1</b> Diamonds dataset</a></li>
+<li class="chapter" data-level="14.2" data-path="linear-regression.html"><a href="linear-regression.html#checking-linearity"><i class="fa fa-check"></i><b>14.2</b> Checking Linearity</a></li>
+<li class="chapter" data-level="14.3" data-path="linear-regression.html"><a href="linear-regression.html#multicollinearity"><i class="fa fa-check"></i><b>14.3</b> Multicollinearity</a></li>
+<li class="chapter" data-level="14.4" data-path="linear-regression.html"><a href="linear-regression.html#model-with-carat-interactions"><i class="fa fa-check"></i><b>14.4</b> Model with carat interactions</a></li>
+<li class="chapter" data-level="14.5" data-path="linear-regression.html"><a href="linear-regression.html#interpreting-the-model"><i class="fa fa-check"></i><b>14.5</b> Interpreting the model</a></li>
+<li class="chapter" data-level="14.6" data-path="linear-regression.html"><a href="linear-regression.html#checking-constant-variance"><i class="fa fa-check"></i><b>14.6</b> Checking Constant Variance</a></li>
+<li class="chapter" data-level="14.7" data-path="linear-regression.html"><a href="linear-regression.html#normality"><i class="fa fa-check"></i><b>14.7</b> Normality</a></li>
+<li class="chapter" data-level="14.8" data-path="linear-regression.html"><a href="linear-regression.html#addressing-non-constant-variance-using-wls"><i class="fa fa-check"></i><b>14.8</b> Addressing non-constant variance using WLS</a></li>
+<li class="chapter" data-level="14.9" data-path="linear-regression.html"><a href="linear-regression.html#inferences-using-wls"><i class="fa fa-check"></i><b>14.9</b> Inferences using WLS</a></li>
+<li class="chapter" data-level="14.10" data-path="linear-regression.html"><a href="linear-regression.html#using-built-in-functions-in-r-for-inference"><i class="fa fa-check"></i><b>14.10</b> Using built-in functions in R for inference</a></li>
+<li class="chapter" data-level="14.11" data-path="linear-regression.html"><a href="linear-regression.html#leverage-outliers-and-influence"><i class="fa fa-check"></i><b>14.11</b> Leverage, outliers, and influence</a>
+<ul>
+<li class="chapter" data-level="14.11.1" data-path="linear-regression.html"><a href="linear-regression.html#illustrations"><i class="fa fa-check"></i><b>14.11.1</b> Illustrations</a></li>
+</ul></li>
+<li class="chapter" data-level="14.12" data-path="linear-regression.html"><a href="linear-regression.html#numerical-summaries-of-outliers-leverage-and-influence"><i class="fa fa-check"></i><b>14.12</b> Numerical summaries of outliers, leverage, and influence</a></li>
+<li class="chapter" data-level="14.13" data-path="linear-regression.html"><a href="linear-regression.html#leverage-diamonds-model"><i class="fa fa-check"></i><b>14.13</b> Leverage, Diamonds model</a>
+<ul>
+<li class="chapter" data-level="14.13.1" data-path="linear-regression.html"><a href="linear-regression.html#outliers-diamonds-model"><i class="fa fa-check"></i><b>14.13.1</b> Outliers, diamonds model</a></li>
+<li class="chapter" data-level="14.13.2" data-path="linear-regression.html"><a href="linear-regression.html#plotting-outliers-with-leverage"><i class="fa fa-check"></i><b>14.13.2</b> plotting outliers with leverage</a></li>
+<li class="chapter" data-level="14.13.3" data-path="linear-regression.html"><a href="linear-regression.html#cooks-distance-df-betas-df-fits"><i class="fa fa-check"></i><b>14.13.3</b> Cook’s distance, DF betas, DF fits</a></li>
+<li class="chapter" data-level="14.13.4" data-path="linear-regression.html"><a href="linear-regression.html#model-fit-without-high-leverage-outliers"><i class="fa fa-check"></i><b>14.13.4</b> Model fit without high leverage outliers</a></li>
+</ul></li>
+<li class="chapter" data-level="14.14" data-path="linear-regression.html"><a href="linear-regression.html#dealing-with-highly-influential-data-points"><i class="fa fa-check"></i><b>14.14</b> Dealing with highly influential data points</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="analysis-of-covariance.html"><a href="analysis-of-covariance.html"><i class="fa fa-check"></i><b>15</b> Analysis of Covariance</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="analysis-of-covariance.html"><a href="analysis-of-covariance.html#choice-of-concommitant-variable"><i class="fa fa-check"></i><b>15.1</b> Choice of “concommitant” variable</a></li>
+<li class="chapter" data-level="15.2" data-path="analysis-of-covariance.html"><a href="analysis-of-covariance.html#interaction-and-regression-slopes"><i class="fa fa-check"></i><b>15.2</b> Interaction and regression slopes</a></li>
+<li class="chapter" data-level="15.3" data-path="analysis-of-covariance.html"><a href="analysis-of-covariance.html#inference-questions"><i class="fa fa-check"></i><b>15.3</b> Inference questions</a></li>
+<li class="chapter" data-level="15.4" data-path="analysis-of-covariance.html"><a href="analysis-of-covariance.html#example"><i class="fa fa-check"></i><b>15.4</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="gauss-markov-theory.html"><a href="gauss-markov-theory.html"><i class="fa fa-check"></i><b>16</b> Gauss-Markov Theory</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="gauss-markov-theory.html"><a href="gauss-markov-theory.html#estimability"><i class="fa fa-check"></i><b>16.1</b> Estimability</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="gauss-markov-theory.html"><a href="gauss-markov-theory.html#characterizing-estimable-functions-in-one-way-anova"><i class="fa fa-check"></i><b>16.1.1</b> Characterizing estimable functions in one-way ANOVA</a></li>
+<li class="chapter" data-level="16.1.2" data-path="gauss-markov-theory.html"><a href="gauss-markov-theory.html#characterizing-estimable-functions-in-rcbd-using-the-null-space-of-x"><i class="fa fa-check"></i><b>16.1.2</b> Characterizing estimable functions in RCBD using the null space of <span class="math inline">\(X\)</span></a></li>
+<li class="chapter" data-level="16.1.3" data-path="gauss-markov-theory.html"><a href="gauss-markov-theory.html#characterizing-estimable-functions-in-rcbd-by-solving-an-inhomogeneous-equation"><i class="fa fa-check"></i><b>16.1.3</b> Characterizing estimable functions in RCBD by solving an inhomogeneous equation</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Linear Models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="gauss-markov-theory" class="section level1 hasAnchor" number="16">
+<h1><span class="header-section-number">Chapter 16</span> Gauss-Markov Theory<a href="gauss-markov-theory.html#gauss-markov-theory" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Recall the Gauss-Markov model defines a linear, stochastic relationship between an <span class="math inline">\(n\times 1\)</span> vector response <span class="math inline">\(Y\)</span> and an <span class="math inline">\(n\times p\)</span> matrix of covariates <span class="math inline">\(X\)</span> by
+<span class="math display">\[Y = X\beta + \epsilon\]</span>
+where <span class="math inline">\(\epsilon_i \stackrel{iid}{\sim} N(0,\sigma^2)\)</span>.<br><br></p>
+<p>Gauss-Markov theory is concerned with the following questions:<br>
+- Which linear functions <span class="math inline">\(c^\top \beta\)</span> are meaningful and may be estimated by the observed <span class="math inline">\((Y,X)\)</span>?
+- How should such functions be estimated?
+- Are hypotheses about such functions testable using the observed(Y,X)?
+- How may such testable hypotheses be tested? (What are the test statistics and their corresponding sampling distributions?)</p>
+<div id="estimability" class="section level2 hasAnchor" number="16.1">
+<h2><span class="header-section-number">16.1</span> Estimability<a href="gauss-markov-theory.html#estimability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In general, beyond Gauss-Markov models, whenever we use a probability distribution to model a population there is a notion of <em>identifiability</em> with respect to the parameter of that model distribution. Say <span class="math inline">\(F_\theta\)</span> is a distribution function used to model a population where <span class="math inline">\(\theta\)</span> is the parameter indexing the family of distributions. Then, we say <span class="math inline">\(\theta\)</span> is identifiable if and only if <span class="math inline">\(\theta\mapsto F_\theta\)</span> one-to-one. In other words, two different parameters <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\theta&#39;\)</span> do not correspond to the same distribution function. <br><br></p>
+<p>In the context of Gauss-Markov models the notion of identifiability boils down to:
+<span class="math display">\[\beta\text{ is identifiable if }X\beta_1\ne X\beta_2\iff \beta_1\ne \beta_2.\]</span>
+And, from the point of view of linear algebra this means that <span class="math inline">\(\beta\)</span> is estimable if and only if <span class="math inline">\(X\)</span> has full column rank—<span class="math inline">\(Xa = 0 \iff a \equiv 0\)</span>.<br><br></p>
+<p>A linear function <span class="math inline">\(c^\top \beta\)</span> is <em>estimable</em> if it can be written
+<span class="math display">\[c^\top \beta = AX\beta = AE(Y)\]</span>
+for some matrix <span class="math inline">\(A\)</span>. Statistically, we understand estimability to mean that the function in question can be represented as one or more linear combinations of mean responses. From a linear algebra point of view, a linear function <span class="math inline">\(c^\top \beta\)</span> is estimable if <span class="math inline">\(c^\top = AX\)</span> for some <span class="math inline">\(A\)</span>, which means <span class="math inline">\(c\)</span> is in the column space of <span class="math inline">\(X^\top\)</span> (row space of X).</p>
+<div id="characterizing-estimable-functions-in-one-way-anova" class="section level3 hasAnchor" number="16.1.1">
+<h3><span class="header-section-number">16.1.1</span> Characterizing estimable functions in one-way ANOVA<a href="gauss-markov-theory.html#characterizing-estimable-functions-in-one-way-anova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider a one-way ANOVA where <span class="math inline">\(n=12\)</span> with 3 groups of 4 replicates:
+<span class="math display">\[Y_{ij} = \mu + \alpha_i + \epsilon_{ij}.\]</span>
+The design matrix of the equivalent Gauss-Markov model <span class="math inline">\(Y = X\beta+\epsilon\)</span> is
+<span class="math display">\[X = \begin{bmatrix}
+1 &amp; 1 &amp; 0 &amp; 0 \\
+1 &amp; 1 &amp; 0 &amp; 0 \\
+1 &amp; 1 &amp; 0 &amp; 0 \\
+1 &amp; 1 &amp; 0 &amp; 0 \\
+1 &amp; 0 &amp; 1 &amp; 0 \\
+1 &amp; 0 &amp; 1 &amp; 0 \\
+1 &amp; 0 &amp; 1 &amp; 0 \\
+1 &amp; 0 &amp; 1 &amp; 0 \\
+1 &amp; 0 &amp; 0 &amp; 1 \\
+1 &amp; 0 &amp; 0 &amp; 1 \\
+1 &amp; 0 &amp; 0 &amp; 1 \\
+1 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix},\]</span>
+and the coefficient vector is <span class="math inline">\(\beta = (\mu,\alpha_1, \alpha_2, \alpha_3)^\top\)</span>. <br><br>
+The coefficient vector <span class="math inline">\(\beta\)</span> is <strong>NOT</strong> identifiable or estimable. To see this, first define <span class="math inline">\(\mu_i\)</span> <span class="math inline">\(i=1,2,3\)</span> to be the population means of the three groups. Then, let <span class="math inline">\(\beta_1 = (0,\mu_1, \mu_2, \mu_3)^\top\)</span> and <span class="math inline">\(\beta_2 = (\mu_3, \mu_1 - \mu_3, \mu_2 = \mu_3, 0)^\top\)</span>. Then, <span class="math inline">\(\beta_1 \ne \beta_2\)</span>, generally; in fact, <span class="math inline">\(\beta_1 - \beta_2 = (-\mu_3, \mu_3, \mu_3, \mu_3)\)</span>. But, it is easy to check that <span class="math inline">\(X\beta_1 = X\beta_2 = 4\mu_1+4\mu_2+4\mu_3\)</span>.</p>
+<p><br><br></p>
+<p>The parameter <span class="math inline">\(\mu + \alpha_1\)</span>, however, IS estimable. To see this, first write
+<span class="math display">\[\mu+\alpha_1 = c^\top \beta = (1,1,0,0)\cdot (\mu, \alpha_1, \alpha_2, \alpha_3)^\top.\]</span>
+Let <span class="math inline">\(A = (\tfrac14, \tfrac14, \tfrac14, \tfrac14, 0,0,0,0,0,0,0,0)\)</span> and note that
+<span class="math display">\[E(Y) = X\beta = (\mu+\alpha_1, \mu+\alpha_1, \mu+\alpha_1, \mu+\alpha_1, \mu+\alpha_2,\cdots, \mu+\alpha_4).\]</span>
+Therefore, <span class="math inline">\(AE(Y) = \tfrac14\sum_{j=1}^4 E(Y_{1j}) = \mu+\alpha_1\)</span>. Since we were able to find a linear combination of mean responses equal to the parameter that means the function <span class="math inline">\(c^\top \beta\)</span> is estimable.
+<br><br></p>
+<p>Last, let’s think carefully about how to characterize estimable and non-estimable functions more generally, rather than using ad-hoc methods in consideration of individual functions like those above. Recall that the definition of estimability says that <span class="math inline">\(c\)</span> is in the row space of <span class="math inline">\(X\)</span>, i.e., it is equivalent to a linear combination of rows of <span class="math inline">\(X\)</span>. That means <span class="math inline">\(X^\top y = c\)</span> for some <span class="math inline">\(y\)</span>. If there is a solution <span class="math inline">\(y\)</span> to this inhomogeneous system then <span class="math inline">\(c^\top \beta\)</span> is estimable. One way to check this condition is to investigate the null space of <span class="math inline">\(X\)</span>, which is the set of vectors <span class="math inline">\(u\)</span> such that <span class="math inline">\(Xu = 0\)</span>. If <span class="math inline">\(c\)</span> is orthogonal to any set of basis vectors spanning the null space of <span class="math inline">\(X\)</span>—denoted <span class="math inline">\(N(X)\)</span>—then <span class="math inline">\(c\)</span> is in the row space of <span class="math inline">\(X\)</span>, hence <span class="math inline">\(c^\top \beta\)</span> is estimable.<br><br></p>
+<p>Let’s apply this strategy to the one-way ANOVA example above. By inspection, we can tell that only three of the four columns in <span class="math inline">\(X\)</span> are linearly independent, for example, because the first column equals the sum of the other three. Another way to confirm this is to produce the reduced row echelon form (RREF) of <span class="math inline">\(X\)</span> via Gaussian elimination; there are only three non-zero rows in the RREF of <span class="math inline">\(X\)</span>, hence the rank of <span class="math inline">\(X\)</span> is 3. (See the R code below). Because the dimension of the row space and null space of <span class="math inline">\(X\)</span> must add to the number of columns of <span class="math inline">\(X\)</span> (the Rank + Nullity Theorem) it follows that the null space of <span class="math inline">\(X\)</span> is one-dimensional. In other words, the null space is spanned by a single vector. Using the RREF we can see that a solution to <span class="math inline">\(Xu = 0\)</span> is <span class="math inline">\(u = (1,-1,-1,-1)^\top\)</span>. Every function <span class="math inline">\(c^\top \beta\)</span> such that the rows of <span class="math inline">\(c^\top\)</span> are orthogonal to <span class="math inline">\(u\)</span> is estimable. For example, <span class="math inline">\((1,1,0,0)\cdot u = 0\)</span>; hence, <span class="math inline">\(\mu+\alpha_1\)</span> is estimable.</p>
+<div class="sourceCode" id="cb691"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb691-1"><a href="gauss-markov-theory.html#cb691-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(matlib)</span>
+<span id="cb691-2"><a href="gauss-markov-theory.html#cb691-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">12</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb691-3"><a href="gauss-markov-theory.html#cb691-3" aria-hidden="true" tabindex="-1"></a><span class="fu">echelon</span>(X)</span></code></pre></div>
+<pre><code>##       [,1] [,2] [,3] [,4]
+##  [1,]    1    0    0    1
+##  [2,]    0    1    0   -1
+##  [3,]    0    0    1   -1
+##  [4,]    0    0    0    0
+##  [5,]    0    0    0    0
+##  [6,]    0    0    0    0
+##  [7,]    0    0    0    0
+##  [8,]    0    0    0    0
+##  [9,]    0    0    0    0
+## [10,]    0    0    0    0
+## [11,]    0    0    0    0
+## [12,]    0    0    0    0</code></pre>
+<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb693-1"><a href="gauss-markov-theory.html#cb693-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Solve</span>(X, <span class="fu">matrix</span>(<span class="dv">0</span>,<span class="dv">12</span>,<span class="dv">1</span>))</span></code></pre></div>
+<pre><code>## x1       + x4  =  0 
+##   x2   - 1*x4  =  0 
+##     x3 - 1*x4  =  0 
+##             0  =  0 
+##             0  =  0 
+##             0  =  0 
+##             0  =  0 
+##             0  =  0 
+##             0  =  0 
+##             0  =  0 
+##             0  =  0 
+##             0  =  0</code></pre>
+</div>
+<div id="characterizing-estimable-functions-in-rcbd-using-the-null-space-of-x" class="section level3 hasAnchor" number="16.1.2">
+<h3><span class="header-section-number">16.1.2</span> Characterizing estimable functions in RCBD using the null space of <span class="math inline">\(X\)</span><a href="gauss-markov-theory.html#characterizing-estimable-functions-in-rcbd-using-the-null-space-of-x" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A linear model for an RCBD is
+<span class="math display">\[Y_{ij} = \mu + \alpha_i + \beta_j + \epsilon_{ij}.\]</span>
+Suppose, for example, that there are 12 observations, 4 in each of 3 blocks, each with a different treatment. Then, the design matrix may be written
+<span class="math display">\[X = \begin{bmatrix}
+1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0\\
+1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1\\
+1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0\\
+1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 1\\
+1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0\\
+1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1\\
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1
+\end{bmatrix}.\]</span>
+The rank of <span class="math inline">\(X\)</span> is 5, which can be determined by solving the system <span class="math inline">\(Xu = 0\)</span> by Gaussian elimination and observing that the RREF of <span class="math inline">\(X\)</span> contains 5 non-zero rows. The rank plus nullity theorem implies the null space is two-dimensional. Two linearly independent solutions to the homogeneous system are
+<span class="math display">\[u = (-2,1,1,1,1,1,1)^\top \text{ and } v = (-1,1,1,1,1,0,0)^\top\]</span>
+which together form a basis for <span class="math inline">\(N(X)\)</span>, the null space of <span class="math inline">\(X\)</span>. All estimable linear functions <span class="math inline">\(c^\top \beta\)</span> are such that the rows of <span class="math inline">\(c^\top\)</span> are orthogonal to both <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span>, and hence orthogonal to the null space, or, in other words, members of the row space of <span class="math inline">\(X\)</span>, denoted <span class="math inline">\(R(X)\)</span>. <br><br></p>
+<p>For examples, <span class="math inline">\(\alpha_1\)</span> is not estimable, nor is <span class="math inline">\(\mu + \alpha_1 - \alpha_2\)</span>. But, <span class="math inline">\(\mu + \alpha_1 + \tfrac12(\beta_1 + \beta_2)\)</span> is estimable. You can check that the corresponding <span class="math inline">\(c\)</span> vectors for these functions are <span class="math inline">\((0,1,0,0,0,0,0)\)</span>, <span class="math inline">\((1,1,-1,0,0,0,0)\)</span> and <span class="math inline">\((1,1,0,0,0,\tfrac12,\tfrac12)\)</span>, of which only the last is orthogonal to the null space basis found above.
+<br><br></p>
+<p>The codes below illustrate how to determine the RREF and rank of the design matrix <span class="math inline">\(X\)</span> using the package matlib in R.</p>
+<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb695-1"><a href="gauss-markov-theory.html#cb695-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(matlib)</span>
+<span id="cb695-2"><a href="gauss-markov-theory.html#cb695-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,</span>
+<span id="cb695-3"><a href="gauss-markov-theory.html#cb695-3" aria-hidden="true" tabindex="-1"></a>          <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb695-4"><a href="gauss-markov-theory.html#cb695-4" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb695-5"><a href="gauss-markov-theory.html#cb695-5" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb695-6"><a href="gauss-markov-theory.html#cb695-6" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,</span>
+<span id="cb695-7"><a href="gauss-markov-theory.html#cb695-7" aria-hidden="true" tabindex="-1"></a>          <span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,</span>
+<span id="cb695-8"><a href="gauss-markov-theory.html#cb695-8" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="dv">8</span>,<span class="dv">7</span>)</span>
+<span id="cb695-9"><a href="gauss-markov-theory.html#cb695-9" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+## [1,]    1    1    0    0    0    1    0
+## [2,]    1    1    0    0    0    0    1
+## [3,]    1    0    1    0    0    1    0
+## [4,]    1    0    1    0    0    0    1
+## [5,]    1    0    0    1    0    1    0
+## [6,]    1    0    0    1    0    0    1
+## [7,]    1    0    0    0    1    1    0
+## [8,]    1    0    0    0    1    0    1</code></pre>
+<p>The basis vectors <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> are determined by putting x6=x7=1 and x6=x7=0 in the general solution of the homogeneous system produced by the Solve function.</p>
+<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb697-1"><a href="gauss-markov-theory.html#cb697-1" aria-hidden="true" tabindex="-1"></a><span class="fu">echelon</span>(X)</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+## [1,]    1    0    0    0    1    0    1
+## [2,]    0    1    0    0   -1    0    0
+## [3,]    0    0    1    0   -1    0    0
+## [4,]    0    0    0    1   -1    0    0
+## [5,]    0    0    0    0    0    1   -1
+## [6,]    0    0    0    0    0    0    0
+## [7,]    0    0    0    0    0    0    0
+## [8,]    0    0    0    0    0    0    0</code></pre>
+<div class="sourceCode" id="cb699"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb699-1"><a href="gauss-markov-theory.html#cb699-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Solve</span>(X,<span class="fu">matrix</span>(<span class="dv">0</span>,<span class="dv">8</span>,<span class="dv">1</span>))</span></code></pre></div>
+<pre><code>## x1         + x5     + x7  =  0 
+##   x2     - 1*x5           =  0 
+##     x3   - 1*x5           =  0 
+##       x4 - 1*x5           =  0 
+##                x6 - 1*x7  =  0 
+##                        0  =  0 
+##                        0  =  0 
+##                        0  =  0</code></pre>
+<p>By solving <span class="math inline">\(Ax = 0\)</span> where A is the null space basis of <span class="math inline">\(X\)</span> we find that an estimable linear functions <span class="math inline">\(c^\top \beta\)</span> is such that each row of <span class="math inline">\(c^\top\)</span> satisfies <span class="math inline">\(c_1 = c_6+c_7\)</span> and <span class="math inline">\(c_2+c_3+c_4+c_5 = c_6+c_7\)</span>.</p>
+<div class="sourceCode" id="cb701"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb701-1"><a href="gauss-markov-theory.html#cb701-1" aria-hidden="true" tabindex="-1"></a>null.basis <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">7</span>,<span class="dv">2</span>))</span>
+<span id="cb701-2"><a href="gauss-markov-theory.html#cb701-2" aria-hidden="true" tabindex="-1"></a>null.basis</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+## [1,]   -2    1    1    1    1    1    1
+## [2,]   -1    1    1    1    1    0    0</code></pre>
+<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb703-1"><a href="gauss-markov-theory.html#cb703-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Solve</span>(null.basis, <span class="fu">matrix</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">1</span>))</span></code></pre></div>
+<pre><code>## x1                  - 1*x6 - 1*x7  =  0 
+##   x2 + x3 + x4 + x5 - 1*x6 - 1*x7  =  0</code></pre>
+</div>
+<div id="characterizing-estimable-functions-in-rcbd-by-solving-an-inhomogeneous-equation" class="section level3 hasAnchor" number="16.1.3">
+<h3><span class="header-section-number">16.1.3</span> Characterizing estimable functions in RCBD by solving an inhomogeneous equation<a href="gauss-markov-theory.html#characterizing-estimable-functions-in-rcbd-by-solving-an-inhomogeneous-equation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Recall once more that the definition of estimability says the linear function <span class="math inline">\(c^\top \beta\)</span> is estimable if and only if <span class="math inline">\(c^\top \beta = AX\beta\)</span> which means that <span class="math inline">\(c^\top = AX\)</span> or, rather that <span class="math inline">\(X^\top A^\top = c\)</span>. Now, <span class="math inline">\(X^\top\)</span> is a <span class="math inline">\(p\times n\)</span> matrix and <span class="math inline">\(c\)</span> is a <span class="math inline">\(p \times k\)</span> matrix so that <span class="math inline">\(A^\top\)</span> is a <span class="math inline">\(n\times k\)</span> matrix. From a linear algebraic point of view, estimability means that there exists a solution <span class="math inline">\(a_\ell\)</span> to <span class="math inline">\(X^\top a_\ell = c_\ell\)</span> for all <span class="math inline">\(\ell = 1, \ldots, k\)</span> where <span class="math inline">\(a_\ell\)</span> and <span class="math inline">\(c_\ell\)</span> denote the columns of <span class="math inline">\(A^\top\)</span> and <span class="math inline">\(c\)</span>, respectively. Inhomogeneous systems may be solved by Gauss-Jordan elimination on the augmented matrix <span class="math inline">\([X^\top ,\,c]\)</span>; and see the R codes below.<br><br>
+The first inhomogeneous system below is used to evaluate whether <span class="math inline">\(\mu + \alpha_1 - \alpha_2\)</span> is estimable, corresponding to <span class="math inline">\(c = (1,1,-1,0,0,0,0)\)</span>. It is not estimable, and this is reflected in the inconsistencies “0=1” in the RREF of the augmented matrix <span class="math inline">\([X, \, c]\)</span>. On the other hand, <span class="math inline">\(\mu + \alpha_1 + \tfrac12(\beta_1 + \beta_2)\)</span> is estimable, as evidenced by the solutions given to its corresponding inhomogeneous system below. For example, <span class="math inline">\(A = (0.5,0.5,0,0,0,0,0,0)\)</span> is one solution (obtained by putting x8=x7=x6=x5=x4=x3=0), but there are infinite others.</p>
+<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="gauss-markov-theory.html#cb705-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Solve</span>(<span class="fu">t</span>(X),<span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">7</span>,<span class="dv">1</span>))</span></code></pre></div>
+<pre><code>## x1     - 1*x4   - 1*x6   - 1*x8  =   1 
+##   x2     + x4     + x6     + x8  =   1 
+##     x3   + x4                    =  -1 
+##              x5   + x6           =   0 
+##                       x7   + x8  =   0 
+##                               0  =  -1 
+##                               0  =  -1</code></pre>
+<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb707-1"><a href="gauss-markov-theory.html#cb707-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Solve</span>(<span class="fu">t</span>(X),<span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,.<span class="dv">5</span>,.<span class="dv">5</span>),<span class="dv">7</span>,<span class="dv">1</span>))</span></code></pre></div>
+<pre><code>## x1     - 1*x4   - 1*x6   - 1*x8  =  0.5 
+##   x2     + x4     + x6     + x8  =  0.5 
+##     x3   + x4                    =    0 
+##              x5   + x6           =    0 
+##                       x7   + x8  =    0 
+##                               0  =    0 
+##                               0  =    0</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="analysis-of-covariance.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/15-GMTheory.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

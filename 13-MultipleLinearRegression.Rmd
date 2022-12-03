@@ -317,7 +317,7 @@ abline(my.lm1$coefficients[1], my.lm1$coefficients[2], col = 'red')
 
 ## Numerical summaries of outliers, leverage, and influence
 
-The "hat" matrix $H = X(X^\top X)^{-1}X^\top$ determines high leverage points.  To see this, note that the fitted responses are given by $\hat Y = H Y$, which are linear combinations of all the responses.  We can express $\hat Y_i$---the predicted price of the $i^{th}$ diamond---as a linear combination of the price of the $i^{th}$ diamond itself and the other $n-1$ diamonds: $\hat Y_i = h_{ii}Y_i + \sum_{i\ne j} h_{ij}Y_j$ where $h_{ij}$ is the $ij$ entry of $H$.  If we simply define leverage to be the degree to which an observed response determines its own prediction (or fitted value) then $h_{ii}$---the diagonal of $H$---defines leverage.
+The "hat" matrix $H = X(X^\top X)^{-1}X^\top$ determines high leverage points.  To see this, note that the fitted responses are given by $\hat Y = H Y$, which are linear combinations of all the responses.  We can express $\hat Y_i$---the predicted price of the $i^{th}$ diamond---as a linear combination of the price of the $i^{th}$ diamond itself and the other $n-1$ diamonds: $\hat Y_i = h_{ii}Y_i + \sum_{i\ne j} h_{ij}Y_j$ where $h_{ij}$ is the $ij$ entry of $H$.  If we simply define leverage to be the degree to which an observed response determines its own prediction (or fitted value) then $h_{ii}$---the diagonal of $H$---defines leverage. Large values of leverage are $2$ to $3$ times $(p+1)/n$.
 
 
 ```{r, echo = T, eval = T}
@@ -333,7 +333,7 @@ diag(hat.X)
 ```
 
 
-Outliers are defined by large residuals.  In multiple linear regression there is more than one way to define residuals and studentized residuals.  "Studentized" refers to normalizing residuals by the estimated standard deviation.    Internally studentized residuals include each observation in the calculation of the estimated standard deviation whereas externally studentized residuals ignore the corresponding observation when computing the estimated standard deviation for normalization.  
+Outliers are defined by large residuals.  In multiple linear regression there is more than one way to define residuals and studentized residuals.  "Studentized" refers to normalizing residuals by the estimated standard deviation.    Internally studentized residuals include each observation in the calculation of the estimated standard deviation whereas externally studentized residuals ignore the corresponding observation when computing the estimated standard deviation for normalization.  Residuals between 2 and 3 are borderline outliers, while residuals above 3 are generally considered to be outliers.  
 
 
 ```{r, echo = T, eval = T}
@@ -349,14 +349,14 @@ ext.stud.resids <- my.lm$residuals / sqrt(MSE.i * (1-h.X))
 plot(X, ext.stud.resids)
 ```
 
-An observation's *influence* can be defined by the degree to which is affects the model through $\hat\beta$ or $\hat Y$. Cook's D and DfFits measure the fit of the model, which is related to residuals and fitted/predicted values, whereas DfBetas measures the change in the fitted coefficients with or without the given observation.
+An observation's *influence* can be defined by the degree to which is affects the model through $\hat\beta$ or $\hat Y$. Cook's D and DfFits measure the fit of the model, which is related to residuals and fitted/predicted values, whereas DfBetas measures the change in the fitted coefficients with or without the given observation.  There is considerable disagreement over what constitutes a "large" value of Cook's distance.  Some practitioners use the cutoff 1, which is supported by the following argument.  The cook's distance for a single observation is a random variable distributed approximately according to an $F$ distribution with numerator and denominator degrees of freedom $p+1$ and $n$.  If we take the median of this distribution to be the cutoff for large Cook's distance, then the cutoff is approximately $\frac{n}{3n-2}\frac{3(p+1)-2}{p}\approx 1$ if $n$ is large and $p$ is moderate, but it can be substantially different from 1 otherwise.  The Cook's distance plotting function in the olsrr package uses the cutoff 4/n, which, of course, is quite different.  DfFits greater than $2\sqrt{p/n}$ and DfBetas greater than $2/\sqrt{n}$ are generally considered to be large and indicate outsized influence.  
 
 ```{r, echo = T, eval = T}
 # base r functions
 cd <- cooks.distance(my.lm)
-which(cd > 2*sqrt(2/30))
+which(cd > (30/(3*30-2))*(3*2-2)/(2))
 dfb <- dfbetas(my.lm)
-which(dfb > 2)
+which(dfb > 2/sqrt(30))
 dff <- dffits(my.lm)
 which(dff > 2*sqrt(2/30))
 
@@ -371,7 +371,6 @@ ols_plot_dffits(my.lm)
 ## Leverage, Diamonds model
 
 ```{r, echo = T, eval = T}
-
 wls <- lm(sqrt(price)~carat+cut.num+color.num+clarity.num + carat*clarity.num + carat*color.num +carat*cut.num, weights  = 1/diamonds$carat, data = diamonds)
 
 MSE.wls <- sum((wls$residuals)^2)/(nrow(diamonds)-8)
@@ -429,28 +428,31 @@ length(wls$fitted.values[abs(ext.stud.resids)>3 & leverages.lm > 0.00045])/53940
 
 ```{r, echo = T, eval = T}
 
+n<-53940
+p <- length(wls$coefficients)
+
 # base r functions
 cd <- cooks.distance(wls, weights  = 1/diamonds$carat)
-sum(cd > 3*(2/53940))
+sum(cd > (((n)/(3*n-2)) * ((3*p-2)/(p))) )
 dfb <- dfbetas(wls, weights  = 1/diamonds$carat)
-sum(abs(dfb) > 3*sqrt(2/53940))
+sum(abs(dfb) > 2*sqrt(1/n))
 dff <- dffits(wls)
-sum(abs(dff) > 3*sqrt(2/53940))
+sum(abs(dff) > 2*sqrt(p/n))
 my.dff <- ext.stud.resids*sqrt(leverages.lm/(1-leverages.lm))
-sum(my.dff > 3*sqrt(2/53940))
+sum(my.dff > 2*sqrt(p/n))
 
 plot(wls$fitted.values, ext.stud.resids)
-points(wls$fitted.values[cd > 3*(2/53940)], ext.stud.resids[cd > 3*(2/53940)], col = 'red')
+points(wls$fitted.values[cd > (((n)/(3*n-2)) * ((3*p-2)/(p)))], ext.stud.resids[cd > (((n)/(3*n-2)) * ((3*p-2)/(p)))], col = 'red')
 
 plot(wls$fitted.values, ext.stud.resids)
-points(wls$fitted.values[abs(dfb) > 3*sqrt(2/53940)], ext.stud.resids[abs(dfb) > 3*sqrt(2/53940)], col = 'red')
+points(wls$fitted.values[abs(dfb) > 2*sqrt(1/n)], ext.stud.resids[abs(dfb) > 2*sqrt(1/n)], col = 'red')
 
 plot(wls$fitted.values, ext.stud.resids)
-points(wls$fitted.values[abs(dff) > 3*sqrt(2/53940)], ext.stud.resids[abs(dff) > 3*sqrt(2/53940)], col = 'red')
+points(wls$fitted.values[abs(dff) > 2*sqrt(p/n)], ext.stud.resids[abs(dff) > 2*sqrt(p/n)], col = 'red')
 
 
 plot(wls$fitted.values, ext.stud.resids)
-points(wls$fitted.values[abs(my.dff) > 3*sqrt(2/53940)], ext.stud.resids[abs(my.dff) > 3*sqrt(2/53940)], col = 'red')
+points(wls$fitted.values[abs(my.dff) > 2*sqrt(p/n)], ext.stud.resids[abs(my.dff) > 2*sqrt(p/n)], col = 'red')
 
 ```
 

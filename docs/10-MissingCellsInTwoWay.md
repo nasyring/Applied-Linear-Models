@@ -69,13 +69,13 @@ kable(aggregate(scoville~water.lvl+sun.lvl+water.lvl*sun.lvl, data = my.data, FU
 interaction.plot(water.lvl, sun.lvl,  scoville, data = my.data)
 ```
 
-<img src="10-MissingCellsInTwoWay_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+![](10-MissingCellsInTwoWay_files/figure-epub3/unnamed-chunk-3-1.png)<!-- -->
 
 ```r
 boxplot(scoville~water.lvl+ sun.lvl, data = my.data)
 ```
 
-<img src="10-MissingCellsInTwoWay_files/figure-html/unnamed-chunk-3-2.png" width="672" />
+![](10-MissingCellsInTwoWay_files/figure-epub3/unnamed-chunk-3-2.png)<!-- -->
 
 
 ## Do any of the treatments matter?
@@ -88,7 +88,7 @@ The linear model method is slightly more challenging to implement because of the
 
 
 One way anova below.  Notice it says the treatments are not all the same; their mean responses significantly differ for at least one treatment compared to the other 7.  One approach would be to follow this test up with tests of contrasts or pairwise comparisons, corrected using Scheff\'e or Tukey.  Since the data is unbalanced, we should do these by hand.  
-<img src="10-MissingCellsInTwoWay_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+![](10-MissingCellsInTwoWay_files/figure-epub3/unnamed-chunk-4-1.png)<!-- -->
 
 
 ```r

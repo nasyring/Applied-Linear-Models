@@ -68,7 +68,7 @@ boxplot(Yield ~ Process,
         data = penicillin)
 ```
 
-<img src="06-RCBD_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+![](06-RCBD_files/figure-epub3/unnamed-chunk-3-1.png)<!-- -->
 
 Let's see what parameter estimates R produces for the penicillin data. From the output of the lm function we see that treatment A and Batch 1 are missing---these are the baseline and are reflected in the intercept estimate, which is 90.  How did R get 90?  Well, the overall sample mean is 86; the process A mean yield is 84, and the batch 1 mean yield is 92.  So, the effect of process A compared to the overall average is -2 and the effect of batch 1 compared to the overall average is +8.  This combines for +6, so we end up with a batch1+processA baseline effect of 90 = 84+6.  The rest of the effect estimates are easy to obtain as differences from this baseline.  For example, since process B has a sample mean 1 larger than A, the process B effect is 1.  And, since batch 3 has a sample mean effect 7 less than batch 1 the batch 3 effect is -7, and so on.  
 

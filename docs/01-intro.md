@@ -107,13 +107,13 @@ Common measures of dispersion include the variance and standard deviation, the r
 Plots and graphs can also be used to summarize a data set or particular observed variable.  Three plots we will use extensively in the course are the scatterplot, histogram, and quantile-quantile (qq) plot.  
 
  - For paired observations of two variables $(x_i, y_i), \,\,i = 1, \ldots, n$ a scatterplot displays $(x_i, y_i)$ in the xy-plane.  For example, see the plot of a chicken's weight versus time from the tabulated data set above.  Scatterplots are useful for assessing relationships between variables.  For example, the chick's weight increases with time, maybe in a linear or slightly quadratic fashion.
- <img src="01-intro_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+ ![](01-intro_files/figure-epub3/unnamed-chunk-2-1.png)<!-- -->
  - For a single variable a histogram summarizes the distribution of its observed values by counting the numer of observations in different intervals (buckets) of values.  Keep in mind that histograms with different choices of buckets may look very different. Check out this histogram of "Time 0" weights of all 23 chicks. 
-<img src="01-intro_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+![](01-intro_files/figure-epub3/unnamed-chunk-3-1.png)<!-- -->
 
  - A qq-plot compares the shape of a distribution of observed values to another known distribution, often the standard normal distribution.   For example, make the standardizing transformation $(x_i - \overline x) / \hat\sigma_x$ where $x_i$ is the Time 0 weight of chick $i$, $\overline x$ is the observed mean and $\hat\sigma_x$ is the observed standard deviation of those values.  Compute the $\alpha$ quantile of these values or several $\alpha$ values in $(0,1)$ along with the corresponding standard normal quantiles (z-scores).  Plot the pairs of $\alpha$ quantiles in the xy-plane.  If the standardized weights are approximately normal, then the points should lie approximately on the line $y=x$.  Note that extreme quantiles are always less reliably estimated, so it is typical for the ends of the "line" to fray up or down from the diagonal.    
 
-<img src="01-intro_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+![](01-intro_files/figure-epub3/unnamed-chunk-4-1.png)<!-- -->
 
 
 
