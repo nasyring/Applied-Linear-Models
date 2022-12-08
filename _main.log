@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2022.2.8)  3 DEC 2022 15:21
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2022.2.8)  8 DEC 2022 10:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2639,19 +2639,24 @@ Underfull \hbox (badness 2277) in paragraph at lines 7664--7664
 []\TU/lmr/bx/n/12 Characterizing estimable functions in one-way
  []
 
-[212] [213] [214] [215] [216]
+[212] [213] [214] [215] [216] [217]
+Overfull \hbox (9.7342pt too wide) detected at line 7925
+[]
+ []
+
+[218] [219] [220] [221] [222] [223]
 No file _main.bbl.
-[217] (./_main.aux)
+[224] (./_main.aux)
 Package rerunfilecheck Info: File `_main.out' has not changed.
-(rerunfilecheck)             Checksum: 2A23E3C48B812FAB3AC549089DB90AE0;15462.
+(rerunfilecheck)             Checksum: AA6BD8E3BD9B6CE9C5693733A4CD65ED;15569.
  ) 
 Here is how much of TeX's memory you used:
- 18103 strings out of 478181
- 360123 string characters out of 5852709
- 819167 words of memory out of 5000000
- 38400 multiletter control sequences out of 15000+600000
+ 18107 strings out of 478181
+ 360217 string characters out of 5852709
+ 819515 words of memory out of 5000000
+ 38404 multiletter control sequences out of 15000+600000
  478721 words of font info for 115 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  86i,10n,121p,2580b,477s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on _main.pdf (217 pages).
+Output written on _main.pdf (224 pages).

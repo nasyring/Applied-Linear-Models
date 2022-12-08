@@ -124,3 +124,7 @@ estimability
 characterizing-estimable-functions-in-one-way-anova
 characterizing-estimable-functions-in-rcbd-using-the-null-space-of-x
 characterizing-estimable-functions-in-rcbd-by-solving-an-inhomogeneous-equation
+estimation
+full-rank-estimation
+less-than-full-rank-estimation
+augmented-normal-equations

@@ -23,7 +23,7 @@
 <meta name="author" content="Nick Syring" />
 
 
-<meta name="date" content="2022-12-03" />
+<meta name="date" content="2022-12-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -342,6 +342,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16.1.2" data-path="gauss-markov-theory.html"><a href="gauss-markov-theory.html#characterizing-estimable-functions-in-rcbd-using-the-null-space-of-x"><i class="fa fa-check"></i><b>16.1.2</b> Characterizing estimable functions in RCBD using the null space of <span class="math inline">\(X\)</span></a></li>
 <li class="chapter" data-level="16.1.3" data-path="gauss-markov-theory.html"><a href="gauss-markov-theory.html#characterizing-estimable-functions-in-rcbd-by-solving-an-inhomogeneous-equation"><i class="fa fa-check"></i><b>16.1.3</b> Characterizing estimable functions in RCBD by solving an inhomogeneous equation</a></li>
 </ul></li>
+<li class="chapter" data-level="16.2" data-path="gauss-markov-theory.html"><a href="gauss-markov-theory.html#estimation"><i class="fa fa-check"></i><b>16.2</b> Estimation</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="gauss-markov-theory.html"><a href="gauss-markov-theory.html#full-rank-estimation"><i class="fa fa-check"></i><b>16.2.1</b> Full rank estimation</a></li>
+<li class="chapter" data-level="16.2.2" data-path="gauss-markov-theory.html"><a href="gauss-markov-theory.html#less-than-full-rank-estimation"><i class="fa fa-check"></i><b>16.2.2</b> Less than full rank estimation</a></li>
+<li class="chapter" data-level="16.2.3" data-path="gauss-markov-theory.html"><a href="gauss-markov-theory.html#augmented-normal-equations"><i class="fa fa-check"></i><b>16.2.3</b> Augmented normal equations</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -531,6 +537,228 @@ The first inhomogeneous system below is used to evaluate whether <span class="ma
 ##                       x7   + x8  =    0 
 ##                               0  =    0 
 ##                               0  =    0</code></pre>
+</div>
+</div>
+<div id="estimation" class="section level2 hasAnchor" number="16.2">
+<h2><span class="header-section-number">16.2</span> Estimation<a href="gauss-markov-theory.html#estimation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="full-rank-estimation" class="section level3 hasAnchor" number="16.2.1">
+<h3><span class="header-section-number">16.2.1</span> Full rank estimation<a href="gauss-markov-theory.html#full-rank-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>So far we have discussed <em>whether or not</em> a linear function <span class="math inline">\(c^\top \beta\)</span> may be estimated but not <em>how</em> to estimate it when possible. <br><br></p>
+<p>Consider a linear algebraic point of view (forget about statistics momentarily) and recall that if <span class="math inline">\(\beta\)</span> is estimable that means the <span class="math inline">\(p-\)</span>dimensional identity matrix is in the row space of <span class="math inline">\(X\)</span>, and, equivalently, that <span class="math inline">\(X\)</span> has full rank <span class="math inline">\(p\)</span>. Given <span class="math inline">\(\hat\beta\)</span> is an estimator of <span class="math inline">\(\beta\)</span> (we have not yet defined <span class="math inline">\(\hat\beta\)</span>) then <span class="math inline">\(X\hat\beta\)</span> is the natural linear predictor of <span class="math inline">\(Y\)</span>. I say it is the natural predictor because <span class="math inline">\(E(Y) = X\beta\)</span>, meaning that <span class="math inline">\(E(Y)\)</span> is in the columns space of <span class="math inline">\(X\)</span>, and it is natural to predict <span class="math inline">\(Y\)</span> by an estimate of its mean. Therefore, a natural predictor of <span class="math inline">\(Y\)</span> is a vector in the columns space of <span class="math inline">\(X\)</span>. But, which one? Again, proceeding logically, the natural choice is the vector in the columns space of <span class="math inline">\(X\)</span> that is <em>closest</em> to the observed <span class="math inline">\(Y\)</span> with respect to some measure of distance. If we choose to measure distance according to Euclidean (also called <span class="math inline">\(L_2\)</span> distance) then the resulting estimator <span class="math inline">\(\hat\beta\)</span> turns out to be the familiar OLS/least squares estimator (and the MLE).<br><br></p>
+<p>To see this, note that the Euclidean distance between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\hat\beta\)</span> is given by
+<span class="math display">\[\|Y - X\hat\beta\|_2 = \left(\sum_{i=1}^n (Y_i - x_i^\top \hat\beta)^2\right)^{1/2} = (Y - X\hat\beta)^\top (Y - X\hat\beta)\]</span>
+In order to minimize this quantity over <span class="math inline">\(\hat\beta\)</span> we differentiate w.r.t. <span class="math inline">\(\hat\beta\)</span>, set the gradient equal to zero and solve, which produces the <em>normal equations</em>
+<span class="math display">\[X^\top X\hat\beta = X^\top Y.\]</span>
+Since <span class="math inline">\(X\)</span> is full rank, so is <span class="math inline">\(X^\top X\)</span>, and, therefore, <span class="math inline">\(X^\top X\)</span> being a square matrix is also invertible with inverse <span class="math inline">\((X^\top X)^{-1}\)</span>. Left multiplying the normal equations by the inverse produces the OLS estimator
+<span class="math display">\[\hat\beta = (X^\top X)^{-1}X^\top Y.\]</span>
+Further, the predictor <span class="math inline">\(\hat Y\)</span> is <span class="math inline">\(X\hat\beta = X(X^\top X)^{-1}X^\top Y = P_x Y\)</span> where <span class="math inline">\(P_x\)</span> is the X-projection matrix, which <em>projects</em> <span class="math inline">\(n-\)</span>vectors to a p-dimensional linear subspace, that is, <span class="math inline">\(\mathbb{R}^p\)</span>, the row space of <span class="math inline">\(X\)</span>.<br><br></p>
+<p>Tying back to the definition of estimability, note that it is straightforward to verify any linear function <span class="math inline">\(c^\top \beta\)</span> is estimable when <span class="math inline">\(\hat\beta\)</span> itself is estimable. First, note an estimator is given by <span class="math inline">\(c^\top \hat\beta = c^\top (X^\top X)^{-1}X^\top Y\)</span>. Next, recall that <span class="math inline">\(\hat\beta\)</span> is unbiased, <span class="math inline">\(E(\hat\beta) = E((X^\top X)^{-1}X^\top Y) = (X^\top X)^{-1}X^\top X\beta = \beta\)</span>. Therefore,
+<span class="math display">\[E(c^\top \hat\beta) = c^\top \beta = c^\top (X^\top X)^{-1}X^\top E(Y) \]</span>
+which reveals that
+<span class="math display">\[c^\top \beta = AE(Y)\]</span>
+where <span class="math inline">\(A = c^\top (X^\top X)^{-1}X^\top\)</span>; hence, the definition of estimability is satisfied.</p>
+</div>
+<div id="less-than-full-rank-estimation" class="section level3 hasAnchor" number="16.2.2">
+<h3><span class="header-section-number">16.2.2</span> Less than full rank estimation<a href="gauss-markov-theory.html#less-than-full-rank-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When <span class="math inline">\(X\)</span> has rank <span class="math inline">\(r &lt; p\)</span> so does <span class="math inline">\(X^\top X\)</span>, and, as a result, the normal equations <span class="math inline">\(X^\top X \beta = X^\top Y\)</span> have infinite solutions. This means <span class="math inline">\(\beta\)</span> is not estimable. However, for any two solutions to the normal equations, say <span class="math inline">\(\hat\beta\)</span> and <span class="math inline">\(\tilde \beta\)</span>, their predictions are the same:
+<span class="math display">\[X\hat\beta = X\tilde \beta.\]</span>
+In other words, <span class="math inline">\(\hat Y\)</span> is <em>invariant</em> to the choice of estimate of <span class="math inline">\(\beta\)</span> so long as it is a solution to the normal equations. For a brief explanation, note that if <span class="math inline">\(\hat\beta\)</span> and <span class="math inline">\(\tilde \beta\)</span> both solve the normal equations, then <span class="math inline">\(X^\top X \hat\beta=X^\top X \tilde\beta\)</span>. Additionally, the null space of <span class="math inline">\(X^\top X\)</span> is the same as the null space of <span class="math inline">\(X\)</span>, as can be seen by the following calculation:
+<span class="math display">\[\begin{align*}
+&amp;X\beta = 0 \Rightarrow X^\top X\beta = 0 \Rightarrow N(X)\subseteq N(X^\top X)\\
+&amp; X^\top X\beta = 0 \Rightarrow \beta^\top X^\top X\beta = 0 \Rightarrow (X\beta)^\top (X\beta)=0 \Rightarrow X\beta = 0 \Rightarrow N(X^\top X)\subseteq N(X).
+\end{align*}\]</span>
+Therefore, <span class="math inline">\(X^\top X (\hat\beta - \tilde \beta) = 0\)</span> implies <span class="math inline">\(X\hat\beta = X\tilde \beta\)</span>.<br />
+<br><br>
+We have seen that predictions are invariant to the choice of estimator (choice of solution to the normal equations). This means also that functions of the predictions are invariant to the choice of estimator: including the SSE and MSE, and all partial F tests! <br><br></p>
+</div>
+<div id="augmented-normal-equations" class="section level3 hasAnchor" number="16.2.3">
+<h3><span class="header-section-number">16.2.3</span> Augmented normal equations<a href="gauss-markov-theory.html#augmented-normal-equations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Invariance is a very important property. But, given there are infinite solutions to the normal equations in the less-than-full-rank case, how do we pick a solution to use in a statistical analysis? There is a systematic way of doing so, and this method is related to the systems of constraints we considered earlier in the course.<br><br></p>
+<p>Let the <span class="math inline">\(n\times p\)</span> design matrix <span class="math inline">\(X\)</span> have rank <span class="math inline">\(r&lt;p\)</span> so that <span class="math inline">\(X^\top X\)</span> also has rank <span class="math inline">\(r\)</span>. Let <span class="math inline">\(K\)</span> specify a <span class="math inline">\((p-r)\times p\)</span> matrix of jointly non-estimable functions, i.e. every linear combination in <span class="math inline">\(K\beta\)</span> is not estimable. <span class="math inline">\(K\)</span> may be found by examining the null space of <span class="math inline">\(X\)</span>: each row vector in <span class="math inline">\(K\)</span> is not-orthogonal to every basis vector in a basis for <span class="math inline">\(N(X)\)</span>. The point is that <span class="math inline">\(K\)</span> is making up for the (<span class="math inline">\(p-r\)</span> dimensional space of) functions that are not estimable due to the lack of full rank of the model matrix. We then augment <span class="math inline">\(X\top X\)</span> by <span class="math inline">\(K\)</span> by row-binding, or stacking, <span class="math inline">\(X^\top X\)</span> on top of <span class="math inline">\(K\)</span> and solve the <em>augmented normal equations</em>
+<span class="math display">\[\begin{bmatrix} X^\top X \\ K\end{bmatrix} \beta = \begin{bmatrix} X^\top Y \\0\end{bmatrix}.\]</span>
+The augmented equations specify a set of <span class="math inline">\(p-r\)</span> constraints <span class="math inline">\(K\beta = 0\)</span> which force a unique solution to the inhomogeneous system. <br><br></p>
+<p>Below is an example of solving the augmented normal equations in the context of one-way ANOVA. Note that the specific choice of augmented rows corresponds to a baseline constraint.</p>
+<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb709-1"><a href="gauss-markov-theory.html#cb709-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(matlib)</span>
+<span id="cb709-2"><a href="gauss-markov-theory.html#cb709-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The design matrix X</span></span>
+<span id="cb709-3"><a href="gauss-markov-theory.html#cb709-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">12</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb709-4"><a href="gauss-markov-theory.html#cb709-4" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div>
+<pre><code>##       [,1] [,2] [,3] [,4]
+##  [1,]    1    1    0    0
+##  [2,]    1    1    0    0
+##  [3,]    1    1    0    0
+##  [4,]    1    1    0    0
+##  [5,]    1    0    1    0
+##  [6,]    1    0    1    0
+##  [7,]    1    0    1    0
+##  [8,]    1    0    1    0
+##  [9,]    1    0    0    1
+## [10,]    1    0    0    1
+## [11,]    1    0    0    1
+## [12,]    1    0    0    1</code></pre>
+<div class="sourceCode" id="cb711"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb711-1"><a href="gauss-markov-theory.html#cb711-1" aria-hidden="true" tabindex="-1"></a><span class="co"># X&#39;X</span></span>
+<span id="cb711-2"><a href="gauss-markov-theory.html#cb711-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(X)<span class="sc">%*%</span>X</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]   12    4    4    4
+## [2,]    4    4    0    0
+## [3,]    4    0    4    0
+## [4,]    4    0    0    4</code></pre>
+<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb713-1"><a href="gauss-markov-theory.html#cb713-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X, <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">4</span>,<span class="dv">1</span>))</span></code></pre></div>
+<pre><code>## x1       + x4  =  0 
+##   x2   - 1*x4  =  0 
+##     x3 - 1*x4  =  0 
+##             0  =  0</code></pre>
+<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb715-1"><a href="gauss-markov-theory.html#cb715-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A basis for the null space is (-1,1,1,1)</span></span>
+<span id="cb715-2"><a href="gauss-markov-theory.html#cb715-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A vector not orthogonal to this basis vector is (0,0,0,1)</span></span>
+<span id="cb715-3"><a href="gauss-markov-theory.html#cb715-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Augmented Matrix W</span></span>
+<span id="cb715-4"><a href="gauss-markov-theory.html#cb715-4" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X, <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb715-5"><a href="gauss-markov-theory.html#cb715-5" aria-hidden="true" tabindex="-1"></a>W</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]   12    4    4    4
+## [2,]    4    4    0    0
+## [3,]    4    0    4    0
+## [4,]    4    0    0    4
+## [5,]    0    0    0    1</code></pre>
+<div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb717-1"><a href="gauss-markov-theory.html#cb717-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate some response vector for illustration</span></span>
+<span id="cb717-2"><a href="gauss-markov-theory.html#cb717-2" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">12</span>,X<span class="sc">%*%</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>),<span class="dv">4</span>,<span class="dv">1</span>),<span class="dv">1</span>),<span class="dv">12</span>,<span class="dv">1</span>)</span>
+<span id="cb717-3"><a href="gauss-markov-theory.html#cb717-3" aria-hidden="true" tabindex="-1"></a>Y</span></code></pre></div>
+<pre><code>##           [,1]
+##  [1,] 1.787604
+##  [2,] 1.597521
+##  [3,] 2.171130
+##  [4,] 2.721818
+##  [5,] 2.024005
+##  [6,] 3.417575
+##  [7,] 3.248509
+##  [8,] 2.091494
+##  [9,] 3.930225
+## [10,] 5.342587
+## [11,] 4.442435
+## [12,] 4.615341</code></pre>
+<div class="sourceCode" id="cb719"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb719-1"><a href="gauss-markov-theory.html#cb719-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Denote [X&#39;Y 0]&#39; by b</span></span>
+<span id="cb719-2"><a href="gauss-markov-theory.html#cb719-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>Y,<span class="dv">0</span>)</span>
+<span id="cb719-3"><a href="gauss-markov-theory.html#cb719-3" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div>
+<pre><code>##           [,1]
+## [1,] 37.390245
+## [2,]  8.278074
+## [3,] 10.781582
+## [4,] 18.330589
+## [5,]  0.000000</code></pre>
+<div class="sourceCode" id="cb721"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb721-1"><a href="gauss-markov-theory.html#cb721-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the augmented normal equations [X&#39;X K]&#39; beta = [X&#39;Y 0]&#39;,</span></span>
+<span id="cb721-2"><a href="gauss-markov-theory.html#cb721-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and note that there is a unique solution and that beta_4 = 0</span></span>
+<span id="cb721-3"><a href="gauss-markov-theory.html#cb721-3" aria-hidden="true" tabindex="-1"></a>beta.hat <span class="ot">&lt;-</span> <span class="fu">Solve</span>(W, b)</span></code></pre></div>
+<pre><code>## x1        =   4.58264714 
+##   x2      =  -2.51312865 
+##     x3    =  -1.88725156 
+##       x4  =            0 
+##        0  =            0</code></pre>
+<p>As we have previously shown, <span class="math inline">\(K\)</span> and <span class="math inline">\(K^\top K\)</span> map to the same null space (we showed this w.r.t. the design matrix <span class="math inline">\(X\)</span>). Therefore, an equivalent set of augmented normal equations is given by</p>
+<p><span class="math display">\[\begin{bmatrix} X^\top X \\ K^\top K\end{bmatrix} \beta =\begin{bmatrix} X \\ K\end{bmatrix}^\top \begin{bmatrix} X\\ K\end{bmatrix}\beta =\begin{bmatrix} X^\top Y \\0\end{bmatrix}.\]</span></p>
+<p>Since <span class="math inline">\([X\,\,\, K]^\top\)</span> is full rank, the product is full rank and <span class="math inline">\((X^\top X + K^\top K)\)</span> has an inverse. We can alternatively write the augmented normal equations as
+<span class="math display">\[(X^\top X + K^\top K)\beta = X^\top Y,\]</span>
+and we may estimate <span class="math inline">\(\beta\)</span> by <em>constrained least squares</em>:
+<span class="math display">\[\hat\beta = (X^\top X + K^\top K)^{-1}X^\top Y\]</span></p>
+<p>Next we use this constrained least squares approach in the context of an RCBD example.</p>
+<div class="sourceCode" id="cb723"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb723-1"><a href="gauss-markov-theory.html#cb723-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(matlib)</span>
+<span id="cb723-2"><a href="gauss-markov-theory.html#cb723-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The design matrix X</span></span>
+<span id="cb723-3"><a href="gauss-markov-theory.html#cb723-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,</span>
+<span id="cb723-4"><a href="gauss-markov-theory.html#cb723-4" aria-hidden="true" tabindex="-1"></a>          <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb723-5"><a href="gauss-markov-theory.html#cb723-5" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb723-6"><a href="gauss-markov-theory.html#cb723-6" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb723-7"><a href="gauss-markov-theory.html#cb723-7" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,</span>
+<span id="cb723-8"><a href="gauss-markov-theory.html#cb723-8" aria-hidden="true" tabindex="-1"></a>          <span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,</span>
+<span id="cb723-9"><a href="gauss-markov-theory.html#cb723-9" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="dv">8</span>,<span class="dv">7</span>)</span>
+<span id="cb723-10"><a href="gauss-markov-theory.html#cb723-10" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+## [1,]    1    1    0    0    0    1    0
+## [2,]    1    1    0    0    0    0    1
+## [3,]    1    0    1    0    0    1    0
+## [4,]    1    0    1    0    0    0    1
+## [5,]    1    0    0    1    0    1    0
+## [6,]    1    0    0    1    0    0    1
+## [7,]    1    0    0    0    1    1    0
+## [8,]    1    0    0    0    1    0    1</code></pre>
+<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb725-1"><a href="gauss-markov-theory.html#cb725-1" aria-hidden="true" tabindex="-1"></a><span class="co"># X&#39;X</span></span>
+<span id="cb725-2"><a href="gauss-markov-theory.html#cb725-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(X)<span class="sc">%*%</span>X</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+## [1,]    8    2    2    2    2    4    4
+## [2,]    2    2    0    0    0    1    1
+## [3,]    2    0    2    0    0    1    1
+## [4,]    2    0    0    2    0    1    1
+## [5,]    2    0    0    0    2    1    1
+## [6,]    4    1    1    1    1    4    0
+## [7,]    4    1    1    1    1    0    4</code></pre>
+<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="gauss-markov-theory.html#cb727-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A basis for the two dimensional null space is (-2,1,1,1,1,1,1) and (-1,1,1,1,1,0,0)</span></span>
+<span id="cb727-2"><a href="gauss-markov-theory.html#cb727-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Vectors not simultaneously orthogonal to these include the baseline constraint vectors (0,0,0,0,1,0,0) and (0,0,0,0,0,0,1)</span></span>
+<span id="cb727-3"><a href="gauss-markov-theory.html#cb727-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X, <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">7</span>,<span class="dv">1</span>))</span></code></pre></div>
+<pre><code>## x1         + x5     + x7  =  0 
+##   x2     - 1*x5           =  0 
+##     x3   - 1*x5           =  0 
+##       x4 - 1*x5           =  0 
+##                x6 - 1*x7  =  0 
+##                        0  =  0 
+##                        0  =  0</code></pre>
+<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="gauss-markov-theory.html#cb729-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Augmented Matrix W</span></span>
+<span id="cb729-2"><a href="gauss-markov-theory.html#cb729-2" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X, <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb729-3"><a href="gauss-markov-theory.html#cb729-3" aria-hidden="true" tabindex="-1"></a>W</span></code></pre></div>
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+##  [1,]    8    2    2    2    2    4    4
+##  [2,]    2    2    0    0    0    1    1
+##  [3,]    2    0    2    0    0    1    1
+##  [4,]    2    0    0    2    0    1    1
+##  [5,]    2    0    0    0    2    1    1
+##  [6,]    4    1    1    1    1    4    0
+##  [7,]    4    1    1    1    1    0    4
+##  [8,]    0    0    0    0    1    0    0
+##  [9,]    0    0    0    0    0    0    1</code></pre>
+<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="gauss-markov-theory.html#cb731-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate some response vector for illustration</span></span>
+<span id="cb731-2"><a href="gauss-markov-theory.html#cb731-2" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">8</span>,X<span class="sc">%*%</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>),<span class="dv">7</span>,<span class="dv">1</span>),<span class="dv">1</span>),<span class="dv">8</span>,<span class="dv">1</span>)</span>
+<span id="cb731-3"><a href="gauss-markov-theory.html#cb731-3" aria-hidden="true" tabindex="-1"></a>Y</span></code></pre></div>
+<pre><code>##          [,1]
+## [1,] 2.233328
+## [2,] 4.286161
+## [3,] 4.173176
+## [4,] 5.260573
+## [5,] 5.449330
+## [6,] 5.488295
+## [7,] 3.063687
+## [8,] 3.984698</code></pre>
+<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="gauss-markov-theory.html#cb733-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Denote [X&#39;Y 0]&#39; by b</span></span>
+<span id="cb733-2"><a href="gauss-markov-theory.html#cb733-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>Y,<span class="dv">0</span>,<span class="dv">0</span>)</span>
+<span id="cb733-3"><a href="gauss-markov-theory.html#cb733-3" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div>
+<pre><code>##            [,1]
+##  [1,] 33.939247
+##  [2,]  6.519489
+##  [3,]  9.433749
+##  [4,] 10.937625
+##  [5,]  7.048384
+##  [6,] 14.919520
+##  [7,] 19.019727
+##  [8,]  0.000000
+##  [9,]  0.000000</code></pre>
+<div class="sourceCode" id="cb735"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb735-1"><a href="gauss-markov-theory.html#cb735-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the augmented normal equations [X&#39;X K]&#39; beta = [X&#39;Y 0]&#39;,</span></span>
+<span id="cb735-2"><a href="gauss-markov-theory.html#cb735-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and note that there is a unique solution that zeroes out one treatment and one block coefficient</span></span>
+<span id="cb735-3"><a href="gauss-markov-theory.html#cb735-3" aria-hidden="true" tabindex="-1"></a>beta.hat <span class="ot">&lt;-</span> <span class="fu">Solve</span>(W, b)</span></code></pre></div>
+<pre><code>## x1              =   4.03671803 
+##   x2            =   -0.2644476 
+##     x3          =   1.19268231 
+##       x4        =   1.94462027 
+##         x5      =            0 
+##           x6    =  -1.02505168 
+##             x7  =            0 
+##              0  =            0 
+##              0  =            0</code></pre>
+<div class="sourceCode" id="cb737"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb737-1"><a href="gauss-markov-theory.html#cb737-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternatively, compute the constrained LS estimator and check it is the same as the solution to the augmented normal equations</span></span>
+<span id="cb737-2"><a href="gauss-markov-theory.html#cb737-2" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span>  <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb737-3"><a href="gauss-markov-theory.html#cb737-3" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">t</span>(X)<span class="sc">%*%</span>X <span class="sc">+</span> <span class="fu">t</span>(K)<span class="sc">%*%</span>K</span>
+<span id="cb737-4"><a href="gauss-markov-theory.html#cb737-4" aria-hidden="true" tabindex="-1"></a><span class="fu">inv</span>(Z)<span class="sc">%*%</span><span class="fu">t</span>(X)<span class="sc">%*%</span>Y</span></code></pre></div>
+<pre><code>##            [,1]
+## [1,]  4.0367180
+## [2,] -0.2644476
+## [3,]  1.1926823
+## [4,]  1.9446203
+## [5,]  0.0000000
+## [6,] -1.0250517
+## [7,]  0.0000000</code></pre>
 
 </div>
 </div>

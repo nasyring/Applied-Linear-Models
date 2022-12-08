@@ -131,6 +131,124 @@ Solve(t(X),matrix(c(1,1,0,0,0,.5,.5),7,1))
 
 
 
+## Estimation
+
+### Full rank estimation
+
+So far we have discussed *whether or not* a linear function $c^\top \beta$ may be estimated but not *how* to estimate it when possible.  <br><br>
+
+Consider a linear algebraic point of view (forget about statistics momentarily) and recall that if $\beta$ is estimable that means the $p-$dimensional identity matrix is in the row space of $X$, and, equivalently, that $X$ has full rank $p$.  Given $\hat\beta$ is an estimator of $\beta$ (we have not yet defined $\hat\beta$) then $X\hat\beta$ is the natural linear predictor of $Y$.  I say it is the natural predictor because $E(Y) = X\beta$, meaning that $E(Y)$ is in the columns space of $X$, and it is natural to predict $Y$ by an estimate of its mean.  Therefore, a natural predictor of $Y$ is a vector in the columns space of $X$.  But, which one?  Again, proceeding logically, the natural choice is the vector in the columns space of $X$ that is *closest* to the observed $Y$ with respect to some measure of distance.  If we choose to measure distance according to Euclidean (also called $L_2$ distance) then the resulting estimator $\hat\beta$ turns out to be the familiar OLS/least squares estimator (and the MLE).<br><br>
+
+To see this, note that the Euclidean distance between $Y$ and $X\hat\beta$ is given by
+\[\|Y - X\hat\beta\|_2 = \left(\sum_{i=1}^n (Y_i - x_i^\top \hat\beta)^2\right)^{1/2} = (Y - X\hat\beta)^\top (Y - X\hat\beta)\]
+In order to minimize this quantity over $\hat\beta$ we differentiate w.r.t. $\hat\beta$, set the gradient equal to zero and solve, which produces the *normal equations*
+\[X^\top X\hat\beta = X^\top Y.\]
+Since $X$ is full rank, so is $X^\top X$, and, therefore, $X^\top X$ being a square matrix is also invertible with inverse $(X^\top X)^{-1}$.  Left multiplying the normal equations by the inverse produces the OLS estimator
+\[\hat\beta = (X^\top X)^{-1}X^\top Y.\]
+Further, the predictor $\hat Y$ is $X\hat\beta = X(X^\top X)^{-1}X^\top Y = P_x Y$ where $P_x$ is the X-projection matrix, which *projects* $n-$vectors to a p-dimensional linear subspace, that is, $\mathbb{R}^p$, the row space of $X$.<br><br>
+
+Tying back to the definition of estimability, note that it is straightforward to verify any linear function $c^\top \beta$ is estimable when $\hat\beta$ itself is estimable.  First, note an estimator is given by $c^\top \hat\beta = c^\top (X^\top X)^{-1}X^\top Y$.  Next, recall that $\hat\beta$ is unbiased, $E(\hat\beta) = E((X^\top X)^{-1}X^\top Y) = (X^\top X)^{-1}X^\top X\beta = \beta$.  Therefore,
+\[E(c^\top \hat\beta) = c^\top \beta = c^\top (X^\top X)^{-1}X^\top E(Y) \]
+which reveals that
+\[c^\top \beta = AE(Y)\]
+where $A = c^\top (X^\top X)^{-1}X^\top$; hence, the definition of estimability is satisfied.
+
+### Less than full rank estimation
+
+When $X$ has rank $r < p$ so does $X^\top X$, and, as a result, the normal equations $X^\top X \beta = X^\top Y$ have infinite solutions.  This means $\beta$ is not estimable.  However, for any two solutions to the normal equations, say $\hat\beta$ and $\tilde \beta$, their predictions are the same:
+\[X\hat\beta = X\tilde \beta.\]
+In other words, $\hat Y$ is *invariant* to the choice of estimate of $\beta$ so long as it is a solution to the normal equations.  For a brief explanation, note that if $\hat\beta$ and $\tilde \beta$ both solve the normal equations, then $X^\top X \hat\beta=X^\top X \tilde\beta$.  Additionally, the null space of $X^\top X$ is the same as the null space of $X$, as can be seen by the following calculation:
+\begin{align*}
+&X\beta = 0 \Rightarrow X^\top X\beta = 0 \Rightarrow N(X)\subseteq N(X^\top X)\\
+& X^\top X\beta = 0 \Rightarrow \beta^\top X^\top X\beta = 0 \Rightarrow (X\beta)^\top (X\beta)=0 \Rightarrow X\beta = 0 \Rightarrow N(X^\top X)\subseteq N(X).
+\end{align*}
+Therefore, $X^\top X (\hat\beta - \tilde \beta) = 0$ implies $X\hat\beta = X\tilde \beta$.  
+<br><br>
+We have seen that predictions are invariant to the choice of estimator (choice of solution to the normal equations).  This means also that functions of the predictions are invariant to the choice of estimator: including the SSE and MSE, and all partial F tests!  <br><br>
+
+### Augmented normal equations
+
+Invariance is a very important property.  But, given there are infinite solutions to the normal equations in the less-than-full-rank case, how do we pick a solution to use in a statistical analysis?  There is a systematic way of doing so, and this method is related to the systems of constraints we considered earlier in the course.<br><br>
+
+Let the $n\times p$ design matrix $X$ have rank $r<p$ so that $X^\top X$ also has rank $r$.  Let $K$ specify a $(p-r)\times p$ matrix of jointly non-estimable functions, i.e. every linear combination in $K\beta$ is not estimable.  $K$ may be found by examining the null space of $X$: each row vector in $K$ is not-orthogonal to every basis vector in a basis for $N(X)$.  The point is that $K$ is making up for the ($p-r$ dimensional space of) functions that are not estimable due to the lack of full rank of the model matrix.  We then augment $X\top X$ by $K$ by row-binding, or stacking, $X^\top X$ on top of $K$ and solve the *augmented normal equations*
+\[\begin{bmatrix} X^\top X \\ K\end{bmatrix} \beta = \begin{bmatrix} X^\top Y \\0\end{bmatrix}.\]
+The augmented equations specify a set of $p-r$ constraints $K\beta = 0$ which force a unique solution to the inhomogeneous system.  <br><br>
+
+Below is an example of solving the augmented normal equations in the context of one-way ANOVA.  Note that the specific choice of augmented rows corresponds to a baseline constraint.
+
+
+```{r, echo = T, eval = T}
+
+library(matlib)
+# The design matrix X
+X <- cbind(rep(1,12), c(1,1,1,1,0,0,0,0,0,0,0,0), c(0,0,0,0,1,1,1,1,0,0,0,0), c(0,0,0,0,0,0,0,0,1,1,1,1))
+X
+# X'X
+t(X)%*%X
+Solve(t(X)%*%X, matrix(c(0,0,0,0),4,1))
+# A basis for the null space is (-1,1,1,1)
+# A vector not orthogonal to this basis vector is (0,0,0,1)
+# Augmented Matrix W
+W <- rbind(t(X)%*%X, c(0,0,0,1))
+W
+# Generate some response vector for illustration
+Y <- matrix(rnorm(12,X%*%matrix(c(1,1,2,3),4,1),1),12,1)
+Y
+# Denote [X'Y 0]' by b
+b <- rbind(t(X)%*%Y,0)
+b
+# Solve the augmented normal equations [X'X K]' beta = [X'Y 0]',
+# and note that there is a unique solution and that beta_4 = 0
+beta.hat <- Solve(W, b)
+```
+
+As we have previously shown, $K$ and $K^\top K$ map to the same null space (we showed this w.r.t. the design matrix $X$).  Therefore, an equivalent set of augmented normal equations is given by
+
+\[\begin{bmatrix} X^\top X \\ K^\top K\end{bmatrix} \beta =\begin{bmatrix} X \\ K\end{bmatrix}^\top \begin{bmatrix} X\\ K\end{bmatrix}\beta =\begin{bmatrix} X^\top Y \\0\end{bmatrix}.\]
+
+Since $[X\,\,\, K]^\top$ is full rank, the product is full rank and $(X^\top X + K^\top K)$ has an inverse.  We can alternatively write the augmented normal equations as
+\[(X^\top X + K^\top K)\beta = X^\top Y,\]
+and we may estimate $\beta$ by *constrained least squares*:
+\[\hat\beta = (X^\top X + K^\top K)^{-1}X^\top Y\]
+
+Next we use this constrained least squares approach in the context of an RCBD example. 
+
+```{r, echo = T, eval = T}
+library(matlib)
+# The design matrix X
+X <- matrix(c(1,1,1,1,1,1,1,1,
+		  1,1,0,0,0,0,0,0,
+		  0,0,1,1,0,0,0,0,
+		  0,0,0,0,1,1,0,0,
+		  0,0,0,0,0,0,1,1,
+		  1,0,1,0,1,0,1,0,
+		  0,1,0,1,0,1,0,1),8,7)
+X
+# X'X
+t(X)%*%X
+# A basis for the two dimensional null space is (-2,1,1,1,1,1,1) and (-1,1,1,1,1,0,0)
+# Vectors not simultaneously orthogonal to these include the baseline constraint vectors (0,0,0,0,1,0,0) and (0,0,0,0,0,0,1)
+Solve(t(X)%*%X, matrix(c(0,0,0,0,0,0,0),7,1))
+# Augmented Matrix W
+W <- rbind(t(X)%*%X, c(0,0,0,0,1,0,0), c(0,0,0,0,0,0,1))
+W
+# Generate some response vector for illustration
+Y <- matrix(rnorm(8,X%*%matrix(c(1,1,2,3,1,1,2),7,1),1),8,1)
+Y
+# Denote [X'Y 0]' by b
+b <- rbind(t(X)%*%Y,0,0)
+b
+# Solve the augmented normal equations [X'X K]' beta = [X'Y 0]',
+# and note that there is a unique solution that zeroes out one treatment and one block coefficient
+beta.hat <- Solve(W, b)
+# Alternatively, compute the constrained LS estimator and check it is the same as the solution to the augmented normal equations
+K <-  rbind(c(0,0,0,0,1,0,0), c(0,0,0,0,0,0,1))
+Z <- t(X)%*%X + t(K)%*%K
+inv(Z)%*%t(X)%*%Y
+
+
+```
+
 
 
 
