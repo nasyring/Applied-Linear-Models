@@ -128,3 +128,6 @@ estimation
 full-rank-estimation
 less-than-full-rank-estimation
 augmented-normal-equations
+introduction-to-response-surface-methodology
+fractional-factorial-experiments
+an-example-fractional-factorial-experiment

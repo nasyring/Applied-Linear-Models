@@ -117,7 +117,7 @@
 
 \title{Applied Linear Models}
 \author{Nick Syring}
-\date{2022-12-08}
+\date{2023-02-15}
 
 \begin{document}
 \maketitle
@@ -1190,106 +1190,106 @@ The \(t_0\) value of \(-5.83\) is off the chart (literally). How do we interpret
 
 \begin{verbatim}
 ##        grid.delta p.value
-##   [1,]   400.0000  0.0040
-##   [2,]   410.1010  0.0035
-##   [3,]   420.2020  0.0058
-##   [4,]   430.3030  0.0068
-##   [5,]   440.4040  0.0074
-##   [6,]   450.5051  0.0092
-##   [7,]   460.6061  0.0145
-##   [8,]   470.7071  0.0152
-##   [9,]   480.8081  0.0187
-##  [10,]   490.9091  0.0250
-##  [11,]   501.0101  0.0250
-##  [12,]   511.1111  0.0324
-##  [13,]   521.2121  0.0366
-##  [14,]   531.3131  0.0432
-##  [15,]   541.4141  0.0479
-##  [16,]   551.5152  0.0626
-##  [17,]   561.6162  0.0739
-##  [18,]   571.7172  0.0845
-##  [19,]   581.8182  0.0998
-##  [20,]   591.9192  0.1159
-##  [21,]   602.0202  0.1286
-##  [22,]   612.1212  0.1506
-##  [23,]   622.2222  0.1710
-##  [24,]   632.3232  0.1876
-##  [25,]   642.4242  0.2155
-##  [26,]   652.5253  0.2413
-##  [27,]   662.6263  0.2721
-##  [28,]   672.7273  0.2934
-##  [29,]   682.8283  0.3448
-##  [30,]   692.9293  0.3833
-##  [31,]   703.0303  0.4132
-##  [32,]   713.1313  0.4650
-##  [33,]   723.2323  0.4962
-##  [34,]   733.3333  0.5510
-##  [35,]   743.4343  0.6057
-##  [36,]   753.5354  0.6555
-##  [37,]   763.6364  0.7038
-##  [38,]   773.7374  0.7521
-##  [39,]   783.8384  0.8062
-##  [40,]   793.9394  0.8612
-##  [41,]   804.0404  0.9177
-##  [42,]   814.1414  0.9777
-##  [43,]   824.2424  0.9671
-##  [44,]   834.3434  0.9021
-##  [45,]   844.4444  0.8479
-##  [46,]   854.5455  0.8001
-##  [47,]   864.6465  0.7448
-##  [48,]   874.7475  0.6884
-##  [49,]   884.8485  0.6425
+##   [1,]   400.0000  0.0041
+##   [2,]   410.1010  0.0054
+##   [3,]   420.2020  0.0043
+##   [4,]   430.3030  0.0073
+##   [5,]   440.4040  0.0090
+##   [6,]   450.5051  0.0114
+##   [7,]   460.6061  0.0118
+##   [8,]   470.7071  0.0150
+##   [9,]   480.8081  0.0186
+##  [10,]   490.9091  0.0226
+##  [11,]   501.0101  0.0267
+##  [12,]   511.1111  0.0339
+##  [13,]   521.2121  0.0378
+##  [14,]   531.3131  0.0442
+##  [15,]   541.4141  0.0537
+##  [16,]   551.5152  0.0606
+##  [17,]   561.6162  0.0733
+##  [18,]   571.7172  0.0779
+##  [19,]   581.8182  0.0940
+##  [20,]   591.9192  0.1125
+##  [21,]   602.0202  0.1301
+##  [22,]   612.1212  0.1433
+##  [23,]   622.2222  0.1726
+##  [24,]   632.3232  0.1900
+##  [25,]   642.4242  0.2136
+##  [26,]   652.5253  0.2440
+##  [27,]   662.6263  0.2763
+##  [28,]   672.7273  0.3058
+##  [29,]   682.8283  0.3441
+##  [30,]   692.9293  0.3885
+##  [31,]   703.0303  0.4233
+##  [32,]   713.1313  0.4571
+##  [33,]   723.2323  0.5044
+##  [34,]   733.3333  0.5458
+##  [35,]   743.4343  0.6007
+##  [36,]   753.5354  0.6486
+##  [37,]   763.6364  0.7040
+##  [38,]   773.7374  0.7514
+##  [39,]   783.8384  0.8120
+##  [40,]   793.9394  0.8596
+##  [41,]   804.0404  0.9202
+##  [42,]   814.1414  0.9799
+##  [43,]   824.2424  0.9654
+##  [44,]   834.3434  0.9049
+##  [45,]   844.4444  0.8506
+##  [46,]   854.5455  0.7928
+##  [47,]   864.6465  0.7421
+##  [48,]   874.7475  0.6987
+##  [49,]   884.8485  0.6333
 ##  [50,]   894.9495  0.5853
-##  [51,]   905.0505  0.5357
-##  [52,]   915.1515  0.4946
-##  [53,]   925.2525  0.4454
-##  [54,]   935.3535  0.4070
-##  [55,]   945.4545  0.3637
-##  [56,]   955.5556  0.3278
-##  [57,]   965.6566  0.3074
-##  [58,]   975.7576  0.2641
-##  [59,]   985.8586  0.2381
-##  [60,]   995.9596  0.2125
-##  [61,]  1006.0606  0.1889
-##  [62,]  1016.1616  0.1650
-##  [63,]  1026.2626  0.1435
-##  [64,]  1036.3636  0.1231
-##  [65,]  1046.4646  0.1121
-##  [66,]  1056.5657  0.0940
-##  [67,]  1066.6667  0.0801
-##  [68,]  1076.7677  0.0686
-##  [69,]  1086.8687  0.0610
-##  [70,]  1096.9697  0.0522
-##  [71,]  1107.0707  0.0417
-##  [72,]  1117.1717  0.0353
-##  [73,]  1127.2727  0.0317
-##  [74,]  1137.3737  0.0253
-##  [75,]  1147.4747  0.0208
-##  [76,]  1157.5758  0.0172
-##  [77,]  1167.6768  0.0133
-##  [78,]  1177.7778  0.0132
-##  [79,]  1187.8788  0.0091
-##  [80,]  1197.9798  0.0097
-##  [81,]  1208.0808  0.0068
-##  [82,]  1218.1818  0.0051
-##  [83,]  1228.2828  0.0036
-##  [84,]  1238.3838  0.0040
-##  [85,]  1248.4848  0.0025
-##  [86,]  1258.5859  0.0025
-##  [87,]  1268.6869  0.0018
-##  [88,]  1278.7879  0.0011
-##  [89,]  1288.8889  0.0008
-##  [90,]  1298.9899  0.0007
+##  [51,]   905.0505  0.5326
+##  [52,]   915.1515  0.4974
+##  [53,]   925.2525  0.4525
+##  [54,]   935.3535  0.4100
+##  [55,]   945.4545  0.3630
+##  [56,]   955.5556  0.3349
+##  [57,]   965.6566  0.2920
+##  [58,]   975.7576  0.2617
+##  [59,]   985.8586  0.2440
+##  [60,]   995.9596  0.2051
+##  [61,]  1006.0606  0.1865
+##  [62,]  1016.1616  0.1566
+##  [63,]  1026.2626  0.1405
+##  [64,]  1036.3636  0.1290
+##  [65,]  1046.4646  0.1107
+##  [66,]  1056.5657  0.0967
+##  [67,]  1066.6667  0.0793
+##  [68,]  1076.7677  0.0732
+##  [69,]  1086.8687  0.0620
+##  [70,]  1096.9697  0.0535
+##  [71,]  1107.0707  0.0423
+##  [72,]  1117.1717  0.0352
+##  [73,]  1127.2727  0.0293
+##  [74,]  1137.3737  0.0275
+##  [75,]  1147.4747  0.0216
+##  [76,]  1157.5758  0.0181
+##  [77,]  1167.6768  0.0144
+##  [78,]  1177.7778  0.0150
+##  [79,]  1187.8788  0.0122
+##  [80,]  1197.9798  0.0077
+##  [81,]  1208.0808  0.0064
+##  [82,]  1218.1818  0.0053
+##  [83,]  1228.2828  0.0046
+##  [84,]  1238.3838  0.0043
+##  [85,]  1248.4848  0.0026
+##  [86,]  1258.5859  0.0024
+##  [87,]  1268.6869  0.0020
+##  [88,]  1278.7879  0.0025
+##  [89,]  1288.8889  0.0013
+##  [90,]  1298.9899  0.0009
 ##  [91,]  1309.0909  0.0008
-##  [92,]  1319.1919  0.0007
-##  [93,]  1329.2929  0.0007
-##  [94,]  1339.3939  0.0005
-##  [95,]  1349.4949  0.0003
-##  [96,]  1359.5960  0.0002
+##  [92,]  1319.1919  0.0009
+##  [93,]  1329.2929  0.0002
+##  [94,]  1339.3939  0.0006
+##  [95,]  1349.4949  0.0006
+##  [96,]  1359.5960  0.0003
 ##  [97,]  1369.6970  0.0001
-##  [98,]  1379.7980  0.0001
-##  [99,]  1389.8990  0.0003
-## [100,]  1400.0000  0.0000
+##  [98,]  1379.7980  0.0004
+##  [99,]  1389.8990  0.0002
+## [100,]  1400.0000  0.0001
 \end{verbatim}
 
 \begin{Shaded}
@@ -1333,7 +1333,7 @@ Sometimes, when residuals/responses appear non-normal, a particular transformati
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.9876929
+## [1] 1.133157
 \end{verbatim}
 
 \begin{Shaded}
@@ -1343,7 +1343,7 @@ Sometimes, when residuals/responses appear non-normal, a particular transformati
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.01238348
+## [1] 0.1250075
 \end{verbatim}
 
 \begin{Shaded}
@@ -1353,7 +1353,7 @@ Sometimes, when residuals/responses appear non-normal, a particular transformati
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.01238348
+## [1] 0.1250075
 \end{verbatim}
 
 Of course, the log-transform can only be applied to positive data values, and is meant specifically for use with positively skewed data. Since the log transform is monotonic increasing it preserves medians. That is, the median of the log-transformed values is equal to the log of the median of the original values. This is helpful for interpreting the results of tests concerning the mean of the log-transformed values.
@@ -8019,18 +8019,18 @@ Below is an example of solving the augmented normal equations in the context of 
 
 \begin{verbatim}
 ##           [,1]
-##  [1,] 1.749651
-##  [2,] 3.143667
-##  [3,] 1.375228
-##  [4,] 1.491133
-##  [5,] 3.732428
-##  [6,] 1.936267
-##  [7,] 2.763889
-##  [8,] 4.701639
-##  [9,] 5.390335
-## [10,] 4.183525
-## [11,] 4.468599
-## [12,] 6.105365
+##  [1,] 2.497126
+##  [2,] 2.700261
+##  [3,] 1.966949
+##  [4,] 2.292415
+##  [5,] 2.376570
+##  [6,] 1.918402
+##  [7,] 3.377891
+##  [8,] 3.495055
+##  [9,] 3.120178
+## [10,] 4.635398
+## [11,] 4.891576
+## [12,] 4.505754
 \end{verbatim}
 
 \begin{Shaded}
@@ -8043,10 +8043,10 @@ Below is an example of solving the augmented normal equations in the context of 
 
 \begin{verbatim}
 ##          [,1]
-## [1,] 41.04173
-## [2,]  7.75968
-## [3,] 13.13422
-## [4,] 20.14782
+## [1,] 37.77757
+## [2,]  9.45675
+## [3,] 11.16792
+## [4,] 17.15291
 ## [5,]  0.00000
 \end{verbatim}
 
@@ -8059,9 +8059,9 @@ Below is an example of solving the augmented normal equations in the context of 
 \end{Shaded}
 
 \begin{verbatim}
-## x1        =   5.03695611 
-##   x2      =  -3.09703622 
-##     x3    =  -1.75340073 
+## x1        =    4.2882264 
+##   x2      =    -1.924039 
+##     x3    =  -1.49624702 
 ##       x4  =            0 
 ##        0  =            0
 \end{verbatim}
@@ -8171,14 +8171,14 @@ Next we use this constrained least squares approach in the context of an RCBD ex
 
 \begin{verbatim}
 ##          [,1]
-## [1,] 2.927999
-## [2,] 3.778456
-## [3,] 3.513548
-## [4,] 3.696006
-## [5,] 5.986762
-## [6,] 7.381496
-## [7,] 1.650067
-## [8,] 3.107490
+## [1,] 1.187337
+## [2,] 4.451954
+## [3,] 3.790146
+## [4,] 5.055502
+## [5,] 5.058057
+## [6,] 6.096309
+## [7,] 2.990280
+## [8,] 3.016417
 \end{verbatim}
 
 \begin{Shaded}
@@ -8191,13 +8191,13 @@ Next we use this constrained least squares approach in the context of an RCBD ex
 
 \begin{verbatim}
 ##            [,1]
-##  [1,] 32.041823
-##  [2,]  6.706454
-##  [3,]  7.209553
-##  [4,] 13.368258
-##  [5,]  4.757557
-##  [6,] 14.078376
-##  [7,] 17.963447
+##  [1,] 31.646002
+##  [2,]  5.639291
+##  [3,]  8.845648
+##  [4,] 11.154366
+##  [5,]  6.006696
+##  [6,] 13.025820
+##  [7,] 18.620182
 ##  [8,]  0.000000
 ##  [9,]  0.000000
 \end{verbatim}
@@ -8211,12 +8211,12 @@ Next we use this constrained least squares approach in the context of an RCBD ex
 \end{Shaded}
 
 \begin{verbatim}
-## x1              =   2.86441229 
-##   x2            =   0.97444879 
-##     x3          =   1.22599831 
-##       x4        =   4.30535058 
+## x1              =   3.70264345 
+##   x2            =   -0.1837026 
+##     x3          =   1.41947556 
+##       x4        =   2.57383498 
 ##         x5      =            0 
-##           x6    =  -0.97126779 
+##           x6    =  -1.39859044 
 ##             x7  =            0 
 ##              0  =            0 
 ##              0  =            0
@@ -8233,13 +8233,150 @@ Next we use this constrained least squares approach in the context of an RCBD ex
 
 \begin{verbatim}
 ##            [,1]
-## [1,]  2.8644123
-## [2,]  0.9744488
-## [3,]  1.2259983
-## [4,]  4.3053506
+## [1,]  3.7026435
+## [2,] -0.1837026
+## [3,]  1.4194756
+## [4,]  2.5738350
 ## [5,]  0.0000000
-## [6,] -0.9712678
+## [6,] -1.3985904
 ## [7,]  0.0000000
+\end{verbatim}
+
+\hypertarget{introduction-to-response-surface-methodology}{%
+\chapter{Introduction to Response Surface Methodology}\label{introduction-to-response-surface-methodology}}
+
+Response surface methods are used to improve a product or process by repeated experimentation. In many applications, several controllable input variables affect the response/output of an industrial, manufacturing, or other process.
+
+The sensitivity of the response to individual inputs may not be well understood, so \emph{screening experiments}---often in the form of fractional factorial experiments---are used to identify the most important inputs.
+
+Once the set of most important inputs has been identified additional experiments are performed to assess main effects or main effects with two-way interactions. These are often \(2^k\) factorial experiments, possibly with center-point replicates to estimate error variance and curvature. The purpose of these experiments is very often to assess the response variable's \emph{direction of steepest ascent} with respect to the inputs. This can be used to propose new input variable values for follow-up experimental runs. This process is an experimental/stochastic version of Newton's method for maximizing (or minimizing) a function, which is, in this case, the unknown regression function relating the inputs to the response.
+
+After a few iterations of steepest ascent, it is often advisable to conduct a new experiment with center point at the last iteration and using a design allowing for the fitting of a quadratic model in the inputs. A quadratic model allows one to determine the curvature of the regression function---which, in the case of two inputs is a surface, hence \emph{response surface}---and try to identify a local maximum response.
+
+The whole process is designed to identify a new region of the input space where better responses are likely to be realized. Many issues may arise to further complicate this endeavor, including sample size constraints, input space constraints, and practical difficulties randomizing trials.
+
+We will discuss a few important concepts related to response surface methodology below, including fractional factorial experiments, steepest ascent, and quadratic models.
+
+\hypertarget{fractional-factorial-experiments}{%
+\section{Fractional factorial experiments}\label{fractional-factorial-experiments}}
+
+Factorial \(2^k\) experiments contain many parameters---in fact, a saturated model consists of \(\sum_{i=1}^k {k\choose i}\) parameters. Without a large sample size, it is not possible to fit all parameters in a factorial experiment with a large number of inputs \(k\).
+
+Instead, we often assume most higher-order interactions, say three-way and above, are exactly zero. In practice, this means we assume the main effects and perhaps some interactions explain most of the variation in response.
+
+A common way of reducing the number of parameters in a factorial experiment is to consider a fractional factorial. The one-half fraction experiment is a \(2^{k-1}\) experiment which can be generated by explicitly confounding the highest order interaction with the intercept. For example, consider the following table depicting the design of a \(2^3\) factorial experiment:
+
+\begin{longtable}[]{@{}llllllll@{}}
+\toprule()
+Intercept & A & B & C & AB & AC & BC & ABC \\
+\midrule()
+\endhead
+1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+1 & 1 & 1 & -1 & 1 & -1 & -1 & -1 \\
+1 & 1 & -1 & 1 & -1 & 1 & -1 & -1 \\
+1 & 1 & -1 & -1 & -1 & -1 & 1 & 1 \\
+1 & -1 & 1 & 1 & -1 & -1 & 1 & -1 \\
+1 & -1 & 1 & -1 & -1 & 1 & -1 & 1 \\
+1 & -1 & -1 & 1 & 1 & -1 & -1 & 1 \\
+1 & -1 & -1 & -1 & 1 & 1 & 1 & -1 \\
+\bottomrule()
+\end{longtable}
+
+The saturated model for a \(2^3\) experiment contains 8 parameters including the intercept. A one-half fraction fractional factorial experiment may be generated by selecting the rows that confound the intercept with the three-way interaction. In this example those are the rows 1,4,6,7. The following sub-table shows this fractional factorial design:
+
+\begin{longtable}[]{@{}llllllll@{}}
+\toprule()
+Intercept & A & B & C & AB & AC & BC & ABC \\
+\midrule()
+\endhead
+1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+1 & 1 & -1 & -1 & -1 & -1 & 1 & 1 \\
+1 & -1 & 1 & -1 & -1 & 1 & -1 & 1 \\
+1 & -1 & -1 & 1 & 1 & -1 & -1 & 1 \\
+\bottomrule()
+\end{longtable}
+
+Generators can be described by generator equations. This design has equation \(I = ABC\). Such generator equations come in handy for exploring the consequences of fractional factorial designs. For example, since A multiplied by A elementwise will always be a vector of ones, we see that \(AI = AABC\), and, simplifying, \(A = BC\), which can be verified by looking at the sub-table. A consequence of the fractional factorial design is that the main effect A is confounded with the two-way interaction BC. In effect, this means that when the main effects model (without interaction) is fit to the data, the estimate of the main effect of A is actually an estimate of \(A+BC\), the main effect plus the BC two-way interaction effect.
+
+The price paid by fractional factorial designs is the confounding of effects.
+
+The \emph{resolution} of a fractional factorial design describes the way it contributes to confounding. A design is called resolution R if no p-factor effect is confounded with any R-p-1 factor effect. A design that is resolution 3 has no main effect confounded by another main effect, but main effects are confounded with two-way interactions. A resolution 4 design has no main effect confounded with another main effect or a two-way interaction, but two-way effects may be confounded. And, resolution 5 designs have main effects and two-way interactions free of confounding with other main effects and two-way interactions.
+
+Of course, there is nothing stopping use from considering even smaller fractions of a full factorial experiment. For example, we may generate a \(2^{k-2}\) design---a one-quarter fraction---using two generators, say \(P\) and \(Q\), representing two effects. The generating equations are \(I=P=Q=PQ\). for example, for a \(2^{6-2}\) design we may choose the four-way interactions ABCE and BCDF as generators. Then \(I=ABCE=BCDF = AEDF\) and the resulting design is resolution 4. Note the choices here are not arbitrary; for example, a bad choice would be \(I = ABCD=BCDE\) because \(ABCDBCDE = AE\) and, as a result, we have confounded main effects A and E!
+
+\hypertarget{an-example-fractional-factorial-experiment}{%
+\subsection{An example fractional factorial experiment}\label{an-example-fractional-factorial-experiment}}
+
+The following experiment comes from an industrial application of injection molding. Poor process quality may be caused by several factors including mold temperature (A), screw speed (B), holding time (C), cycle time (D), gate size (E), and holding pressure (F). A fractional factorial \(2^{6-2}\) experiment is used based on the belief that only main effects and two-way interactions are likely to be present. Four center point replicates are used to estimate error and test for model curvature. After dropping insignificant effects, the final model contains only A, B, and AB. F tests do not indicate model curvature or lack of fit.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{)}
+\NormalTok{B }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{)}
+\NormalTok{C }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{)}
+\NormalTok{D }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{)}
+\NormalTok{E }\OtherTok{\textless{}{-}}\NormalTok{ A}\SpecialCharTok{*}\NormalTok{B}\SpecialCharTok{*}\NormalTok{C}
+\NormalTok{F }\OtherTok{\textless{}{-}}\NormalTok{ B}\SpecialCharTok{*}\NormalTok{C}\SpecialCharTok{*}\NormalTok{D}
+\NormalTok{Y }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{6}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{32}\NormalTok{,}\DecValTok{60}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{15}\NormalTok{,}\DecValTok{26}\NormalTok{,}\DecValTok{60}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{34}\NormalTok{,}\DecValTok{60}\NormalTok{,}\DecValTok{16}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{37}\NormalTok{,}\DecValTok{52}\NormalTok{,}\DecValTok{29}\NormalTok{,}\DecValTok{34}\NormalTok{,}\DecValTok{26}\NormalTok{,}\DecValTok{30}\NormalTok{)}
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(Y,A,B,C,D,E,F)}
+
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{aov}\NormalTok{(Y}\SpecialCharTok{\textasciitilde{}}\NormalTok{A}\SpecialCharTok{+}\NormalTok{B}\SpecialCharTok{+}\NormalTok{A}\SpecialCharTok{*}\NormalTok{B, }\AttributeTok{data =}\NormalTok{ data)}
+\FunctionTok{anova}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Y
+##           Df Sum Sq Mean Sq F value    Pr(>F)    
+## A          1  770.1   770.1  41.000 8.742e-06 ***
+## B          1 5076.6  5076.6 270.288 1.917e-11 ***
+## A:B        1  564.1   564.1  30.032 5.037e-05 ***
+## Residuals 16  300.5    18.8                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# test for curvature}
+\NormalTok{mean.center }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(Y[}\DecValTok{17}\SpecialCharTok{:}\DecValTok{20}\NormalTok{])}
+\NormalTok{SS.center }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{((Y[}\DecValTok{17}\SpecialCharTok{:}\DecValTok{20}\NormalTok{] }\SpecialCharTok{{-}}\NormalTok{ mean.center)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{MS.center }\OtherTok{\textless{}{-}}\NormalTok{ SS.center }\SpecialCharTok{/} \DecValTok{3}
+\NormalTok{mean.factorial }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(Y[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{16}\NormalTok{])}
+\NormalTok{SS.factorial }\OtherTok{\textless{}{-}} \DecValTok{16}\SpecialCharTok{*}\DecValTok{4}\SpecialCharTok{*}\NormalTok{((mean.center }\SpecialCharTok{{-}}\NormalTok{ mean.factorial)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\DecValTok{20}
+\NormalTok{F }\OtherTok{\textless{}{-}}\NormalTok{ SS.factorial }\SpecialCharTok{/}\NormalTok{ MS.center}
+\DecValTok{1}\SpecialCharTok{{-}}\FunctionTok{pf}\NormalTok{(F,}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{) }\CommentTok{\# rejection is bad, indicates curvature}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.2786071
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pure.error }\OtherTok{\textless{}{-}}\NormalTok{ MS.center}
+\NormalTok{pure.error}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10.91667
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Test for lack of Fit}
+\NormalTok{LoF }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(fit}\SpecialCharTok{$}\NormalTok{residuals}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{{-}}\NormalTok{SS.factorial}\SpecialCharTok{{-}}\NormalTok{ SS.center}
+\NormalTok{F.LoF }\OtherTok{\textless{}{-}}\NormalTok{ (LoF}\SpecialCharTok{/}\NormalTok{(}\DecValTok{15{-}3}\NormalTok{))}\SpecialCharTok{/}\NormalTok{MS.center}
+\DecValTok{1}\SpecialCharTok{{-}}\FunctionTok{pf}\NormalTok{(F.LoF,}\DecValTok{12}\NormalTok{,}\DecValTok{3}\NormalTok{) }\CommentTok{\# rejection is bad, indicates model does not fit}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.3276994
 \end{verbatim}
 
   \bibliography{book.bib,packages.bib}

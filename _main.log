@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2022.2.8)  8 DEC 2022 10:58
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2022.2.8)  15 FEB 2023 10:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -719,15 +719,15 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 (Font)              scaled to size 6.99925pt on input line 3.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 (Font)              scaled to size 4.99947pt on input line 3.
-[3] [4])
+[3] [4] [5])
 \tf@toc=\write5
 \openout5 = `_main.toc'.
 
-[5] [6
-
-]
+[6]
 Chapter 1.
-[7] [8
+[7
+
+] [8
 
 ]
 Chapter 2.
@@ -2644,19 +2644,33 @@ Overfull \hbox (9.7342pt too wide) detected at line 7925
 []
  []
 
-[218] [219] [220] [221] [222] [223]
+[218] [219] [220] [221] [222] [223] [224]
+Chapter 17.
+[225
+
+]
+Overfull \hbox (31.80562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 226 \TU/lmr/m/sl/10 CHAPTER 17.  INTRODUCTION TO RESPONSE SURFACE METHODOLOGY
+ []
+
+[226] [227]
 No file _main.bbl.
-[224] (./_main.aux)
+
+Overfull \hbox (31.80562pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 228 \TU/lmr/m/sl/10 CHAPTER 17.  INTRODUCTION TO RESPONSE SURFACE METHODOLOGY
+ []
+
+[228] (./_main.aux)
 Package rerunfilecheck Info: File `_main.out' has not changed.
-(rerunfilecheck)             Checksum: AA6BD8E3BD9B6CE9C5693733A4CD65ED;15569.
+(rerunfilecheck)             Checksum: 8C3C80B8CA9DA1214DE00EB8AEB34106;16069.
  ) 
 Here is how much of TeX's memory you used:
- 18107 strings out of 478181
- 360217 string characters out of 5852709
- 819515 words of memory out of 5000000
- 38404 multiletter control sequences out of 15000+600000
+ 18113 strings out of 478181
+ 360362 string characters out of 5852709
+ 820522 words of memory out of 5000000
+ 38410 multiletter control sequences out of 15000+600000
  478721 words of font info for 115 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  86i,10n,121p,2580b,477s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on _main.pdf (224 pages).
+Output written on _main.pdf (228 pages).

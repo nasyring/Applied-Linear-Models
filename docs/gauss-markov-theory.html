@@ -23,7 +23,7 @@
 <meta name="author" content="Nick Syring" />
 
 
-<meta name="date" content="2022-12-08" />
+<meta name="date" content="2023-02-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="analysis-of-covariance.html"/>
-
+<link rel="next" href="introduction-to-response-surface-methodology.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -349,6 +349,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16.2.3" data-path="gauss-markov-theory.html"><a href="gauss-markov-theory.html#augmented-normal-equations"><i class="fa fa-check"></i><b>16.2.3</b> Augmented normal equations</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="17" data-path="introduction-to-response-surface-methodology.html"><a href="introduction-to-response-surface-methodology.html"><i class="fa fa-check"></i><b>17</b> Introduction to Response Surface Methodology</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="introduction-to-response-surface-methodology.html"><a href="introduction-to-response-surface-methodology.html#fractional-factorial-experiments"><i class="fa fa-check"></i><b>17.1</b> Fractional factorial experiments</a>
+<ul>
+<li class="chapter" data-level="17.1.1" data-path="introduction-to-response-surface-methodology.html"><a href="introduction-to-response-surface-methodology.html#an-example-fractional-factorial-experiment"><i class="fa fa-check"></i><b>17.1.1</b> An example fractional factorial experiment</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -621,34 +628,34 @@ The augmented equations specify a set of <span class="math inline">\(p-r\)</span
 <div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb717-1"><a href="gauss-markov-theory.html#cb717-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate some response vector for illustration</span></span>
 <span id="cb717-2"><a href="gauss-markov-theory.html#cb717-2" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">12</span>,X<span class="sc">%*%</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>),<span class="dv">4</span>,<span class="dv">1</span>),<span class="dv">1</span>),<span class="dv">12</span>,<span class="dv">1</span>)</span>
 <span id="cb717-3"><a href="gauss-markov-theory.html#cb717-3" aria-hidden="true" tabindex="-1"></a>Y</span></code></pre></div>
-<pre><code>##           [,1]
-##  [1,] 1.787604
-##  [2,] 1.597521
-##  [3,] 2.171130
-##  [4,] 2.721818
-##  [5,] 2.024005
-##  [6,] 3.417575
-##  [7,] 3.248509
-##  [8,] 2.091494
-##  [9,] 3.930225
-## [10,] 5.342587
-## [11,] 4.442435
-## [12,] 4.615341</code></pre>
+<pre><code>##            [,1]
+##  [1,] 2.0870653
+##  [2,] 0.9785498
+##  [3,] 1.3618200
+##  [4,] 2.3916477
+##  [5,] 3.6674569
+##  [6,] 2.9305694
+##  [7,] 4.1751765
+##  [8,] 1.6395536
+##  [9,] 3.7195831
+## [10,] 3.6668281
+## [11,] 3.7430628
+## [12,] 3.8501350</code></pre>
 <div class="sourceCode" id="cb719"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb719-1"><a href="gauss-markov-theory.html#cb719-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Denote [X&#39;Y 0]&#39; by b</span></span>
 <span id="cb719-2"><a href="gauss-markov-theory.html#cb719-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>Y,<span class="dv">0</span>)</span>
 <span id="cb719-3"><a href="gauss-markov-theory.html#cb719-3" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div>
 <pre><code>##           [,1]
-## [1,] 37.390245
-## [2,]  8.278074
-## [3,] 10.781582
-## [4,] 18.330589
+## [1,] 34.211448
+## [2,]  6.819083
+## [3,] 12.412756
+## [4,] 14.979609
 ## [5,]  0.000000</code></pre>
 <div class="sourceCode" id="cb721"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb721-1"><a href="gauss-markov-theory.html#cb721-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the augmented normal equations [X&#39;X K]&#39; beta = [X&#39;Y 0]&#39;,</span></span>
 <span id="cb721-2"><a href="gauss-markov-theory.html#cb721-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and note that there is a unique solution and that beta_4 = 0</span></span>
 <span id="cb721-3"><a href="gauss-markov-theory.html#cb721-3" aria-hidden="true" tabindex="-1"></a>beta.hat <span class="ot">&lt;-</span> <span class="fu">Solve</span>(W, b)</span></code></pre></div>
-<pre><code>## x1        =   4.58264714 
-##   x2      =  -2.51312865 
-##     x3    =  -1.88725156 
+<pre><code>## x1        =   3.74490224 
+##   x2      =  -2.04013152 
+##     x3    =  -0.64171315 
 ##       x4  =            0 
 ##        0  =            0</code></pre>
 <p>As we have previously shown, <span class="math inline">\(K\)</span> and <span class="math inline">\(K^\top K\)</span> map to the same null space (we showed this w.r.t. the design matrix <span class="math inline">\(X\)</span>). Therefore, an equivalent set of augmented normal equations is given by</p>
@@ -714,36 +721,36 @@ and we may estimate <span class="math inline">\(\beta\)</span> by <em>constraine
 <span id="cb731-2"><a href="gauss-markov-theory.html#cb731-2" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">8</span>,X<span class="sc">%*%</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>),<span class="dv">7</span>,<span class="dv">1</span>),<span class="dv">1</span>),<span class="dv">8</span>,<span class="dv">1</span>)</span>
 <span id="cb731-3"><a href="gauss-markov-theory.html#cb731-3" aria-hidden="true" tabindex="-1"></a>Y</span></code></pre></div>
 <pre><code>##          [,1]
-## [1,] 2.233328
-## [2,] 4.286161
-## [3,] 4.173176
-## [4,] 5.260573
-## [5,] 5.449330
-## [6,] 5.488295
-## [7,] 3.063687
-## [8,] 3.984698</code></pre>
+## [1,] 3.345321
+## [2,] 3.133566
+## [3,] 3.479170
+## [4,] 5.330375
+## [5,] 5.469973
+## [6,] 5.466072
+## [7,] 3.078272
+## [8,] 4.901349</code></pre>
 <div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="gauss-markov-theory.html#cb733-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Denote [X&#39;Y 0]&#39; by b</span></span>
 <span id="cb733-2"><a href="gauss-markov-theory.html#cb733-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>Y,<span class="dv">0</span>,<span class="dv">0</span>)</span>
 <span id="cb733-3"><a href="gauss-markov-theory.html#cb733-3" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div>
 <pre><code>##            [,1]
-##  [1,] 33.939247
-##  [2,]  6.519489
-##  [3,]  9.433749
-##  [4,] 10.937625
-##  [5,]  7.048384
-##  [6,] 14.919520
-##  [7,] 19.019727
+##  [1,] 34.204098
+##  [2,]  6.478887
+##  [3,]  8.809546
+##  [4,] 10.936045
+##  [5,]  7.979621
+##  [6,] 15.372736
+##  [7,] 18.831362
 ##  [8,]  0.000000
 ##  [9,]  0.000000</code></pre>
 <div class="sourceCode" id="cb735"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb735-1"><a href="gauss-markov-theory.html#cb735-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the augmented normal equations [X&#39;X K]&#39; beta = [X&#39;Y 0]&#39;,</span></span>
 <span id="cb735-2"><a href="gauss-markov-theory.html#cb735-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and note that there is a unique solution that zeroes out one treatment and one block coefficient</span></span>
 <span id="cb735-3"><a href="gauss-markov-theory.html#cb735-3" aria-hidden="true" tabindex="-1"></a>beta.hat <span class="ot">&lt;-</span> <span class="fu">Solve</span>(W, b)</span></code></pre></div>
-<pre><code>## x1              =   4.03671803 
-##   x2            =   -0.2644476 
-##     x3          =   1.19268231 
-##       x4        =   1.94462027 
+<pre><code>## x1              =   4.42213868 
+##   x2            =  -0.75036677 
+##     x3          =   0.41496247 
+##       x4        =    1.4782119 
 ##         x5      =            0 
-##           x6    =  -1.02505168 
+##           x6    =  -0.86465665 
 ##             x7  =            0 
 ##              0  =            0 
 ##              0  =            0</code></pre>
@@ -752,12 +759,12 @@ and we may estimate <span class="math inline">\(\beta\)</span> by <em>constraine
 <span id="cb737-3"><a href="gauss-markov-theory.html#cb737-3" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">t</span>(X)<span class="sc">%*%</span>X <span class="sc">+</span> <span class="fu">t</span>(K)<span class="sc">%*%</span>K</span>
 <span id="cb737-4"><a href="gauss-markov-theory.html#cb737-4" aria-hidden="true" tabindex="-1"></a><span class="fu">inv</span>(Z)<span class="sc">%*%</span><span class="fu">t</span>(X)<span class="sc">%*%</span>Y</span></code></pre></div>
 <pre><code>##            [,1]
-## [1,]  4.0367180
-## [2,] -0.2644476
-## [3,]  1.1926823
-## [4,]  1.9446203
+## [1,]  4.4221387
+## [2,] -0.7503668
+## [3,]  0.4149625
+## [4,]  1.4782119
 ## [5,]  0.0000000
-## [6,] -1.0250517
+## [6,] -0.8646566
 ## [7,]  0.0000000</code></pre>
 
 </div>
@@ -768,8 +775,8 @@ and we may estimate <span class="math inline">\(\beta\)</span> by <em>constraine
           </div>
         </div>
       </div>
-<a href="analysis-of-covariance.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="analysis-of-covariance.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction-to-response-surface-methodology.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
